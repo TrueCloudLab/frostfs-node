@@ -4,6 +4,8 @@ Changelog for FrostFS Node
 ## [Unreleased]
 
 ### Added
+- Separate batching for replicated operations over the same container in pilorama (#1621)
+
 ### Changed
 ### Fixed
 - Big object removal with non-local parts (#1978)
