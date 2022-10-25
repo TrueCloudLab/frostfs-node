@@ -39,10 +39,15 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 )
 
+replace (
+	github.com/TrueCloudLab/frostfs-api-go/v2 v2.0.0-20221212144048-1351b6656d68 => github.com/KirillovDenis/frostfs-api-go/v2 v2.11.2-0.20230221082308-ac00938fa447
+	github.com/TrueCloudLab/frostfs-sdk-go v0.0.0-20221214065929-4c779423f556 => github.com/KirillovDenis/frostfs-sdk-go v0.0.0-20230221082914-5f20e7c6a460
+)
+
 require (
 	github.com/TrueCloudLab/frostfs-crypto v0.5.0 // indirect
 	github.com/TrueCloudLab/rfc6979 v0.3.0 // indirect
-	github.com/antlr/antlr4/runtime/Go/antlr v1.4.10 // indirect
+	github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20221202181307-76fa05c21b12 // indirect
 	github.com/benbjohnson/clock v1.1.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -54,7 +59,7 @@ require (
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
-	github.com/hashicorp/golang-lru v0.5.4 // indirect
+	github.com/hashicorp/golang-lru v0.6.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/holiman/uint256 v1.2.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
@@ -89,8 +94,9 @@ require (
 	github.com/syndtr/goleveldb v1.0.1-0.20210305035536-64b5b1c73954 // indirect
 	github.com/twmb/murmur3 v1.1.5 // indirect
 	github.com/urfave/cli v1.22.5 // indirect
-	go.uber.org/multierr v1.8.0 // indirect
+	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/crypto v0.4.0 // indirect
+	golang.org/x/exp v0.0.0-20221227203929-1b447090c38c // indirect
 	golang.org/x/net v0.4.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect

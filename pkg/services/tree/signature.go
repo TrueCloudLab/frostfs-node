@@ -100,6 +100,7 @@ func (s *Service) verifyClient(req message, cid cidSDK.ID, rawBearer []byte, op 
 	}
 
 	var tb eacl.Table
+	signer := req.GetSignature().GetKey()
 	if tableFromBearer {
 		if bt.Impersonate() {
 			tbCore, err := s.eaclSource.GetEACL(cid)
@@ -111,6 +112,7 @@ func (s *Service) verifyClient(req message, cid cidSDK.ID, rawBearer []byte, op 
 				return fmt.Errorf("get eACL table: %w", err)
 			}
 			tb = *tbCore.Value
+			signer = bt.SigningKeyBytes()
 		} else {
 			if !bearer.ResolveIssuer(*bt).Equals(cnr.Value.Owner()) {
 				return eACLErr(eaclOp, errBearerWrongOwner)
@@ -130,7 +132,7 @@ func (s *Service) verifyClient(req message, cid cidSDK.ID, rawBearer []byte, op 
 		tb = *tbCore.Value
 	}
 
-	return checkEACL(tb, req.GetSignature().GetKey(), eACLRole(role), eaclOp)
+	return checkEACL(tb, signer, eACLRole(role), eaclOp)
 }
 
 func verifyMessage(m message) error {
