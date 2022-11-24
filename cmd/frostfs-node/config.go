@@ -24,7 +24,6 @@ import (
 	blobovniczaconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/engine/shard/blobstor/blobovnicza"
 	fstreeconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/engine/shard/blobstor/fstree"
 	loggerconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/logger"
-	metricsconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/metrics"
 	nodeconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/node"
 	objectconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/object"
 	replicatorconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/replicator"
@@ -48,6 +47,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/network"
 	"github.com/TrueCloudLab/frostfs-node/pkg/network/cache"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/control"
+	objectService "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
 	getsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/get"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/tombstone"
 	tsourse "github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/tombstone/source"
@@ -308,7 +308,7 @@ type internals struct {
 
 	wg      *sync.WaitGroup
 	workers []worker
-	closers []func()
+	closers []closer
 
 	apiVersion   version.Version
 	healthStatus *atomic.Int32
@@ -364,12 +364,16 @@ type shared struct {
 	treeService *tree.Service
 
 	metricsCollector *metrics.NodeMetrics
+
+	metricsSvc *objectService.MetricCollector
 }
 
 // dynamicConfiguration stores parameters of the
 // components that supports runtime reconfigurations.
 type dynamicConfiguration struct {
-	logger *logger.Prm
+	logger  *logger.Prm
+	pprof   *httpComponent
+	metrics *httpComponent
 }
 
 type cfg struct {
@@ -612,10 +616,8 @@ func initCfg(appCfg *config.Config) *cfg {
 
 	user.IDFromKey(&c.ownerIDFromKey, key.PrivateKey.PublicKey)
 
-	if metricsconfig.Enabled(c.appCfg) {
-		c.metricsCollector = metrics.NewNodeMetrics()
-		netState.metrics = c.metricsCollector
-	}
+	c.metricsCollector = metrics.NewNodeMetrics()
+	netState.metrics = c.metricsCollector
 
 	c.onShutdown(c.clientCache.CloseAll)    // clean up connections
 	c.onShutdown(c.bgClientCache.CloseAll)  // clean up connections
@@ -915,11 +917,9 @@ func (c *cfg) ObjectServiceLoad() float64 {
 	return float64(c.cfgObject.pool.putRemote.Running()) / float64(c.cfgObject.pool.putRemoteCapacity)
 }
 
-type dCfg struct {
-	name string
-	cfg  interface {
-		Reload() error
-	}
+type dCmp struct {
+	name       string
+	reloadFunc func() error
 }
 
 func (c *cfg) signalWatcher() {
@@ -964,7 +964,7 @@ func (c *cfg) reloadConfig() {
 
 	// all the components are expected to support
 	// Logger's dynamic reconfiguration approach
-	var components []dCfg
+	var components []dCmp
 
 	// Logger
 
@@ -974,7 +974,18 @@ func (c *cfg) reloadConfig() {
 		return
 	}
 
-	components = append(components, dCfg{name: "logger", cfg: logPrm})
+	components = append(components, dCmp{"logger", logPrm.Reload})
+	if cmp, updated := metricsComponent(c); updated {
+		if cmp.enabled {
+			cmp.preReload = enableMetricsSvc
+		} else {
+			cmp.preReload = disableMetricsSvc
+		}
+		components = append(components, dCmp{cmp.name, cmp.reload})
+	}
+	if cmp, updated := pprofComponent(c); updated {
+		components = append(components, dCmp{cmp.name, cmp.reload})
+	}
 
 	// Storage Engine
 
@@ -990,7 +1001,7 @@ func (c *cfg) reloadConfig() {
 	}
 
 	for _, component := range components {
-		err = component.cfg.Reload()
+		err = component.reloadFunc()
 		if err != nil {
 			c.log.Error("updated configuration applying",
 				zap.String("component", component.name),
@@ -1006,7 +1017,7 @@ func (c *cfg) shutdown() {
 
 	c.ctxCancel()
 	for i := range c.closers {
-		c.closers[len(c.closers)-1-i]()
+		c.closers[len(c.closers)-1-i].fn()
 	}
 	close(c.internalErr)
 }

@@ -10,6 +10,7 @@ Changelog for FrostFS Node
 - New `frostfs_node_object_payload_size` metric for tracking size of reqular objects on a single shard (#1794)
 - Add command `frostfs-adm morph netmap-candidates` (#1889)
 - `object.delete.tombstone_lifetime` config parameter to set tombstone lifetime in the DELETE service (#2246)
+- Reload config for pprof and metrics on SIGHUP in `neofs-node` (#1868)
 
 ### Changed
 - Change `frostfs_node_engine_container_size` to counting sizes of logical objects

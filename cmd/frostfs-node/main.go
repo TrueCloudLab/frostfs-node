@@ -81,8 +81,10 @@ func initApp(c *cfg) {
 		c.wg.Done()
 	}()
 
-	initAndLog(c, "pprof", initProfiler)
-	initAndLog(c, "prometheus", initMetrics)
+	pprof, _ := pprofComponent(c)
+	metrics, _ := metricsComponent(c)
+	initAndLog(c, pprof.name, pprof.init)
+	initAndLog(c, metrics.name, metrics.init)
 
 	initLocalStorage(c)
 
@@ -114,6 +116,19 @@ func runAndLog(c *cfg, name string, logSuccess bool, starter func(*cfg)) {
 	}
 }
 
+func stopAndLog(c *cfg, name string, stopper func() error) {
+	c.log.Debug(fmt.Sprintf("shutting down %s service", name))
+
+	err := stopper()
+	if err != nil {
+		c.log.Debug(fmt.Sprintf("could not shutdown %s server", name),
+			zap.String("error", err.Error()),
+		)
+	}
+
+	c.log.Debug(fmt.Sprintf("%s service has been stopped", name))
+}
+
 func bootUp(c *cfg) {
 	runAndLog(c, "NATS", true, connectNats)
 	runAndLog(c, "gRPC", false, serveGRPC)
@@ -135,5 +150,5 @@ func wait(c *cfg) {
 }
 
 func (c *cfg) onShutdown(f func()) {
-	c.closers = append(c.closers, f)
+	c.closers = append(c.closers, closer{"", f})
 }
