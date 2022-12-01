@@ -80,6 +80,9 @@ func (s *Shard) delete(prm DeletePrm) (DeleteRes, error) {
 
 	s.decObjectCounterBy(physical, res.RawObjectsRemoved())
 	s.decObjectCounterBy(logical, res.AvailableObjectsRemoved())
+	for i := range prm.addr {
+		s.addToContainerSize(prm.addr[i].Container().EncodeToString(), -int64(res.RemovedObjectSizes()[i]))
+	}
 
 	for i := range prm.addr {
 		var delPrm common.DeletePrm

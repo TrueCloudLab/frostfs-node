@@ -17,26 +17,28 @@ import (
 )
 
 type metricsStore struct {
-	s map[string]uint64
+	objCounters map[string]uint64
+	cnrSize     map[string]int64
+	readOnly    bool
 }
 
 func (m metricsStore) SetShardID(_ string) {}
 
 func (m metricsStore) SetObjectCounter(objectType string, v uint64) {
-	m.s[objectType] = v
+	m.objCounters[objectType] = v
 }
 
 func (m metricsStore) AddToObjectCounter(objectType string, delta int) {
 	switch {
 	case delta > 0:
-		m.s[objectType] += uint64(delta)
+		m.objCounters[objectType] += uint64(delta)
 	case delta < 0:
 		uDelta := uint64(-delta)
 
-		if m.s[objectType] >= uDelta {
-			m.s[objectType] -= uDelta
+		if m.objCounters[objectType] >= uDelta {
+			m.objCounters[objectType] -= uDelta
 		} else {
-			m.s[objectType] = 0
+			m.objCounters[objectType] = 0
 		}
 	case delta == 0:
 		return
@@ -44,19 +46,19 @@ func (m metricsStore) AddToObjectCounter(objectType string, delta int) {
 }
 
 func (m metricsStore) IncObjectCounter(objectType string) {
-	m.s[objectType] += 1
+	m.objCounters[objectType] += 1
 }
 
 func (m metricsStore) DecObjectCounter(objectType string) {
 	m.AddToObjectCounter(objectType, -1)
 }
 
-func (m metricsStore) SetReadonly(r bool) {
-	if r {
-		m.s[readonly] = 1
-	} else {
-		m.s[readonly] = 0
-	}
+func (m *metricsStore) SetReadonly(r bool) {
+	m.readOnly = r
+}
+
+func (m metricsStore) AddToContainerSize(cnr string, size int64) {
+	m.cnrSize[cnr] += size
 }
 
 const physical = "phy"
@@ -68,9 +70,9 @@ func TestCounters(t *testing.T) {
 	sh, mm := shardWithMetrics(t, dir)
 
 	sh.SetMode(mode.ReadOnly)
-	require.Equal(t, mm.s[readonly], uint64(1))
+	require.True(t, mm.readOnly)
 	sh.SetMode(mode.ReadWrite)
-	require.Equal(t, mm.s[readonly], uint64(0))
+	require.False(t, mm.readOnly)
 
 	const objNumber = 10
 	oo := make([]*object.Object, objNumber)
@@ -79,9 +81,16 @@ func TestCounters(t *testing.T) {
 	}
 
 	t.Run("defaults", func(t *testing.T) {
-		require.Zero(t, mm.s[physical])
-		require.Zero(t, mm.s[logical])
+		require.Zero(t, mm.objCounters[physical])
+		require.Zero(t, mm.objCounters[logical])
+		require.Empty(t, mm.cnrSize)
 	})
+
+	expectedSizes := make(map[string]int64)
+	for i := range oo {
+		cnr, _ := oo[i].ContainerID()
+		expectedSizes[cnr.EncodeToString()] += int64(oo[i].PayloadSize())
+	}
 
 	t.Run("put", func(t *testing.T) {
 		var prm shard.PutPrm
@@ -93,8 +102,9 @@ func TestCounters(t *testing.T) {
 			require.NoError(t, err)
 		}
 
-		require.Equal(t, uint64(objNumber), mm.s[physical])
-		require.Equal(t, uint64(objNumber), mm.s[logical])
+		require.Equal(t, uint64(objNumber), mm.objCounters[physical])
+		require.Equal(t, uint64(objNumber), mm.objCounters[logical])
+		require.Equal(t, expectedSizes, mm.cnrSize)
 	})
 
 	t.Run("inhume_GC", func(t *testing.T) {
@@ -108,8 +118,9 @@ func TestCounters(t *testing.T) {
 			require.NoError(t, err)
 		}
 
-		require.Equal(t, uint64(objNumber), mm.s[physical])
-		require.Equal(t, uint64(objNumber-inhumedNumber), mm.s[logical])
+		require.Equal(t, uint64(objNumber), mm.objCounters[physical])
+		require.Equal(t, uint64(objNumber-inhumedNumber), mm.objCounters[logical])
+		require.Equal(t, expectedSizes, mm.cnrSize)
 
 		oo = oo[inhumedNumber:]
 	})
@@ -118,8 +129,8 @@ func TestCounters(t *testing.T) {
 		var prm shard.InhumePrm
 		ts := objectcore.AddressOf(generateObject(t))
 
-		phy := mm.s[physical]
-		logic := mm.s[logical]
+		phy := mm.objCounters[physical]
+		logic := mm.objCounters[logical]
 
 		inhumedNumber := int(phy / 4)
 		prm.SetTarget(ts, addrFromObjs(oo[:inhumedNumber])...)
@@ -127,8 +138,9 @@ func TestCounters(t *testing.T) {
 		_, err := sh.Inhume(prm)
 		require.NoError(t, err)
 
-		require.Equal(t, phy, mm.s[physical])
-		require.Equal(t, logic-uint64(inhumedNumber), mm.s[logical])
+		require.Equal(t, phy, mm.objCounters[physical])
+		require.Equal(t, logic-uint64(inhumedNumber), mm.objCounters[logical])
+		require.Equal(t, expectedSizes, mm.cnrSize)
 
 		oo = oo[inhumedNumber:]
 	})
@@ -136,8 +148,8 @@ func TestCounters(t *testing.T) {
 	t.Run("Delete", func(t *testing.T) {
 		var prm shard.DeletePrm
 
-		phy := mm.s[physical]
-		logic := mm.s[logical]
+		phy := mm.objCounters[physical]
+		logic := mm.objCounters[logical]
 
 		deletedNumber := int(phy / 4)
 		prm.SetAddresses(addrFromObjs(oo[:deletedNumber])...)
@@ -145,8 +157,13 @@ func TestCounters(t *testing.T) {
 		_, err := sh.Delete(prm)
 		require.NoError(t, err)
 
-		require.Equal(t, phy-uint64(deletedNumber), mm.s[physical])
-		require.Equal(t, logic-uint64(deletedNumber), mm.s[logical])
+		require.Equal(t, phy-uint64(deletedNumber), mm.objCounters[physical])
+		require.Equal(t, logic-uint64(deletedNumber), mm.objCounters[logical])
+		for i := range oo[:deletedNumber] {
+			cnr, _ := oo[i].ContainerID()
+			expectedSizes[cnr.EncodeToString()] -= int64(oo[i].PayloadSize())
+		}
+		require.Equal(t, expectedSizes, mm.cnrSize)
 	})
 }
 
@@ -163,11 +180,11 @@ func shardWithMetrics(t *testing.T, path string) (*shard.Shard, *metricsStore) {
 	}
 
 	mm := &metricsStore{
-		s: map[string]uint64{
-			"phy":      0,
-			"logic":    0,
-			"readonly": 1,
+		objCounters: map[string]uint64{
+			"phy":   0,
+			"logic": 0,
 		},
+		cnrSize: make(map[string]int64),
 	}
 
 	sh := shard.New(

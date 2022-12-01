@@ -6,6 +6,7 @@ Changelog for FrostFS Node
 ### Added
 - Separate batching for replicated operations over the same container in pilorama (#1621)
 - Doc for extended headers (#2128)
+- New `frostfs_node_object_container_size` metric for tracking size of reqular objects in a container (#2116)
 
 ### Changed
 - `common.PrintVerbose` prints via `cobra.Command.Printf` (#1962)
