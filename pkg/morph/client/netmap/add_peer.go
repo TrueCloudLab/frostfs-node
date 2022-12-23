@@ -3,8 +3,8 @@ package netmap
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 )
 
 // AddPeerPrm groups parameters of AddPeer operation.
@@ -27,7 +27,7 @@ func (c *Client) AddPeer(p AddPeerPrm) error {
 	if c.client.WithNotary() && c.client.IsAlpha() {
 		// In notary environments Alphabet must calls AddPeerIR method instead of AddPeer.
 		// It differs from AddPeer only by name, so we can do this in the same form.
-		// See https://github.com/nspcc-dev/neofs-contract/issues/154.
+		// See https://github.com/nspcc-dev/frostfs-contract/issues/154.
 		method += "IR"
 	}
 

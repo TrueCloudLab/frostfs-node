@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
-	"github.com/nspcc-dev/neofs-sdk-go/bearer"
-	sessionsdk "github.com/nspcc-dev/neofs-sdk-go/session"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-sdk-go/bearer"
+	sessionsdk "github.com/TrueCloudLab/frostfs-sdk-go/session"
 )
 
 // maxLocalTTL is maximum TTL for an operation to be considered local.

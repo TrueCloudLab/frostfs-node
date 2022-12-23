@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"crypto/sha256"
 
-	core "github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
-	"github.com/nspcc-dev/neofs-sdk-go/container/acl"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	core "github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container/acl"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"go.uber.org/zap"
 )
 
@@ -35,7 +35,7 @@ func (c senderClassifier) classify(
 
 	ownerKeyInBytes := ownerKey.Bytes()
 
-	// TODO: #767 get owner from neofs.id if present
+	// TODO: #767 get owner from frostfs.id if present
 
 	// if request owner is the same as container owner, return RoleUser
 	if ownerID.Equals(cnr.Owner()) {

@@ -3,7 +3,7 @@ package accounting
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/accounting"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/accounting"
 )
 
 // Server is an interface of the NeoFS API Accounting service server.

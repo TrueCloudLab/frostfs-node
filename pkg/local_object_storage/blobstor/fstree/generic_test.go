@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/internal/blobstortest"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/internal/blobstortest"
 )
 
 func TestGeneric(t *testing.T) {

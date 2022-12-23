@@ -1,8 +1,8 @@
 package util
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/network"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/network"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
 

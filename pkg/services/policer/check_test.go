@@ -3,7 +3,7 @@ package policer
 import (
 	"testing"
 
-	netmaptest "github.com/nspcc-dev/neofs-sdk-go/netmap/test"
+	netmaptest "github.com/TrueCloudLab/frostfs-sdk-go/netmap/test"
 	"github.com/stretchr/testify/require"
 )
 

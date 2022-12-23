@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 // HeadReceiver is an interface of entity that can receive

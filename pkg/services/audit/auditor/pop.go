@@ -1,9 +1,9 @@
 package auditor
 
 import (
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	"github.com/nspcc-dev/tzhash/tz"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	"github.com/TrueCloudLab/tzhash/tz"
 	"go.uber.org/zap"
 )
 

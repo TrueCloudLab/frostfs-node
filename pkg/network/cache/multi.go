@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"sync"
 
-	rawclient "github.com/nspcc-dev/neofs-api-go/v2/rpc/client"
-	clientcore "github.com/nspcc-dev/neofs-node/pkg/core/client"
-	"github.com/nspcc-dev/neofs-node/pkg/network"
-	"github.com/nspcc-dev/neofs-sdk-go/client"
+	rawclient "github.com/TrueCloudLab/frostfs-api-go/v2/rpc/client"
+	clientcore "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/network"
+	"github.com/TrueCloudLab/frostfs-sdk-go/client"
 )
 
 type multiClient struct {

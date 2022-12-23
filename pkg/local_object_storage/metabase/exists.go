@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"strconv"
 
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
 )
 

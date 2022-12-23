@@ -1,8 +1,8 @@
 package netmap
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 )
 
 // GetNetMap calls "snapshot" method and decodes netmap.NetMap from the response.

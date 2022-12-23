@@ -3,11 +3,11 @@ package container
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	containercore "github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	containercore "github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 )
 
 // Put marshals container, and passes it to Wrapper's Put method

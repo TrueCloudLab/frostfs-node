@@ -6,9 +6,9 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/TrueCloudLab/frostfs-api-go/v2/rpc/client"
 	"github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr/net"
-	"github.com/nspcc-dev/neofs-api-go/v2/rpc/client"
 )
 
 /*

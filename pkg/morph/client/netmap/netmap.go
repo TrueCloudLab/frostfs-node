@@ -3,10 +3,10 @@ package netmap
 import (
 	"fmt"
 
+	netmapcontract "github.com/TrueCloudLab/frostfs-contract/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
-	netmapcontract "github.com/nspcc-dev/neofs-contract/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
 )
 
 // GetNetMapByEpoch calls "snapshotByEpoch" method with the given epoch and

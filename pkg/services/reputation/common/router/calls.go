@@ -4,8 +4,8 @@ import (
 	"encoding/hex"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation"
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/common"
 	"go.uber.org/zap"
 )
 

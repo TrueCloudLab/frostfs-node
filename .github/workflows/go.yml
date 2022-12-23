@@ -1,4 +1,4 @@
-name: neofs-node tests
+name: frostfs-node tests
 
 on:
   push:

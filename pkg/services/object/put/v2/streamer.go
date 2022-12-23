@@ -3,16 +3,16 @@ package putsvc
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-api-go/v2/rpc"
-	rawclient "github.com/nspcc-dev/neofs-api-go/v2/rpc/client"
-	sessionV2 "github.com/nspcc-dev/neofs-api-go/v2/session"
-	"github.com/nspcc-dev/neofs-api-go/v2/signature"
-	"github.com/nspcc-dev/neofs-node/pkg/core/client"
-	"github.com/nspcc-dev/neofs-node/pkg/network"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/internal"
-	putsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/put"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/rpc"
+	rawclient "github.com/TrueCloudLab/frostfs-api-go/v2/rpc/client"
+	sessionV2 "github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/signature"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/network"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal"
+	putsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/put"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
 )
 
 type streamer struct {

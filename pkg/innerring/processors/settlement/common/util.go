@@ -3,7 +3,7 @@ package common
 import (
 	"math/big"
 
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 type TransferTable struct {

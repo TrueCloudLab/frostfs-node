@@ -1,14 +1,14 @@
-package neofs
+package frostfs
 
 import (
 	"crypto/elliptic"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	frostfs "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/neofsid"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event/neofs"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 	"go.uber.org/zap"
 )
 
@@ -28,7 +28,7 @@ func (np *Processor) processBind(e bindCommon) {
 		bindCommon: e,
 	}
 
-	_, c.bind = e.(neofs.Bind)
+	_, c.bind = e.(frostfs.Bind)
 
 	err := np.checkBindCommon(c)
 	if err != nil {
@@ -95,10 +95,10 @@ func (np *Processor) approveBindCommon(e *bindCommonContext) {
 	var typ string
 	if e.bind {
 		typ = "bind"
-		err = np.neofsIDClient.AddKeys(prm)
+		err = np.frostfsIDClient.AddKeys(prm)
 	} else {
 		typ = "unbind"
-		err = np.neofsIDClient.RemoveKeys(prm)
+		err = np.frostfsIDClient.RemoveKeys(prm)
 	}
 
 	if err != nil {

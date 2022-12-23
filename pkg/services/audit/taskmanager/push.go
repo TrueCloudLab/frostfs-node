@@ -1,7 +1,7 @@
 package audittask
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit"
 )
 
 // PushTask adds a task to the queue for processing.

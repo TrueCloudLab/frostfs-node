@@ -3,8 +3,8 @@ package netmap
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-contract/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-contract/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
 // UpdatePeerPrm groups parameters of UpdatePeerState operation.
@@ -42,7 +42,7 @@ func (c *Client) UpdatePeerState(p UpdatePeerPrm) error {
 	if c.client.WithNotary() && c.client.IsAlpha() {
 		// In notary environments Alphabet must calls UpdateStateIR method instead of UpdateState.
 		// It differs from UpdateState only by name, so we can do this in the same form.
-		// See https://github.com/nspcc-dev/neofs-contract/issues/225.
+		// See https://github.com/nspcc-dev/frostfs-contract/issues/225.
 		method += "IR"
 	}
 

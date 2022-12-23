@@ -1,8 +1,8 @@
 package alphabet
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/timers"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/timers"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"go.uber.org/zap"
 )
 

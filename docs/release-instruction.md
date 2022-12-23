@@ -9,7 +9,7 @@ These should run successfully:
 * `make lint` (should not change any files);
 * `make fmts` (should not change any files);
 * `go mod tidy` (should not change any files);
-* integration tests in [neofs-devenv](https://github.com/nspcc-dev/neofs-devenv).
+* integration tests in [frostfs-devenv](https://github.com/TrueCloudLab/frostfs-devenv).
 
 ## Make release commit
 
@@ -48,7 +48,7 @@ Update version in Debian package changelog file
 $ cat debian/changelog
 ```
 
-Update the supported version of `nspcc-dev/neofs-contract` module in root
+Update the supported version of `TrueCloudLab/frostfs-contract` module in root
 `README.md` if needed.
 
 ### Writing changelog
@@ -123,17 +123,17 @@ the release. Publish the release.
 
 ### Update NeoFS Developer Environment
 
-Prepare pull-request in [neofs-devenv](https://github.com/nspcc-dev/neofs-devenv)
+Prepare pull-request in [frostfs-devenv](https://github.com/TrueCloudLab/frostfs-devenv)
 with new versions.
 
 ### Close GitHub milestone
 
-Look up GitHub [milestones](https://github.com/nspcc-dev/neofs-node/milestones) and close the release one if exists.
+Look up GitHub [milestones](https://github.com/TrueCloudLab/frostfs-node/milestones) and close the release one if exists.
 
 ### Rebuild NeoFS LOCODE database
 
 If new release contains LOCODE-related changes, rebuild NeoFS LOCODE database via NeoFS CLI
 
 ```shell
-$ neofs-cli util locode generate ...
+$ frostfs-cli util locode generate ...
 ```

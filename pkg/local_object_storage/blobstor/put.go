@@ -3,10 +3,10 @@ package blobstor
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
 
 // ErrNoPlaceFound is returned when object can't be saved to any sub-storage component

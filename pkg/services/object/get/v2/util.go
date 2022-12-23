@@ -9,25 +9,25 @@ import (
 	"io"
 	"sync"
 
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	"github.com/nspcc-dev/neofs-api-go/v2/rpc"
-	rpcclient "github.com/nspcc-dev/neofs-api-go/v2/rpc/client"
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
-	"github.com/nspcc-dev/neofs-api-go/v2/signature"
-	"github.com/nspcc-dev/neofs-api-go/v2/status"
-	"github.com/nspcc-dev/neofs-node/pkg/core/client"
-	"github.com/nspcc-dev/neofs-node/pkg/network"
-	objectSvc "github.com/nspcc-dev/neofs-node/pkg/services/object"
-	getsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/get"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/internal"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	neofscrypto "github.com/nspcc-dev/neofs-sdk-go/crypto"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	versionSDK "github.com/nspcc-dev/neofs-sdk-go/version"
-	"github.com/nspcc-dev/tzhash/tz"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/rpc"
+	rpcclient "github.com/TrueCloudLab/frostfs-api-go/v2/rpc/client"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/signature"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/status"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/network"
+	objectSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	getsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/get"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	frostfscrypto "github.com/TrueCloudLab/frostfs-sdk-go/crypto"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	versionSDK "github.com/TrueCloudLab/frostfs-sdk-go/version"
+	"github.com/TrueCloudLab/tzhash/tz"
 )
 
 var errWrongMessageSeq = errors.New("incorrect message sequence")
@@ -96,7 +96,7 @@ func (s *Service) toPrm(req *objectV2.GetRequest, stream objectSvc.GetObjectStre
 			}
 
 			// code below is copy-pasted from c.GetObject implementation,
-			// perhaps it is worth highlighting the utility function in neofs-api-go
+			// perhaps it is worth highlighting the utility function in frostfs-api-go
 
 			// open stream
 			var getStream *rpc.GetResponseReader
@@ -260,7 +260,7 @@ func (s *Service) toRangePrm(req *objectV2.GetRangeRequest, stream objectSvc.Get
 			}
 
 			// code below is copy-pasted from c.ObjectPayloadRangeData implementation,
-			// perhaps it is worth highlighting the utility function in neofs-api-go
+			// perhaps it is worth highlighting the utility function in frostfs-api-go
 
 			// open stream
 			var rangeStream *rpc.ObjectRangeResponseReader
@@ -461,7 +461,7 @@ func (s *Service) toHeadPrm(ctx context.Context, req *objectV2.HeadRequest, resp
 			}
 
 			// code below is copy-pasted from c.GetObjectHeader implementation,
-			// perhaps it is worth highlighting the utility function in neofs-api-go
+			// perhaps it is worth highlighting the utility function in frostfs-api-go
 
 			// send Head request
 			var headResp *objectV2.HeadResponse
@@ -537,7 +537,7 @@ func (s *Service) toHeadPrm(ctx context.Context, req *objectV2.HeadRequest, resp
 					return nil, fmt.Errorf("marshal ID: %w", err)
 				}
 
-				var sig neofscrypto.Signature
+				var sig frostfscrypto.Signature
 				if err := sig.ReadFromV2(*idSig); err != nil {
 					return nil, fmt.Errorf("can't read signature: %w", err)
 				}

@@ -2,7 +2,7 @@ package metrics
 
 import "github.com/prometheus/client_golang/prometheus"
 
-const namespace = "neofs_node"
+const namespace = "frostfs_node"
 
 type NodeMetrics struct {
 	objectServiceMetrics

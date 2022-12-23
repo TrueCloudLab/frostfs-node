@@ -5,11 +5,11 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/netmap"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	"github.com/nspcc-dev/neofs-node/pkg/core/version"
-	netmapSDK "github.com/nspcc-dev/neofs-sdk-go/netmap"
-	versionsdk "github.com/nspcc-dev/neofs-sdk-go/version"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/netmap"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/version"
+	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	versionsdk "github.com/TrueCloudLab/frostfs-sdk-go/version"
 )
 
 type executorSvc struct {

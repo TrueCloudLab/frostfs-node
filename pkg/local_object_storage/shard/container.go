@@ -3,7 +3,7 @@ package shard
 import (
 	"fmt"
 
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 )
 
 type ContainerSizePrm struct {

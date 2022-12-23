@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"testing"
 
+	netmapcontract "github.com/TrueCloudLab/frostfs-contract/netmap"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
-	netmapcontract "github.com/nspcc-dev/neofs-contract/netmap"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
 	"github.com/stretchr/testify/require"
 )
 

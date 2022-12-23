@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/blobovniczatree"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/fstree"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/blobovniczatree"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/fstree"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"github.com/stretchr/testify/require"
 )
 
@@ -32,7 +32,7 @@ func defaultStorages(p string, smallSizeLimit uint64) []SubStorage {
 }
 
 func TestCompression(t *testing.T) {
-	dir, err := os.MkdirTemp("", "neofs*")
+	dir, err := os.MkdirTemp("", "frostfs*")
 	require.NoError(t, err)
 	t.Cleanup(func() { _ = os.RemoveAll(dir) })
 
@@ -102,7 +102,7 @@ func TestCompression(t *testing.T) {
 func TestBlobstor_needsCompression(t *testing.T) {
 	const smallSizeLimit = 512
 	newBlobStor := func(t *testing.T, compress bool, ct ...string) *BlobStor {
-		dir, err := os.MkdirTemp("", "neofs*")
+		dir, err := os.MkdirTemp("", "frostfs*")
 		require.NoError(t, err)
 		t.Cleanup(func() { _ = os.RemoveAll(dir) })
 

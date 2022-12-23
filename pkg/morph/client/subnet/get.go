@@ -3,7 +3,7 @@ package morphsubnet
 import (
 	"errors"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
 // GetPrm groups parameters of Get method of Subnet contract.

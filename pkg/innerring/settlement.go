@@ -9,24 +9,24 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement/basic"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement/common"
+	auditClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/audit"
+	balanceClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
+	containerClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
+	netmapClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	auditAPI "github.com/TrueCloudLab/frostfs-sdk-go/audit"
+	containerAPI "github.com/TrueCloudLab/frostfs-sdk-go/container"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	netmapAPI "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/storagegroup"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement/audit"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement/basic"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement/common"
-	auditClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/audit"
-	balanceClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/balance"
-	containerClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
-	netmapClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	auditAPI "github.com/nspcc-dev/neofs-sdk-go/audit"
-	containerAPI "github.com/nspcc-dev/neofs-sdk-go/container"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	netmapAPI "github.com/nspcc-dev/neofs-sdk-go/netmap"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	"github.com/nspcc-dev/neofs-sdk-go/storagegroup"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 	"go.uber.org/zap"
 )
 
@@ -145,7 +145,7 @@ func (s settlementDeps) buildContainer(e uint64, cid cid.ID) ([][]netmapAPI.Node
 
 	cn, err := nm.ContainerNodes(
 		cnr.Value.PlacementPolicy(),
-		binCnr, // may be replace pivot calculation to neofs-api-go
+		binCnr, // may be replace pivot calculation to frostfs-api-go
 	)
 	if err != nil {
 		return nil, nil, fmt.Errorf("could not calculate container nodes: %w", err)

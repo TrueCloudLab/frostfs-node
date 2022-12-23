@@ -3,8 +3,8 @@ package getsvc
 import (
 	"errors"
 
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"go.uber.org/zap"
 )
 

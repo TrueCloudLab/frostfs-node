@@ -4,11 +4,11 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"github.com/panjf2000/ants/v2"
 	"go.uber.org/zap"
 )
@@ -54,7 +54,7 @@ type (
 	}
 )
 
-// New creates a neofs mainnet contract processor instance.
+// New creates a frostfs mainnet contract processor instance.
 func New(p *Params) (*Processor, error) {
 	switch {
 	case p.Log == nil:
@@ -69,7 +69,7 @@ func New(p *Params) (*Processor, error) {
 
 	pool, err := ants.NewPool(p.PoolSize, ants.WithNonblocking(true))
 	if err != nil {
-		return nil, fmt.Errorf("ir/neofs: can't create worker pool: %w", err)
+		return nil, fmt.Errorf("ir/frostfs: can't create worker pool: %w", err)
 	}
 
 	return &Processor{

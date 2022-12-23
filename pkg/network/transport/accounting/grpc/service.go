@@ -3,9 +3,9 @@ package accounting
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/accounting"
-	accountingGRPC "github.com/nspcc-dev/neofs-api-go/v2/accounting/grpc"
-	accountingsvc "github.com/nspcc-dev/neofs-node/pkg/services/accounting"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/accounting"
+	accountingGRPC "github.com/TrueCloudLab/frostfs-api-go/v2/accounting/grpc"
+	accountingsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/accounting"
 )
 
 // Server wraps NeoFS API Accounting service and

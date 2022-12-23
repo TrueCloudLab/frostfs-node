@@ -5,12 +5,12 @@ import (
 	"sync"
 	"time"
 
-	clientcore "github.com/nspcc-dev/neofs-node/pkg/core/client"
-	"github.com/nspcc-dev/neofs-sdk-go/client"
+	clientcore "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/client"
 )
 
 type (
-	// ClientCache is a structure around neofs-sdk-go/client to reuse
+	// ClientCache is a structure around frostfs-sdk-go/client to reuse
 	// already created clients.
 	ClientCache struct {
 		mu      sync.RWMutex

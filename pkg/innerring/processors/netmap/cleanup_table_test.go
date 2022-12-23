@@ -3,8 +3,8 @@ package netmap
 import (
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
 	"github.com/stretchr/testify/require"
 )
 

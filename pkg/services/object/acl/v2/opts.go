@@ -1,10 +1,10 @@
 package v2
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	objectSvc "github.com/nspcc-dev/neofs-node/pkg/services/object"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	objectSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 )
 
 // WithLogger returns option to set logger.

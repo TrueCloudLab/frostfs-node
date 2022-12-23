@@ -10,14 +10,14 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/compression"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	"github.com/nspcc-dev/neofs-node/pkg/util"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/compression"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 // FSTree represents an object storage as a filesystem tree.

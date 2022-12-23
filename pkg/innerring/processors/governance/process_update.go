@@ -6,11 +6,11 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	neofscontract "github.com/nspcc-dev/neofs-node/pkg/morph/client/neofs"
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
 	"go.uber.org/zap"
 )
 
@@ -131,14 +131,14 @@ func (gp *Processor) processAlphabetSync(txHash util.Uint256) {
 
 	id := append([]byte(alphabetUpdateIDPrefix), buf...)
 
-	prm := neofscontract.AlphabetUpdatePrm{}
+	prm := frostfscontract.AlphabetUpdatePrm{}
 
 	prm.SetID(id)
 	prm.SetPubs(newAlphabet)
 
-	err = gp.neofsClient.AlphabetUpdate(prm)
+	err = gp.frostfsClient.AlphabetUpdate(prm)
 	if err != nil {
-		gp.log.Error("can't update list of alphabet nodes in neofs contract",
+		gp.log.Error("can't update list of alphabet nodes in frostfs contract",
 			zap.String("error", err.Error()))
 	}
 

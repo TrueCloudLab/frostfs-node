@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	containerContract "github.com/nspcc-dev/neofs-contract/container"
-	containercore "github.com/nspcc-dev/neofs-node/pkg/core/container"
-	core "github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	"github.com/nspcc-dev/neofs-sdk-go/session"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	containerContract "github.com/TrueCloudLab/frostfs-contract/container"
+	containercore "github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	core "github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/session"
 )
 
 type containerSource Client

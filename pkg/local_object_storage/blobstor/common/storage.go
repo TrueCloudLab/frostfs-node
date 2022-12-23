@@ -1,6 +1,6 @@
 package common
 
-import "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/compression"
+import "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/compression"
 
 // Storage represents key-value object storage.
 // It is used as a building block for a blobstor of a shard.

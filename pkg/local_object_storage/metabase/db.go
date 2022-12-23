@@ -11,11 +11,11 @@ import (
 	"sync"
 	"time"
 
+	v2object "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard/mode"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"github.com/mr-tron/base58"
-	v2object "github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard/mode"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
 	"go.etcd.io/bbolt"
 	"go.uber.org/zap"
 )

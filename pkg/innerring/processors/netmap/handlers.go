@@ -3,10 +3,10 @@ package netmap
 import (
 	"encoding/hex"
 
-	timerEvent "github.com/nspcc-dev/neofs-node/pkg/innerring/timers"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	netmapEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/netmap"
-	subnetevents "github.com/nspcc-dev/neofs-node/pkg/morph/event/subnet"
+	timerEvent "github.com/TrueCloudLab/frostfs-node/pkg/innerring/timers"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	netmapEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/netmap"
+	subnetevents "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/subnet"
 	"go.uber.org/zap"
 )
 

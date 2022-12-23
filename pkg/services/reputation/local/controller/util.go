@@ -1,6 +1,6 @@
 package trustcontroller
 
-import "github.com/nspcc-dev/neofs-node/pkg/services/reputation/common"
+import "github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/common"
 
 type storageWrapper struct {
 	w common.Writer

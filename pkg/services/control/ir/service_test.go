@@ -3,7 +3,7 @@ package control_test
 import (
 	"testing"
 
-	control "github.com/nspcc-dev/neofs-node/pkg/services/control/ir"
+	control "github.com/TrueCloudLab/frostfs-node/pkg/services/control/ir"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/proto"
 )

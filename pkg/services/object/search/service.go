@@ -1,14 +1,14 @@
 package searchsvc
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/core/client"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/placement"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.uber.org/zap"
 )
 

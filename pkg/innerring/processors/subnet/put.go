@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-sdk-go/subnet"
-	subnetid "github.com/nspcc-dev/neofs-sdk-go/subnet/id"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	"github.com/TrueCloudLab/frostfs-sdk-go/subnet"
+	subnetid "github.com/TrueCloudLab/frostfs-sdk-go/subnet/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 // Put represents a notification about NeoFS subnet creation.

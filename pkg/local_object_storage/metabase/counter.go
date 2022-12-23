@@ -4,8 +4,8 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
 )
 

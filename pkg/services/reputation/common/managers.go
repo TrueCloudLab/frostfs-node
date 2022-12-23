@@ -3,11 +3,11 @@ package common
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/hrw"
-	netmapcore "github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	apiNetmap "github.com/nspcc-dev/neofs-sdk-go/netmap"
-	apireputation "github.com/nspcc-dev/neofs-sdk-go/reputation"
+	netmapcore "github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	apiNetmap "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	apireputation "github.com/TrueCloudLab/frostfs-sdk-go/reputation"
+	"github.com/TrueCloudLab/hrw"
 	"go.uber.org/zap"
 )
 

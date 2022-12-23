@@ -3,8 +3,8 @@ package policer
 import (
 	"fmt"
 
-	objectcore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
+	objectcore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
 )
 
 type jobQueue struct {

@@ -1,7 +1,7 @@
 package settlement
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 )
 
 // AuditEvent is an event of the start of

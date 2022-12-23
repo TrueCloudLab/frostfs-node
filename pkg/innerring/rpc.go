@@ -6,19 +6,19 @@ import (
 	"fmt"
 	"time"
 
-	clientcore "github.com/nspcc-dev/neofs-node/pkg/core/client"
-	netmapcore "github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	storagegroup2 "github.com/nspcc-dev/neofs-node/pkg/core/storagegroup"
-	neofsapiclient "github.com/nspcc-dev/neofs-node/pkg/innerring/internal/client"
-	"github.com/nspcc-dev/neofs-node/pkg/network/cache"
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit/auditor"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/placement"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	"github.com/nspcc-dev/neofs-sdk-go/storagegroup"
+	clientcore "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	netmapcore "github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	storagegroup2 "github.com/TrueCloudLab/frostfs-node/pkg/core/storagegroup"
+	frostfsapiclient "github.com/TrueCloudLab/frostfs-node/pkg/innerring/internal/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/network/cache"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit/auditor"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/storagegroup"
 	"go.uber.org/zap"
 )
 
@@ -83,7 +83,7 @@ func (c *ClientCache) getSG(ctx context.Context, addr oid.Address, nm *netmap.Ne
 
 	var info clientcore.NodeInfo
 
-	var getObjPrm neofsapiclient.GetObjectPrm
+	var getObjPrm frostfsapiclient.GetObjectPrm
 	getObjPrm.SetAddress(addr)
 
 	for _, node := range placement.FlattenNodes(nodes) {
@@ -154,9 +154,9 @@ func (c *ClientCache) GetHeader(prm auditor.GetHeaderPrm) (*object.Object, error
 	var obj *object.Object
 
 	if prm.NodeIsRelay {
-		obj, err = neofsapiclient.GetObjectHeaderFromContainer(cctx, cli, objAddress)
+		obj, err = frostfsapiclient.GetObjectHeaderFromContainer(cctx, cli, objAddress)
 	} else {
-		obj, err = neofsapiclient.GetRawObjectHeaderLocally(cctx, cli, objAddress)
+		obj, err = frostfsapiclient.GetRawObjectHeaderLocally(cctx, cli, objAddress)
 	}
 
 	cancel()
@@ -189,7 +189,7 @@ func (c *ClientCache) GetRangeHash(prm auditor.GetRangeHashPrm) ([]byte, error) 
 
 	cctx, cancel := context.WithTimeout(prm.Context, c.rangeTimeout)
 
-	h, err := neofsapiclient.HashObjectRange(cctx, cli, objAddress, prm.Range)
+	h, err := frostfsapiclient.HashObjectRange(cctx, cli, objAddress, prm.Range)
 
 	cancel()
 
@@ -200,9 +200,9 @@ func (c *ClientCache) GetRangeHash(prm auditor.GetRangeHashPrm) ([]byte, error) 
 	return h, nil
 }
 
-func (c *ClientCache) getWrappedClient(info clientcore.NodeInfo) (neofsapiclient.Client, error) {
+func (c *ClientCache) getWrappedClient(info clientcore.NodeInfo) (frostfsapiclient.Client, error) {
 	// can be also cached
-	var cInternal neofsapiclient.Client
+	var cInternal frostfsapiclient.Client
 
 	cli, err := c.Get(info)
 	if err != nil {
@@ -221,7 +221,7 @@ func (c ClientCache) ListSG(dst *storagegroup2.SearchSGDst, prm storagegroup2.Se
 		return fmt.Errorf("could not get API client from cache")
 	}
 
-	var cliPrm neofsapiclient.SearchSGPrm
+	var cliPrm frostfsapiclient.SearchSGPrm
 
 	cliPrm.SetContext(prm.Context)
 	cliPrm.SetContainerID(prm.Container)

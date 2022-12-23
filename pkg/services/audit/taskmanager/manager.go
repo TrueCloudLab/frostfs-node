@@ -3,10 +3,10 @@ package audittask
 import (
 	"time"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit"
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit/auditor"
-	"github.com/nspcc-dev/neofs-node/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit/auditor"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
 

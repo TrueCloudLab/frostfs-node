@@ -4,11 +4,11 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/session/storage"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/google/uuid"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/services/session/storage"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 )
 
 // SessionSource is an interface tha provides

@@ -6,11 +6,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	oidtest "github.com/nspcc-dev/neofs-sdk-go/object/id/test"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
 	"github.com/stretchr/testify/require"
 )
 

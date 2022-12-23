@@ -3,9 +3,9 @@ package netmap
 import (
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 	"github.com/stretchr/testify/require"
 )
 

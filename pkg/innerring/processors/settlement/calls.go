@@ -1,8 +1,8 @@
 package settlement
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
 

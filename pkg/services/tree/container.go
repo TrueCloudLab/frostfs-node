@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
+	cidSDK "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"github.com/hashicorp/golang-lru/simplelru"
-	"github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/placement"
-	cidSDK "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	netmapSDK "github.com/nspcc-dev/neofs-sdk-go/netmap"
 )
 
 type containerCache struct {

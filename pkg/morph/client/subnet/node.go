@@ -3,7 +3,7 @@ package morphsubnet
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
 // NodeAllowedPrm groups parameters of NodeAllowed method of Subnet contract.

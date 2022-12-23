@@ -3,7 +3,7 @@ package netmap
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
 // NewEpoch updates NeoFS epoch number through

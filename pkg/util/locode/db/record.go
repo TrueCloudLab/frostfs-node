@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
-	locodecolumn "github.com/nspcc-dev/neofs-node/pkg/util/locode/column"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
+	locodecolumn "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/column"
 )
 
 // Key represents the key in NeoFS location database.

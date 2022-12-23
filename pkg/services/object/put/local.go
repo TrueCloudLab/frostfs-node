@@ -3,10 +3,10 @@ package putsvc
 import (
 	"fmt"
 
-	objectCore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/transformer"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	objectCore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/transformer"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 // ObjectStorage is an object storage interface.

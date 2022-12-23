@@ -3,7 +3,7 @@ package deletesvc
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
 	"go.uber.org/zap"
 )
 

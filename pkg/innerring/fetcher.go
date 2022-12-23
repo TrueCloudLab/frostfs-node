@@ -1,9 +1,9 @@
 package innerring
 
 import (
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
 )
 
 // NewIRFetcherWithNotary creates IrFetcherWithNotary.

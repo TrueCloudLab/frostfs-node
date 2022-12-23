@@ -1,8 +1,8 @@
 package engine
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	"go.uber.org/zap"
 )
 

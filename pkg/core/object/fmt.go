@@ -6,15 +6,15 @@ import (
 	"fmt"
 	"strconv"
 
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	neofsecdsa "github.com/nspcc-dev/neofs-sdk-go/crypto/ecdsa"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	"github.com/nspcc-dev/neofs-sdk-go/storagegroup"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/storagegroup"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 // FormatValidator represents an object format validator.
@@ -140,7 +140,7 @@ func (v *FormatValidator) validateSignatureKey(obj *object.Object) error {
 
 	binKey := sigV2.GetKey()
 
-	var key neofsecdsa.PublicKey
+	var key frostfsecdsa.PublicKey
 
 	err := key.Decode(binKey)
 	if err != nil {
@@ -158,7 +158,7 @@ func (v *FormatValidator) validateSignatureKey(obj *object.Object) error {
 	return nil
 }
 
-func (v *FormatValidator) checkOwnerKey(id user.ID, key neofsecdsa.PublicKey) error {
+func (v *FormatValidator) checkOwnerKey(id user.ID, key frostfsecdsa.PublicKey) error {
 	var id2 user.ID
 	user.IDFromKey(&id2, (ecdsa.PublicKey)(key))
 

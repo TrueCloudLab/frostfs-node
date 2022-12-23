@@ -4,19 +4,19 @@ import (
 	"context"
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-api-go/v2/container"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	containerCore "github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	containerSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/container"
+	containerSvcMorph "github.com/TrueCloudLab/frostfs-node/pkg/services/container/morph"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
+	containertest "github.com/TrueCloudLab/frostfs-sdk-go/container/test"
+	frostfscrypto "github.com/TrueCloudLab/frostfs-sdk-go/crypto"
+	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
+	sessiontest "github.com/TrueCloudLab/frostfs-sdk-go/session/test"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-api-go/v2/container"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
-	containerCore "github.com/nspcc-dev/neofs-node/pkg/core/container"
-	containerSvc "github.com/nspcc-dev/neofs-node/pkg/services/container"
-	containerSvcMorph "github.com/nspcc-dev/neofs-node/pkg/services/container/morph"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
-	containertest "github.com/nspcc-dev/neofs-sdk-go/container/test"
-	neofscrypto "github.com/nspcc-dev/neofs-sdk-go/crypto"
-	neofsecdsa "github.com/nspcc-dev/neofs-sdk-go/crypto/ecdsa"
-	sessiontest "github.com/nspcc-dev/neofs-sdk-go/session/test"
 	"github.com/stretchr/testify/require"
 )
 
@@ -52,8 +52,8 @@ func TestInvalidToken(t *testing.T) {
 		StableMarshal([]byte) []byte
 		SetSignature(signature *refs.Signature)
 	}) {
-		signer := neofsecdsa.Signer(priv.PrivateKey)
-		var sig neofscrypto.Signature
+		signer := frostfsecdsa.Signer(priv.PrivateKey)
+		var sig frostfscrypto.Signature
 		require.NoError(t, sig.Calculate(signer, reqBody.StableMarshal(nil)))
 
 		var sigV2 refs.Signature

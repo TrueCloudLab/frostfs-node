@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation"
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation/eigentrust"
-	eigentrustcalc "github.com/nspcc-dev/neofs-node/pkg/services/reputation/eigentrust/calculator"
-	apireputation "github.com/nspcc-dev/neofs-sdk-go/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/eigentrust"
+	eigentrustcalc "github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/eigentrust/calculator"
+	apireputation "github.com/TrueCloudLab/frostfs-sdk-go/reputation"
 )
 
 // Put saves intermediate trust of the consumer to daughter peer.

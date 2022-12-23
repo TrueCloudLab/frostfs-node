@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobovnicza"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobovnicza"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"go.uber.org/zap"
 )
 

@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/blobovniczatree"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/fstree"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/control"
 	"github.com/google/uuid"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/blobovniczatree"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/fstree"
-	"github.com/nspcc-dev/neofs-node/pkg/services/control"
 )
 
 func TestNetmap_StableMarshal(t *testing.T) {

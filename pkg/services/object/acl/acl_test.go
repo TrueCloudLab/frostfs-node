@@ -3,14 +3,14 @@ package acl
 import (
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
-	v2 "github.com/nspcc-dev/neofs-node/pkg/services/object/acl/v2"
-	"github.com/nspcc-dev/neofs-sdk-go/container/acl"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	eaclSDK "github.com/nspcc-dev/neofs-sdk-go/eacl"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
-	usertest "github.com/nspcc-dev/neofs-sdk-go/user/test"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
+	v2 "github.com/TrueCloudLab/frostfs-node/pkg/services/object/acl/v2"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container/acl"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	eaclSDK "github.com/TrueCloudLab/frostfs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
+	usertest "github.com/TrueCloudLab/frostfs-sdk-go/user/test"
 	"github.com/stretchr/testify/require"
 )
 

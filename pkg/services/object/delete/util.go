@@ -3,11 +3,11 @@ package deletesvc
 import (
 	"errors"
 
-	getsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/get"
-	putsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/put"
-	searchsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/search"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	getsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/get"
+	putsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/put"
+	searchsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/search"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 type headSvcWrapper getsvc.Service

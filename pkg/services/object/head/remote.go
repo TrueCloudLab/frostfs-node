@@ -5,13 +5,13 @@ import (
 	"errors"
 	"fmt"
 
-	clientcore "github.com/nspcc-dev/neofs-node/pkg/core/client"
-	netmapCore "github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	internalclient "github.com/nspcc-dev/neofs-node/pkg/services/object/internal/client"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	clientcore "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	netmapCore "github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	internalclient "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 type ClientConstructor interface {

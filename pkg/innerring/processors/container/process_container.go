@@ -3,15 +3,15 @@ package container
 import (
 	"fmt"
 
+	cntClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
+	morphsubnet "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/subnet"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	containerEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/container"
+	containerSDK "github.com/TrueCloudLab/frostfs-sdk-go/container"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/session"
+	subnetid "github.com/TrueCloudLab/frostfs-sdk-go/subnet/id"
 	"github.com/nspcc-dev/neo-go/pkg/network/payload"
-	cntClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
-	morphsubnet "github.com/nspcc-dev/neofs-node/pkg/morph/client/subnet"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	containerEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/container"
-	containerSDK "github.com/nspcc-dev/neofs-sdk-go/container"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	"github.com/nspcc-dev/neofs-sdk-go/session"
-	subnetid "github.com/nspcc-dev/neofs-sdk-go/subnet/id"
 	"go.uber.org/zap"
 )
 

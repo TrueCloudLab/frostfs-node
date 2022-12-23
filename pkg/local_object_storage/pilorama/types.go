@@ -3,7 +3,7 @@ package pilorama
 import (
 	"math"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
 )
 
 // Timestamp is an alias for integer timestamp type.

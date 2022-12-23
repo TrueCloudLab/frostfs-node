@@ -3,7 +3,7 @@ package eigentrust
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation"
 )
 
 type EpochIteration struct {

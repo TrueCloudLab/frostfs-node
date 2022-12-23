@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 )
 
 // AddressGroup represents list of network addresses of the node.

@@ -1,7 +1,7 @@
 package v2
 
 import (
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 // ACLChecker is an interface that must provide

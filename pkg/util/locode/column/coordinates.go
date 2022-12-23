@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
 )
 
 const (

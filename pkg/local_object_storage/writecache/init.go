@@ -3,11 +3,11 @@ package writecache
 import (
 	"errors"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	storagelog "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/internal/log"
-	meta "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/metabase"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	storagelog "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/internal/log"
+	meta "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/metabase"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
 	"go.uber.org/zap"
 )

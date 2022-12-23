@@ -1,0 +1,38 @@
+package writecache
+
+import (
+	"fmt"
+	"io"
+
+	common "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-lens/internal"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/writecache"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	"github.com/spf13/cobra"
+)
+
+var listCMD = &cobra.Command{
+	Use:   "inspect",
+	Short: "Object inspection",
+	Long:  `Inspect specific object in a write-cache.`,
+	Run:   listFunc,
+}
+
+func init() {
+	common.AddComponentPathFlag(listCMD, &vPath)
+}
+
+func listFunc(cmd *cobra.Command, _ []string) {
+	// other targets can be supported
+	w := cmd.OutOrStderr()
+
+	wAddr := func(addr oid.Address) error {
+		_, err := io.WriteString(w, fmt.Sprintf("%s\n", addr))
+		return err
+	}
+
+	db := openWC(cmd)
+	defer db.Close()
+
+	err := writecache.IterateDB(db, wAddr)
+	common.ExitOnErr(cmd, common.Errf("write-cache iterator failure: %w", err))
+}

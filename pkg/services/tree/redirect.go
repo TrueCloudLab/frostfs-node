@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 
-	netmapSDK "github.com/nspcc-dev/neofs-sdk-go/netmap"
+	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"go.uber.org/zap"
 )
 

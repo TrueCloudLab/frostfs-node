@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/internal/storagetest"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/internal/storagetest"
 )
 
 func TestGeneric(t *testing.T) {

@@ -4,14 +4,14 @@ import (
 	"context"
 	"fmt"
 
-	clientcore "github.com/nspcc-dev/neofs-node/pkg/core/client"
-	netmapCore "github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	objectcore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	internalclient "github.com/nspcc-dev/neofs-node/pkg/services/object/internal/client"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/transformer"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	clientcore "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	netmapCore "github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	objectcore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	internalclient "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/transformer"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
 
 type remoteTarget struct {

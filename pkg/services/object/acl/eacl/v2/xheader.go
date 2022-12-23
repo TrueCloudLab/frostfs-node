@@ -1,8 +1,8 @@
 package v2
 
 import (
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
-	eaclSDK "github.com/nspcc-dev/neofs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	eaclSDK "github.com/TrueCloudLab/frostfs-sdk-go/eacl"
 )
 
 type xHeaderSource interface {

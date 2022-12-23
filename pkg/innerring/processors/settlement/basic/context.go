@@ -4,11 +4,11 @@ import (
 	"math/big"
 	"sync"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement/common"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 )
 
 type (

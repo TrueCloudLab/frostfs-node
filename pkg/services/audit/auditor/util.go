@@ -1,7 +1,7 @@
 package auditor
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/util/rand"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/rand"
 )
 
 // nextRandUint64 returns random uint64 number [0; n) outside exclude map.

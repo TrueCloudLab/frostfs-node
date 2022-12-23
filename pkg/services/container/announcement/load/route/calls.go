@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"sync"
 
-	loadcontroller "github.com/nspcc-dev/neofs-node/pkg/services/container/announcement/load/controller"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
+	loadcontroller "github.com/TrueCloudLab/frostfs-node/pkg/services/container/announcement/load/controller"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
 	"go.uber.org/zap"
 )
 

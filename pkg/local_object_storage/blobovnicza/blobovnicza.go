@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.etcd.io/bbolt"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"

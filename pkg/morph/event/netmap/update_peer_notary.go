@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/vm/opcode"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 )
 
 var errNilPubKey = errors.New("could not parse public key: public key is nil")

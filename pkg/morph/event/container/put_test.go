@@ -4,9 +4,9 @@ import (
 	"crypto/sha256"
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
 	"github.com/stretchr/testify/require"
 )
 

@@ -3,9 +3,9 @@ package eigentrustcalc
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation"
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation/common"
-	"github.com/nspcc-dev/neofs-node/pkg/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
 )
 
 // Prm groups the required parameters of the Calculator's constructor.

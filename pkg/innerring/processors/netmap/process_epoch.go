@@ -1,11 +1,11 @@
 package netmap
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/audit"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/governance"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement"
-	cntClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
-	netmapEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/governance"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement"
+	cntClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
+	netmapEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/netmap"
 	"go.uber.org/zap"
 )
 

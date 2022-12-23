@@ -4,12 +4,12 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-sdk-go/user"
-	usertest "github.com/nspcc-dev/neofs-sdk-go/user/test"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
+	usertest "github.com/TrueCloudLab/frostfs-sdk-go/user/test"
 	"github.com/stretchr/testify/require"
 
-	"github.com/nspcc-dev/neofs-sdk-go/subnet"
-	subnetid "github.com/nspcc-dev/neofs-sdk-go/subnet/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/subnet"
+	subnetid "github.com/TrueCloudLab/frostfs-sdk-go/subnet/id"
 )
 
 type put struct {

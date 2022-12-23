@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"testing"
 
-	objectCore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
+	objectCore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
 	"github.com/stretchr/testify/require"
 )
 

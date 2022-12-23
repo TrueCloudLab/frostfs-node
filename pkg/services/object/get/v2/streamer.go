@@ -1,9 +1,9 @@
 package getsvc
 
 import (
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	objectSvc "github.com/nspcc-dev/neofs-node/pkg/services/object"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	objectSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
 
 type streamObjectWriter struct {

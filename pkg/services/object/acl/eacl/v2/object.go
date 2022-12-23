@@ -3,11 +3,11 @@ package v2
 import (
 	"strconv"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/acl"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	eaclSDK "github.com/nspcc-dev/neofs-sdk-go/eacl"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/acl"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	eaclSDK "github.com/TrueCloudLab/frostfs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 type sysObjHdr struct {

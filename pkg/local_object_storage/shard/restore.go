@@ -7,8 +7,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
 
 // ErrInvalidMagic is returned when dump format is invalid.

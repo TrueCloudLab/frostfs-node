@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-sdk-go/container"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
 	"github.com/stretchr/testify/require"
 )
 

@@ -3,7 +3,7 @@ package container
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
 // StartEstimationPrm groups parameters of StartEstimation operation.

@@ -3,8 +3,8 @@ package getsvc
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"go.uber.org/zap"
 )
 

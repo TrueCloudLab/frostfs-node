@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/client"
 	"go.uber.org/zap"
 )
 

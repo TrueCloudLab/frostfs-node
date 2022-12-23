@@ -1,0 +1,95 @@
+package container
+
+import (
+	"fmt"
+	"time"
+
+	internalclient "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/internal/client"
+	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/internal/common"
+	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/internal/commonflags"
+	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/internal/key"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	"github.com/spf13/cobra"
+)
+
+var deleteContainerCmd = &cobra.Command{
+	Use:   "delete",
+	Short: "Delete existing container",
+	Long: `Delete existing container. 
+Only owner of the container has a permission to remove container.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		id := parseContainerID(cmd)
+
+		tok := getSession(cmd)
+
+		pk := key.Get(cmd)
+		cli := internalclient.GetSDKClientByFlag(cmd, pk, commonflags.RPC)
+
+		if force, _ := cmd.Flags().GetBool(commonflags.ForceFlag); !force {
+			fs := objectSDK.NewSearchFilters()
+			fs.AddTypeFilter(objectSDK.MatchStringEqual, objectSDK.TypeLock)
+
+			var searchPrm internalclient.SearchObjectsPrm
+			searchPrm.SetClient(cli)
+			searchPrm.SetContainerID(id)
+			searchPrm.SetFilters(fs)
+			searchPrm.SetTTL(2)
+
+			common.PrintVerbose("Searching for LOCK objects...")
+
+			res, err := internalclient.SearchObjects(searchPrm)
+			common.ExitOnErr(cmd, "can't search for LOCK objects: %w", err)
+
+			if len(res.IDList()) != 0 {
+				common.ExitOnErr(cmd, "",
+					fmt.Errorf("Container wasn't removed because LOCK objects were found.\n"+
+						"Use --%s flag to remove anyway.", commonflags.ForceFlag))
+			}
+		}
+
+		var delPrm internalclient.DeleteContainerPrm
+		delPrm.SetClient(cli)
+		delPrm.SetContainer(id)
+
+		if tok != nil {
+			delPrm.WithinSession(*tok)
+		}
+
+		_, err := internalclient.DeleteContainer(delPrm)
+		common.ExitOnErr(cmd, "rpc error: %w", err)
+
+		cmd.Println("container delete method invoked")
+
+		if containerAwait {
+			cmd.Println("awaiting...")
+
+			var getPrm internalclient.GetContainerPrm
+			getPrm.SetClient(cli)
+			getPrm.SetContainer(id)
+
+			for i := 0; i < awaitTimeout; i++ {
+				time.Sleep(1 * time.Second)
+
+				_, err := internalclient.GetContainer(getPrm)
+				if err != nil {
+					cmd.Println("container has been removed:", containerID)
+					return
+				}
+			}
+
+			common.ExitOnErr(cmd, "", errDeleteTimeout)
+		}
+	},
+}
+
+func initContainerDeleteCmd() {
+	flags := deleteContainerCmd.Flags()
+
+	flags.StringP(commonflags.WalletPath, commonflags.WalletPathShorthand, commonflags.WalletPathDefault, commonflags.WalletPathUsage)
+	flags.StringP(commonflags.Account, commonflags.AccountShorthand, commonflags.AccountDefault, commonflags.AccountUsage)
+	flags.StringP(commonflags.RPC, commonflags.RPCShorthand, commonflags.RPCDefault, commonflags.RPCUsage)
+
+	flags.StringVar(&containerID, commonflags.CIDFlag, "", commonflags.CIDFlagUsage)
+	flags.BoolVar(&containerAwait, "await", false, "Block execution until container is removed")
+	flags.BoolP(commonflags.ForceFlag, commonflags.ForceFlagShorthand, false, "Do not check whether container contains locks and remove immediately")
+}

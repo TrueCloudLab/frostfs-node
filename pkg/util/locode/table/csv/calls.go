@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
-	locodedb "github.com/nspcc-dev/neofs-node/pkg/util/locode/db"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
+	locodedb "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/db"
 )
 
 var errInvalidRecord = errors.New("invalid table record")

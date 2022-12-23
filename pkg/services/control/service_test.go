@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/control"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/control"
 )
 
 func TestHealthCheckResponse_Body_StableMarshal(t *testing.T) {

@@ -4,7 +4,7 @@ global:
     monitor: 'user_metrics'
 
 scrape_configs:
-  - job_name: 'neofs-node-user'
+  - job_name: 'frostfs-node-user'
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9090']

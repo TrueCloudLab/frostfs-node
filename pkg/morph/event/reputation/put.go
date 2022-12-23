@@ -3,11 +3,11 @@ package reputation
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-sdk-go/reputation"
 	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/network/payload"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	"github.com/nspcc-dev/neofs-sdk-go/reputation"
 )
 
 // Put structure of reputation.reputationPut notification from

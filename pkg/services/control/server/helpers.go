@@ -1,6 +1,6 @@
 package control
 
-import "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
+import "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
 
 func (s *Server) getShardIDList(raw [][]byte) []*shard.ID {
 	if len(raw) != 0 {

@@ -6,18 +6,18 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
+	eaclV2 "github.com/TrueCloudLab/frostfs-node/pkg/services/object/acl/eacl/v2"
+	v2 "github.com/TrueCloudLab/frostfs-node/pkg/services/object/acl/v2"
+	bearerSDK "github.com/TrueCloudLab/frostfs-sdk-go/bearer"
+	"github.com/TrueCloudLab/frostfs-sdk-go/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container/acl"
+	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
+	eaclSDK "github.com/TrueCloudLab/frostfs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
-	eaclV2 "github.com/nspcc-dev/neofs-node/pkg/services/object/acl/eacl/v2"
-	v2 "github.com/nspcc-dev/neofs-node/pkg/services/object/acl/v2"
-	bearerSDK "github.com/nspcc-dev/neofs-sdk-go/bearer"
-	"github.com/nspcc-dev/neofs-sdk-go/client"
-	"github.com/nspcc-dev/neofs-sdk-go/container/acl"
-	neofsecdsa "github.com/nspcc-dev/neofs-sdk-go/crypto/ecdsa"
-	eaclSDK "github.com/nspcc-dev/neofs-sdk-go/eacl"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 )
 
 // CheckerPrm groups parameters for Checker
@@ -234,12 +234,12 @@ func isValidBearer(reqInfo v2.RequestInfo, st netmap.State) error {
 
 	// 4. Then check if container owner signed this token.
 	if !bearerSDK.ResolveIssuer(*token).Equals(ownerCnr) {
-		// TODO: #767 in this case we can issue all owner keys from neofs.id and check once again
+		// TODO: #767 in this case we can issue all owner keys from frostfs.id and check once again
 		return errBearerNotSignedByOwner
 	}
 
 	// 5. Then check if request sender has rights to use this token.
-	var keySender neofsecdsa.PublicKey
+	var keySender frostfsecdsa.PublicKey
 
 	err := keySender.Decode(reqInfo.SenderKey())
 	if err != nil {
@@ -250,7 +250,7 @@ func isValidBearer(reqInfo v2.RequestInfo, st netmap.State) error {
 	user.IDFromKey(&usrSender, ecdsa.PublicKey(keySender))
 
 	if !token.AssertUser(usrSender) {
-		// TODO: #767 in this case we can issue all owner keys from neofs.id and check once again
+		// TODO: #767 in this case we can issue all owner keys from frostfs.id and check once again
 		return errBearerInvalidOwner
 	}
 

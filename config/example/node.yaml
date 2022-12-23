@@ -18,8 +18,8 @@ node:
     address: "NcpJzXcSDrh5CCizf4K9Ro6w4t59J5LKzz"  # address of a NEO account in the wallet; ignored if key is presented
     password: "password"  # password for a NEO account in the wallet; ignored if key is presented
   addresses:  # list of addresses announced by Storage node in the Network map
-    - s01.neofs.devenv:8080
-    - /dns4/s02.neofs.devenv/tcp/8081
+    - s01.frostfs.devenv:8080
+    - /dns4/s02.frostfs.devenv/tcp/8081
     - grpc://127.0.0.1:8082
     - grpcs://localhost:8083
   attribute_0: "Price:11"
@@ -45,16 +45,16 @@ node:
     ca: "/ca/path"  # path to optional CA certificate
 
 grpc:
-  - endpoint: s01.neofs.devenv:8080  # endpoint for gRPC server
+  - endpoint: s01.frostfs.devenv:8080  # endpoint for gRPC server
     tls:
       enabled: true  # use TLS for a gRPC connection (min version is TLS 1.2)
       certificate: /path/to/cert  # path to TLS certificate
       key: /path/to/key  # path to TLS key
 
-  - endpoint: s02.neofs.devenv:8080  # endpoint for gRPC server
+  - endpoint: s02.frostfs.devenv:8080  # endpoint for gRPC server
     tls:
       enabled: false  # use TLS for a gRPC connection
-  - endpoint: s03.neofs.devenv:8080
+  - endpoint: s03.frostfs.devenv:8080
     tls:
       enabled: true
       use_insecure_crypto: true # allow using insecure ciphers with TLS 1.2

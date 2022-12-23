@@ -3,7 +3,7 @@ package control
 import (
 	"context"
 
-	control "github.com/nspcc-dev/neofs-node/pkg/services/control/ir"
+	control "github.com/TrueCloudLab/frostfs-node/pkg/services/control/ir"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

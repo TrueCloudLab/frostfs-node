@@ -1,7 +1,7 @@
 package engine
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
 )
 
 // FlushWriteCachePrm groups the parameters of FlushWriteCache operation.

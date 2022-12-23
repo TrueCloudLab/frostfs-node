@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	auditAPI "github.com/TrueCloudLab/frostfs-sdk-go/audit"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	auditAPI "github.com/nspcc-dev/neofs-sdk-go/audit"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
 	"github.com/stretchr/testify/require"
 )
 
@@ -16,7 +16,7 @@ func TestAuditResults(t *testing.T) {
 	t.Skip()
 	const epoch = 11
 
-	endpoint := "http://morph_chain.neofs.devenv:30333"
+	endpoint := "http://morph_chain.frostfs.devenv:30333"
 	sAuditHash := "cdfb3dab86e6d60e8a143d9e2ecb0b188f3dc2eb"
 	irKeyWIF := "L3o221BojgcCPYgdbXsm6jn7ayTZ72xwREvBHXKknR8VJ3G4WmjB"
 

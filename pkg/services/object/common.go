@@ -3,8 +3,8 @@ package object
 import (
 	"context"
 
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
 )
 
 // NodeState is storage node state processed by Object service.

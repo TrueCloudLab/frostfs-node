@@ -3,9 +3,9 @@ package v2
 import (
 	"io"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 type localStorage struct {

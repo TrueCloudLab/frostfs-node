@@ -48,7 +48,7 @@ func TestAddress_HostAddrString(t *testing.T) {
 			ma  multiaddr.Multiaddr
 			exp string
 		}{
-			{buildMultiaddr("/dns4/neofs.bigcorp.com/tcp/8080", t), "neofs.bigcorp.com:8080"},
+			{buildMultiaddr("/dns4/frostfs.bigcorp.com/tcp/8080", t), "frostfs.bigcorp.com:8080"},
 			{buildMultiaddr("/ip4/172.16.14.1/tcp/8080", t), "172.16.14.1:8080"},
 			{buildMultiaddr("/ip4/192.168.0.1/tcp/8888/tls", t), "grpcs://192.168.0.1:8888"},
 		}

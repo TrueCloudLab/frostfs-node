@@ -3,9 +3,9 @@ package blobstortest
 import (
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	oidtest "github.com/nspcc-dev/neofs-sdk-go/object/id/test"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
 	"github.com/stretchr/testify/require"
 )
 

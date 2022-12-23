@@ -4,11 +4,11 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-sdk-go/reputation"
+	reputationtest "github.com/TrueCloudLab/frostfs-sdk-go/reputation/test"
 	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	"github.com/nspcc-dev/neofs-sdk-go/reputation"
-	reputationtest "github.com/nspcc-dev/neofs-sdk-go/reputation/test"
 	"github.com/stretchr/testify/require"
 )
 

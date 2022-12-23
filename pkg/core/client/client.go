@@ -3,9 +3,9 @@ package client
 import (
 	"context"
 
-	rawclient "github.com/nspcc-dev/neofs-api-go/v2/rpc/client"
-	"github.com/nspcc-dev/neofs-node/pkg/network"
-	"github.com/nspcc-dev/neofs-sdk-go/client"
+	rawclient "github.com/TrueCloudLab/frostfs-api-go/v2/rpc/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/network"
+	"github.com/TrueCloudLab/frostfs-sdk-go/client"
 )
 
 // Client is an interface of NeoFS storage

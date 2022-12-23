@@ -4,7 +4,7 @@ SHELL = bash
 REPO ?= $(shell go list -m)
 VERSION ?= $(shell git describe --tags --dirty --match "v*" --always --abbrev=8 2>/dev/null || cat VERSION 2>/dev/null || echo "develop")
 
-HUB_IMAGE ?= nspccdev/neofs
+HUB_IMAGE ?= truecloudlab/frostfs
 HUB_TAG ?= "$(shell echo ${VERSION} | sed 's/^v//')"
 
 GO_VERSION ?= 1.17
@@ -29,7 +29,7 @@ PKG_VERSION ?= $(shell echo $(VERSION) | sed "s/^v//" | \
 		prepare-release debpackage
 
 # To build a specific binary, use it's name prefix with bin/ as a target
-# For example `make bin/neofs-node` will build only storage node binary
+# For example `make bin/frostfs-node` will build only storage node binary
 # Just `make` will build all possible binaries
 all: $(DIRS) $(BINS)
 
@@ -50,7 +50,7 @@ $(DIRS):
 # Prepare binaries and archives for release
 .ONESHELL:
 prepare-release: docker/all
-	@for file in `ls -1 $(BIN)/neofs-*`; do
+	@for file in `ls -1 $(BIN)/frostfs-*`; do
 		cp $$file $(RELEASE)/`basename $$file`-$(ARCH)
 		strip $(RELEASE)/`basename $$file`-$(ARCH)
 		tar -czf $(RELEASE)/`basename $$file`-$(ARCH).tar.gz $(RELEASE)/`basename $$file`-$(ARCH)
@@ -67,17 +67,17 @@ dep:
 
 # Regenerate proto files:
 protoc:
-	@GOPRIVATE=github.com/nspcc-dev go mod vendor
+	@GOPRIVATE=github.com/TrueCloudLab go mod vendor
 	# Install specific version for protobuf lib
 	@go list -f '{{.Path}}/...@{{.Version}}' -m  github.com/golang/protobuf | xargs go install -v
-	@GOBIN=$(abspath $(BIN)) go install -mod=mod -v github.com/nspcc-dev/neofs-api-go/v2/util/protogen
+	@GOBIN=$(abspath $(BIN)) go install -mod=mod -v github.com/TrueCloudLab/frostfs-api-go/v2/util/protogen
 	# Protoc generate
 	@for f in `find . -type f -name '*.proto' -not -path './vendor/*'`; do \
 		echo "⇒ Processing $$f "; \
 		protoc \
 			--proto_path=.:./vendor:/usr/local/include \
-			--plugin=protoc-gen-go-neofs=$(BIN)/protogen \
-			--go-neofs_out=. --go-neofs_opt=paths=source_relative \
+			--plugin=protoc-gen-go-frostfs=$(BIN)/protogen \
+			--go-frostfs_out=. --go-frostfs_opt=paths=source_relative \
 			--go_out=. --go_opt=paths=source_relative \
 			--go-grpc_opt=require_unimplemented_servers=false \
 			--go-grpc_out=. --go-grpc_opt=paths=source_relative $$f; \
@@ -152,7 +152,7 @@ clean:
 
 # Package for Debian
 debpackage:
-	dch --package neofs-node \
+	dch --package frostfs-node \
 			--controlmaint \
 			--newversion $(PKG_VERSION) \
 			--distribution $(OS_RELEASE) \

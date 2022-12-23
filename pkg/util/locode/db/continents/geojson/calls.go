@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	locodedb "github.com/nspcc-dev/neofs-node/pkg/util/locode/db"
+	locodedb "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/db"
 	"github.com/paulmach/orb"
 	"github.com/paulmach/orb/geojson"
 	"github.com/paulmach/orb/planar"

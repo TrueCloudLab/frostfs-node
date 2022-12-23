@@ -4,8 +4,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard/mode"
-	cidSDK "github.com/nspcc-dev/neofs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard/mode"
+	cidSDK "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 )
 
 // memoryForest represents multiple replicating trees sharing a single storage.

@@ -4,10 +4,10 @@ import (
 	"math/rand"
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"github.com/google/uuid"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
 	"github.com/stretchr/testify/require"
 )
 

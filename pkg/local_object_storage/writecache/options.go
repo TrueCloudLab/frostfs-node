@@ -3,11 +3,11 @@ package writecache
 import (
 	"time"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	meta "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/metabase"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	meta "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/metabase"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"go.uber.org/zap"
 )
 

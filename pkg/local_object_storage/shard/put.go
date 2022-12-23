@@ -3,10 +3,10 @@ package shard
 import (
 	"fmt"
 
-	objectCore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	meta "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/metabase"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	objectCore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	meta "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/metabase"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"go.uber.org/zap"
 )
 

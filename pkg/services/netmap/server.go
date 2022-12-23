@@ -3,7 +3,7 @@ package netmap
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/netmap"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/netmap"
 )
 
 // Server is an interface of the NeoFS API Netmap service server.

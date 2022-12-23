@@ -3,7 +3,7 @@ package session
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
 )
 
 // Server is an interface of the NeoFS API Session service server.

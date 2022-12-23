@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util"
-	locodedb "github.com/nspcc-dev/neofs-node/pkg/util/locode/db"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
+	locodedb "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/db"
 	"go.etcd.io/bbolt"
 )
 

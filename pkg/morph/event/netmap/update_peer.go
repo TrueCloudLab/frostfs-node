@@ -4,12 +4,12 @@ import (
 	"crypto/elliptic"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-contract/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/network/payload"
-	"github.com/nspcc-dev/neofs-contract/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 )
 
 type UpdatePeer struct {

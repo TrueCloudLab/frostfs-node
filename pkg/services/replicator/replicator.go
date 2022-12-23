@@ -3,9 +3,9 @@ package replicator
 import (
 	"time"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
-	putsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/put"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
+	putsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/put"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
 

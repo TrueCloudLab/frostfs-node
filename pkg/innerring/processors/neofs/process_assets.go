@@ -1,9 +1,9 @@
-package neofs
+package frostfs
 
 import (
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
+	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/balance"
-	neofsEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/neofs"
 	"go.uber.org/zap"
 )
 
@@ -14,7 +14,7 @@ const (
 
 // Process deposit event by invoking a balance contract and sending native
 // gas in the sidechain.
-func (np *Processor) processDeposit(deposit *neofsEvent.Deposit) {
+func (np *Processor) processDeposit(deposit *frostfsEvent.Deposit) {
 	if !np.alphabetState.IsAlphabet() {
 		np.log.Info("non alphabet mode, ignore deposit")
 		return
@@ -79,7 +79,7 @@ func (np *Processor) processDeposit(deposit *neofsEvent.Deposit) {
 }
 
 // Process withdraw event by locking assets in the balance account.
-func (np *Processor) processWithdraw(withdraw *neofsEvent.Withdraw) {
+func (np *Processor) processWithdraw(withdraw *frostfsEvent.Withdraw) {
 	if !np.alphabetState.IsAlphabet() {
 		np.log.Info("non alphabet mode, ignore withdraw")
 		return
@@ -110,7 +110,7 @@ func (np *Processor) processWithdraw(withdraw *neofsEvent.Withdraw) {
 
 // Process cheque event by transferring assets from the lock account back to
 // the reserve account.
-func (np *Processor) processCheque(cheque *neofsEvent.Cheque) {
+func (np *Processor) processCheque(cheque *frostfsEvent.Cheque) {
 	if !np.alphabetState.IsAlphabet() {
 		np.log.Info("non alphabet mode, ignore cheque")
 		return

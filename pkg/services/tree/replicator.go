@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/pilorama"
-	cidSDK "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	netmapSDK "github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/pilorama"
+	cidSDK "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"go.uber.org/zap"
 )
 

@@ -1,7 +1,7 @@
 package settlement
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement/basic"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement/basic"
 )
 
 // AuditProcessor is an interface of data audit fee processor.

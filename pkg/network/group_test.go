@@ -9,8 +9,8 @@ import (
 
 func TestAddressGroup_FromStringSlice(t *testing.T) {
 	addrs := []string{
-		"/dns4/node1.neofs/tcp/8080",
-		"/dns4/node2.neofs/tcp/1234/tls",
+		"/dns4/node1.frostfs/tcp/8080",
+		"/dns4/node2.frostfs/tcp/1234/tls",
 	}
 	expected := make(AddressGroup, len(addrs))
 	for i := range addrs {
@@ -33,8 +33,8 @@ func TestAddressGroup_FromStringSlice(t *testing.T) {
 
 func TestAddressGroup_FromIterator(t *testing.T) {
 	addrs := testIterator{
-		"/dns4/node1.neofs/tcp/8080",
-		"/dns4/node2.neofs/tcp/1234/tls",
+		"/dns4/node1.frostfs/tcp/8080",
+		"/dns4/node2.frostfs/tcp/1234/tls",
 	}
 	expected := make(AddressGroup, len(addrs))
 	for i := range addrs {

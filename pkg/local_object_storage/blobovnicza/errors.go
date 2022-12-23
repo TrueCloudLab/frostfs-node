@@ -3,7 +3,7 @@ package blobovnicza
 import (
 	"errors"
 
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
 )
 
 // IsErrNotFound checks if the error returned by Blobovnicza Get/Delete method

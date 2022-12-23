@@ -1,8 +1,8 @@
 package morphsubnet
 
 import (
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
 )
 
 // PutPrm groups parameters of Put method of Subnet contract.

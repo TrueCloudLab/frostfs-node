@@ -6,14 +6,14 @@ import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/acl"
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
-	bearertest "github.com/nspcc-dev/neofs-sdk-go/bearer/test"
-	aclsdk "github.com/nspcc-dev/neofs-sdk-go/container/acl"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
-	oidtest "github.com/nspcc-dev/neofs-sdk-go/object/id/test"
-	sessionSDK "github.com/nspcc-dev/neofs-sdk-go/session"
-	sessiontest "github.com/nspcc-dev/neofs-sdk-go/session/test"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/acl"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	bearertest "github.com/TrueCloudLab/frostfs-sdk-go/bearer/test"
+	aclsdk "github.com/TrueCloudLab/frostfs-sdk-go/container/acl"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
+	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
+	sessionSDK "github.com/TrueCloudLab/frostfs-sdk-go/session"
+	sessiontest "github.com/TrueCloudLab/frostfs-sdk-go/session/test"
 	"github.com/stretchr/testify/require"
 )
 
@@ -60,7 +60,7 @@ func testGenerateMetaHeader(depth uint32, b *acl.BearerToken, s *session.Token) 
 }
 
 func TestIsVerbCompatible(t *testing.T) {
-	// Source: https://nspcc.ru/upload/neofs-spec-latest.pdf#page=28
+	// Source: https://nspcc.ru/upload/frostfs-spec-latest.pdf#page=28
 	table := map[aclsdk.Op][]sessionSDK.ObjectVerb{
 		aclsdk.OpObjectPut:    {sessionSDK.VerbObjectPut, sessionSDK.VerbObjectDelete},
 		aclsdk.OpObjectDelete: {sessionSDK.VerbObjectDelete},

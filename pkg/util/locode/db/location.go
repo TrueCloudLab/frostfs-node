@@ -3,7 +3,7 @@ package locodedb
 import (
 	"fmt"
 
-	locodecolumn "github.com/nspcc-dev/neofs-node/pkg/util/locode/column"
+	locodecolumn "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/column"
 )
 
 // LocationCode represents a location code for

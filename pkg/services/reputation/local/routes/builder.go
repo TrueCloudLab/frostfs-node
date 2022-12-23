@@ -3,8 +3,8 @@ package routes
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation/common"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 )
 
 // Prm groups the required parameters of the Builder's constructor.

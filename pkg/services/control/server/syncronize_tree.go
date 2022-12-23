@@ -3,8 +3,8 @@ package control
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/control"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/control"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

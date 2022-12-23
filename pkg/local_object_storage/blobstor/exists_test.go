@@ -5,16 +5,16 @@ import (
 	"path/filepath"
 	"testing"
 
-	objectCore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	oidtest "github.com/nspcc-dev/neofs-sdk-go/object/id/test"
+	objectCore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
 	"github.com/stretchr/testify/require"
 )
 
 func TestExists(t *testing.T) {
-	dir, err := os.MkdirTemp("", "neofs*")
+	dir, err := os.MkdirTemp("", "frostfs*")
 	require.NoError(t, err)
 	t.Cleanup(func() { _ = os.RemoveAll(dir) })
 

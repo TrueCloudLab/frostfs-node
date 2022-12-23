@@ -1,0 +1,38 @@
+package meta
+
+import (
+	common "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-lens/internal"
+	meta "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/metabase"
+	"github.com/spf13/cobra"
+)
+
+var listGraveyardCMD = &cobra.Command{
+	Use:   "list-graveyard",
+	Short: "Graveyard listing",
+	Long:  `List all the objects that have been covered with a Tomb Stone.`,
+	Run:   listGraveyardFunc,
+}
+
+func init() {
+	common.AddComponentPathFlag(listGraveyardCMD, &vPath)
+}
+
+func listGraveyardFunc(cmd *cobra.Command, _ []string) {
+	db := openMeta(cmd)
+	defer db.Close()
+
+	var gravePrm meta.GraveyardIterationPrm
+	gravePrm.SetHandler(
+		func(tsObj meta.TombstonedObject) error {
+			cmd.Printf(
+				"Object: %s\nTS: %s\n",
+				tsObj.Address().EncodeToString(),
+				tsObj.Tombstone().EncodeToString(),
+			)
+
+			return nil
+		})
+
+	err := db.IterateOverGraveyard(gravePrm)
+	common.ExitOnErr(cmd, common.Errf("could not iterate over graveyard bucket: %w", err))
+}

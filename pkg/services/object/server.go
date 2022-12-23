@@ -3,8 +3,8 @@ package object
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-node/pkg/services/util"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 )
 
 // GetObjectStream is an interface of NeoFS API v2 compatible object streamer.

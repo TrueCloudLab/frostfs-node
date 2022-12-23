@@ -3,10 +3,10 @@ package blobovniczatree
 import (
 	"path/filepath"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobovnicza"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobovnicza"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
 	"go.uber.org/zap"
 )
 

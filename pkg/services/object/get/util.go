@@ -5,13 +5,13 @@ import (
 	"errors"
 	"io"
 
-	coreclient "github.com/nspcc-dev/neofs-node/pkg/core/client"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
-	internal "github.com/nspcc-dev/neofs-node/pkg/services/object/internal/client"
-	internalclient "github.com/nspcc-dev/neofs-node/pkg/services/object/internal/client"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	coreclient "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
+	internal "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
+	internalclient "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
 
 type SimpleObjectWriter struct {

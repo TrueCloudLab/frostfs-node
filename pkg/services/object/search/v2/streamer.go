@@ -1,10 +1,10 @@
 package searchsvc
 
 import (
-	"github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	objectSvc "github.com/nspcc-dev/neofs-node/pkg/services/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	objectSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 type streamWriter struct {

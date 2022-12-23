@@ -3,12 +3,12 @@ package engine
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard/mode"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	"github.com/TrueCloudLab/hrw"
 	"github.com/google/uuid"
-	"github.com/nspcc-dev/hrw"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard/mode"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
 	"github.com/panjf2000/ants/v2"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"

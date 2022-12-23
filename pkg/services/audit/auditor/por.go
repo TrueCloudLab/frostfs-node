@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/placement"
-	"github.com/nspcc-dev/neofs-node/pkg/util/rand"
-	containerSDK "github.com/nspcc-dev/neofs-sdk-go/container"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	storagegroupSDK "github.com/nspcc-dev/neofs-sdk-go/storagegroup"
-	"github.com/nspcc-dev/tzhash/tz"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/rand"
+	containerSDK "github.com/TrueCloudLab/frostfs-sdk-go/container"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	storagegroupSDK "github.com/TrueCloudLab/frostfs-sdk-go/storagegroup"
+	"github.com/TrueCloudLab/tzhash/tz"
 	"go.uber.org/zap"
 )
 

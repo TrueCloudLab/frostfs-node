@@ -3,7 +3,7 @@ package reputation
 import (
 	"strconv"
 
-	"github.com/nspcc-dev/neofs-sdk-go/reputation"
+	"github.com/TrueCloudLab/frostfs-sdk-go/reputation"
 )
 
 // TrustValue represents the numeric value of the node's trust.

@@ -3,9 +3,9 @@ package temporary
 import (
 	"sync"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/session/storage"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/mr-tron/base58"
-	"github.com/nspcc-dev/neofs-node/pkg/services/session/storage"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 )
 
 type key struct {

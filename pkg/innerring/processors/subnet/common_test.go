@@ -1,6 +1,6 @@
 package subnetevents
 
-import subnetid "github.com/nspcc-dev/neofs-sdk-go/subnet/id"
+import subnetid "github.com/TrueCloudLab/frostfs-sdk-go/subnet/id"
 
 type idEvent struct {
 	id subnetid.ID

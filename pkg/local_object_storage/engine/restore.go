@@ -1,6 +1,6 @@
 package engine
 
-import "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
+import "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
 
 // RestoreShard restores objects from dump to the shard with provided identifier.
 //

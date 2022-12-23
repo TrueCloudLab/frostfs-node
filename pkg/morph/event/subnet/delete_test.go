@@ -3,8 +3,8 @@ package subnetevents_test
 import (
 	"testing"
 
+	subnetevents "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/subnet"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
-	subnetevents "github.com/nspcc-dev/neofs-node/pkg/morph/event/subnet"
 	"github.com/stretchr/testify/require"
 )
 

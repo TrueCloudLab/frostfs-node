@@ -1,15 +1,15 @@
 package deletesvc
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	getsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/get"
-	putsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/put"
-	searchsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/search"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	getsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/get"
+	putsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/put"
+	searchsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/search"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"go.uber.org/zap"
 )
 

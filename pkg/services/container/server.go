@@ -3,7 +3,7 @@ package container
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/container"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/container"
 )
 
 // Server is an interface of the NeoFS API Container service server.

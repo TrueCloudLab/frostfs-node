@@ -4,8 +4,8 @@ import (
 	"context"
 	"crypto/ecdsa"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/reputation"
-	"github.com/nspcc-dev/neofs-node/pkg/services/util"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 )
 
 type signService struct {

@@ -3,7 +3,7 @@ package blobstor
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard/mode"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard/mode"
 )
 
 // SetMode sets the blobstor mode of operation.

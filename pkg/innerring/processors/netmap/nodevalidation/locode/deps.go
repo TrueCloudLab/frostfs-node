@@ -1,8 +1,8 @@
 package locode
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
-	locodedb "github.com/nspcc-dev/neofs-node/pkg/util/locode/db"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
+	locodedb "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/db"
 )
 
 // Record is an interface of read-only

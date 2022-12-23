@@ -6,20 +6,20 @@ import (
 	"io"
 	"sync"
 
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	"github.com/nspcc-dev/neofs-api-go/v2/rpc"
-	rpcclient "github.com/nspcc-dev/neofs-api-go/v2/rpc/client"
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
-	"github.com/nspcc-dev/neofs-api-go/v2/signature"
-	"github.com/nspcc-dev/neofs-node/pkg/core/client"
-	"github.com/nspcc-dev/neofs-node/pkg/network"
-	objectSvc "github.com/nspcc-dev/neofs-node/pkg/services/object"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/internal"
-	searchsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/search"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/rpc"
+	rpcclient "github.com/TrueCloudLab/frostfs-api-go/v2/rpc/client"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/signature"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/network"
+	objectSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal"
+	searchsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/search"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 func (s *Service) toPrm(req *objectV2.SearchRequest, stream objectSvc.SearchStream) (*searchsvc.Prm, error) {
@@ -89,7 +89,7 @@ func (s *Service) toPrm(req *objectV2.SearchRequest, stream objectSvc.SearchStre
 			}
 
 			// code below is copy-pasted from c.SearchObjects implementation,
-			// perhaps it is worth highlighting the utility function in neofs-api-go
+			// perhaps it is worth highlighting the utility function in frostfs-api-go
 			var (
 				searchResult []oid.ID
 				resp         = new(objectV2.SearchResponse)

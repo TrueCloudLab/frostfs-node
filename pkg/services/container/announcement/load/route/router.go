@@ -3,7 +3,7 @@ package loadroute
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 )
 
 // Prm groups the required parameters of the Router's constructor.

@@ -3,8 +3,8 @@ package nats
 import (
 	"time"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/nats-io/nats.go"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 )
 
 func WithClientCert(certPath, keyPath string) Option {

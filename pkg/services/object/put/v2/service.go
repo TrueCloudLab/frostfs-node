@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/object"
-	putsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/put"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	putsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/put"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
 )
 
 // Service implements Put operation of Object service v2.

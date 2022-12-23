@@ -1,8 +1,13 @@
-module github.com/nspcc-dev/neofs-node
+module github.com/TrueCloudLab/frostfs-node
 
 go 1.17
 
 require (
+	github.com/TrueCloudLab/frostfs-api-go/v2 v2.0.0-20221212144048-1351b6656d68
+	github.com/TrueCloudLab/frostfs-contract v0.0.0-20221213081248-6c805c1b4e42
+	github.com/TrueCloudLab/frostfs-sdk-go v0.0.0-20221214065929-4c779423f556
+	github.com/TrueCloudLab/hrw v1.1.0
+	github.com/TrueCloudLab/tzhash v1.7.0
 	github.com/cheggaaa/pb v1.0.29
 	github.com/chzyer/readline v1.5.1
 	github.com/flynn-archive/go-shlex v0.0.0-20150515145356-3f9db97f8568
@@ -14,13 +19,8 @@ require (
 	github.com/mr-tron/base58 v1.2.0
 	github.com/multiformats/go-multiaddr v0.4.0
 	github.com/nats-io/nats.go v1.16.0
-	github.com/nspcc-dev/hrw v1.0.9
 	github.com/nspcc-dev/neo-go v0.99.4
 	github.com/nspcc-dev/neo-go/pkg/interop v0.0.0-20220927123257-24c107e3a262 // indirect
-	github.com/nspcc-dev/neofs-api-go/v2 v2.14.0
-	github.com/nspcc-dev/neofs-contract v0.16.0
-	github.com/nspcc-dev/neofs-sdk-go v1.0.0-rc.7
-	github.com/nspcc-dev/tzhash v1.6.1
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/panjf2000/ants/v2 v2.4.0
 	github.com/paulmach/orb v0.2.2
@@ -40,6 +40,8 @@ require (
 )
 
 require (
+	github.com/TrueCloudLab/frostfs-crypto v0.5.0 // indirect
+	github.com/TrueCloudLab/rfc6979 v0.3.0 // indirect
 	github.com/antlr/antlr4/runtime/Go/antlr v1.4.10 // indirect
 	github.com/benbjohnson/clock v1.1.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -72,7 +74,6 @@ require (
 	github.com/nats-io/nkeys v0.3.0 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/nspcc-dev/go-ordered-json v0.0.0-20220111165707-25110be27d22 // indirect
-	github.com/nspcc-dev/neofs-crypto v0.4.0 // indirect
 	github.com/nspcc-dev/rfc6979 v0.2.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect

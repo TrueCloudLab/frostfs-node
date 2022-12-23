@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 
-	"github.com/nspcc-dev/neofs-sdk-go/container"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
 )
 
 // UsedSpaceHandler describes the signature of the container.SizeEstimation

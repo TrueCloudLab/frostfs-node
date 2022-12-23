@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/governance"
+	auditClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit"
+	control "github.com/TrueCloudLab/frostfs-node/pkg/services/control/ir"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/state"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/governance"
-	auditClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/audit"
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit"
-	control "github.com/nspcc-dev/neofs-node/pkg/services/control/ir"
-	"github.com/nspcc-dev/neofs-node/pkg/util/state"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 )

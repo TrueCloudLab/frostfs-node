@@ -3,7 +3,7 @@ package network
 import (
 	"testing"
 
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"github.com/stretchr/testify/require"
 )
 

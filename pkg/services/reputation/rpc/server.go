@@ -3,7 +3,7 @@ package reputationrpc
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/reputation"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/reputation"
 )
 
 // Server is an interface of the NeoFS API v2 Reputation service server.

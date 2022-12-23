@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/state"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/state"
 	"github.com/stretchr/testify/require"
 )
 

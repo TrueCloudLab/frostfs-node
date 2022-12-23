@@ -3,7 +3,7 @@ package fstree
 import (
 	"testing"
 
-	oidtest "github.com/nspcc-dev/neofs-sdk-go/object/id/test"
+	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
 	"github.com/stretchr/testify/require"
 )
 

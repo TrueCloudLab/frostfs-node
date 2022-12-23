@@ -40,7 +40,7 @@ governance:
 
 node:
   persistent_state:
-    path: .neofs-ir-state # Path to application state file
+    path: .frostfs-ir-state # Path to application state file
 
 locode:
   db:

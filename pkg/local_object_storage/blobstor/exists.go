@@ -1,7 +1,7 @@
 package blobstor
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
 	"go.uber.org/zap"
 )
 

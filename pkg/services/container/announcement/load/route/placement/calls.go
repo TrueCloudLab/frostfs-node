@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"fmt"
 
-	netmapcore "github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	loadroute "github.com/nspcc-dev/neofs-node/pkg/services/container/announcement/load/route"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
+	netmapcore "github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	loadroute "github.com/TrueCloudLab/frostfs-node/pkg/services/container/announcement/load/route"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
 )
 
 // NextStage composes container nodes for the container and epoch from a,

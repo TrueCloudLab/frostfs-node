@@ -1,8 +1,8 @@
 package shard
 
 import (
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/mr-tron/base58"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
 

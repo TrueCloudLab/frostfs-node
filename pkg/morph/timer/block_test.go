@@ -3,7 +3,7 @@ package timer_test
 import (
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/timer"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/timer"
 	"github.com/stretchr/testify/require"
 )
 

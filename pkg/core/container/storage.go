@@ -3,12 +3,12 @@ package container
 import (
 	"errors"
 
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	neofscrypto "github.com/nspcc-dev/neofs-sdk-go/crypto"
-	"github.com/nspcc-dev/neofs-sdk-go/eacl"
-	"github.com/nspcc-dev/neofs-sdk-go/session"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	frostfscrypto "github.com/TrueCloudLab/frostfs-sdk-go/crypto"
+	"github.com/TrueCloudLab/frostfs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-sdk-go/session"
 )
 
 // Container groups information about the NeoFS container stored in the NeoFS network.
@@ -17,7 +17,7 @@ type Container struct {
 	Value container.Container
 
 	// Signature of the Value.
-	Signature neofscrypto.Signature
+	Signature frostfscrypto.Signature
 
 	// Session within which Value was created. Nil means session absence.
 	Session *session.Container
@@ -50,7 +50,7 @@ type EACL struct {
 	Value *eacl.Table
 
 	// Signature of the Value.
-	Signature neofscrypto.Signature
+	Signature frostfscrypto.Signature
 
 	// Session within which Value was set. Nil means session absence.
 	Session *session.Container

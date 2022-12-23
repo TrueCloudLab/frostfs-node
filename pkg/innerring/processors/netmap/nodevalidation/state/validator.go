@@ -9,7 +9,7 @@ package state
 import (
 	"errors"
 
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 )
 
 // ErrMaintenanceModeDisallowed is returned when maintenance mode is disallowed.
@@ -33,7 +33,7 @@ type NetworkSettings interface {
 // and currently doesn't require any additional initialization.
 //
 // NetMapCandidateValidator implements
-// github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap.NodeValidator.
+// github.com/nspcc-dev/frostfs-node/pkg/innerring/processors/netmap.NodeValidator.
 type NetMapCandidateValidator struct {
 	netSettings NetworkSettings
 }

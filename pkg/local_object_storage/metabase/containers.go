@@ -3,7 +3,7 @@ package meta
 import (
 	"encoding/binary"
 
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	"go.etcd.io/bbolt"
 )
 

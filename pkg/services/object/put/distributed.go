@@ -5,13 +5,13 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/object"
-	svcutil "github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/placement"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/transformer"
-	"github.com/nspcc-dev/neofs-node/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	svcutil "github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/transformer"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"go.uber.org/zap"
 )
 

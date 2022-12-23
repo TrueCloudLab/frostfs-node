@@ -7,12 +7,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/storagegroup"
-	cntClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/storagegroup"
+	cntClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/panjf2000/ants/v2"
 )
 

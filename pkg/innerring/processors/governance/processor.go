@@ -4,15 +4,15 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event/rolemanagement"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/nspcc-dev/neo-go/pkg/core/native"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	neofscontract "github.com/nspcc-dev/neofs-node/pkg/morph/client/neofs"
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event/rolemanagement"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"github.com/panjf2000/ants/v2"
 )
 
@@ -55,10 +55,10 @@ type (
 
 	// Processor of events related to governance in the network.
 	Processor struct {
-		log          *logger.Logger
-		pool         *ants.Pool
-		neofsClient  *neofscontract.Client
-		netmapClient *nmClient.Client
+		log           *logger.Logger
+		pool          *ants.Pool
+		frostfsClient *frostfscontract.Client
+		netmapClient  *nmClient.Client
 
 		alphabetState AlphabetState
 		epochState    EpochState
@@ -84,7 +84,7 @@ type (
 
 		MorphClient   *client.Client
 		MainnetClient *client.Client
-		NeoFSClient   *neofscontract.Client
+		NeoFSClient   *frostfscontract.Client
 		NetmapClient  *nmClient.Client
 
 		NotaryDisabled bool
@@ -121,7 +121,7 @@ func New(p *Params) (*Processor, error) {
 	return &Processor{
 		log:            p.Log,
 		pool:           pool,
-		neofsClient:    p.NeoFSClient,
+		frostfsClient:  p.NeoFSClient,
 		netmapClient:   p.NetmapClient,
 		alphabetState:  p.AlphabetState,
 		epochState:     p.EpochState,

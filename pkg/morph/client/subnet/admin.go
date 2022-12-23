@@ -1,6 +1,6 @@
 package morphsubnet
 
-import "github.com/nspcc-dev/neofs-node/pkg/morph/client"
+import "github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 
 // ManageAdminsPrm groups parameters of administer methods of Subnet contract.
 //

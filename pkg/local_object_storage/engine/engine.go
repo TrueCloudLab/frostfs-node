@@ -4,11 +4,11 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard/mode"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
-	"github.com/nspcc-dev/neofs-node/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard/mode"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"
 )

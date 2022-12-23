@@ -3,10 +3,10 @@ package audit
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/storagegroup"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/storagegroup"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 )
 
 // Task groups groups the container audit parameters.

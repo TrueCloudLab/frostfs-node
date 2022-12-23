@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 )
 
 // HandleUnaryRequest call passes request to handler, sets response meta header values and returns it.

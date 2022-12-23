@@ -4,9 +4,9 @@ import (
 	"crypto/elliptic"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 )
 
 // AccountKeysPrm groups parameters of AccountKeys operation.

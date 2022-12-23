@@ -5,16 +5,16 @@ import (
 	"crypto/elliptic"
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	sessionV2 "github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	tokenStorage "github.com/TrueCloudLab/frostfs-node/pkg/services/session/storage/temporary"
+	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
+	"github.com/TrueCloudLab/frostfs-sdk-go/session"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
+	usertest "github.com/TrueCloudLab/frostfs-sdk-go/user/test"
 	"github.com/google/uuid"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	sessionV2 "github.com/nspcc-dev/neofs-api-go/v2/session"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	tokenStorage "github.com/nspcc-dev/neofs-node/pkg/services/session/storage/temporary"
-	neofsecdsa "github.com/nspcc-dev/neofs-sdk-go/crypto/ecdsa"
-	"github.com/nspcc-dev/neofs-sdk-go/session"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
-	usertest "github.com/nspcc-dev/neofs-sdk-go/user/test"
 	"github.com/stretchr/testify/require"
 )
 
@@ -49,7 +49,7 @@ func TestNewKeyStorage(t *testing.T) {
 			Owner: owner,
 		})
 		require.NoError(t, err)
-		require.True(t, tok.AssertAuthKey((*neofsecdsa.PublicKey)(&key.PublicKey)))
+		require.True(t, tok.AssertAuthKey((*frostfsecdsa.PublicKey)(&key.PublicKey)))
 	})
 
 	t.Run("expired token", func(t *testing.T) {
@@ -80,7 +80,7 @@ func createToken(t *testing.T, store *tokenStorage.TokenStore, owner user.ID, ex
 	require.NoError(t, id.UnmarshalBinary(resp.GetID()))
 
 	var tok session.Object
-	tok.SetAuthKey((*neofsecdsa.PublicKey)(pub))
+	tok.SetAuthKey((*frostfsecdsa.PublicKey)(pub))
 	tok.SetID(id)
 
 	return tok

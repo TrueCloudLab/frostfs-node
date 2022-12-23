@@ -1,11 +1,11 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: neofs-node
+Upstream-Name: frostfs-node
 Upstream-Contact: tech@nspcc.ru
-Source: https://github.com/nspcc-dev/neofs-node
+Source: https://github.com/TrueCloudLab/frostfs-node
 
 Files: *
-Copyright: 2018-2022 NeoSPCC (@nspcc-dev), contributors of neofs-node project 
-           (https://github.com/nspcc-dev/neofs-node/blob/master/CREDITS.md)
+Copyright: 2018-2022 NeoSPCC (@nspcc-dev), contributors of frostfs-node project 
+           (https://github.com/TrueCloudLab/frostfs-node/blob/master/CREDITS.md)
 
 License: GPL-3
  This program is free software: you can redistribute it and/or modify it

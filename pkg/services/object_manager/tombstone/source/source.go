@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	getsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/get"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	getsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/get"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 // Source represents wrapper over the object service that

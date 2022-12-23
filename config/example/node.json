@@ -20,8 +20,8 @@
       "password": "password"
     },
     "addresses": [
-      "s01.neofs.devenv:8080",
-      "/dns4/s02.neofs.devenv/tcp/8081",
+      "s01.frostfs.devenv:8080",
+      "/dns4/s02.frostfs.devenv/tcp/8081",
       "grpc://127.0.0.1:8082",
       "grpcs://localhost:8083"
     ],
@@ -54,7 +54,7 @@
   },
   "grpc": {
     "0": {
-      "endpoint": "s01.neofs.devenv:8080",
+      "endpoint": "s01.frostfs.devenv:8080",
       "tls": {
         "enabled": true,
         "certificate": "/path/to/cert",
@@ -62,13 +62,13 @@
       }
     },
     "1": {
-      "endpoint": "s02.neofs.devenv:8080",
+      "endpoint": "s02.frostfs.devenv:8080",
       "tls": {
         "enabled": false
       }
     },
     "2": {
-      "endpoint": "s03.neofs.devenv:8080",
+      "endpoint": "s03.frostfs.devenv:8080",
       "tls": {
         "enabled": true,
         "use_insecure_crypto": true

@@ -6,7 +6,7 @@ docker image and run it with docker-compose.
 
 ## Build image
 
-Prepared **neofs-storage-testnet** image is available at Docker Hub. 
+Prepared **frostfs-storage-testnet** image is available at Docker Hub. 
 However, if you need to rebuild it for some reason, run 
 `make image-storage-testnet` command.
 
@@ -67,11 +67,11 @@ NEOFS_NODE_ATTRIBUTE_2=UN-LOCODE:RU LED
 ```
 
 You can validate UN/LOCODE attribute in 
-[NeoFS LOCODE database](https://github.com/nspcc-dev/neofs-locode-db/releases/tag/v0.1.0)
-with neofs-cli.
+[NeoFS LOCODE database](https://github.com/TrueCloudLab/frostfs-locode-db/releases/tag/v0.1.0)
+with frostfs-cli.
 
 ```
-$ neofs-cli util locode info --db ./locode_db --locode 'RU LED'
+$ frostfs-cli util locode info --db ./locode_db --locode 'RU LED'
 Country: Russia
 Location: Saint Petersburg (ex Leningrad)
 Continent: Europe
@@ -80,11 +80,11 @@ Coordinates: 59.53, 30.15
 ```
 
 It is recommended to pass the node's key as a file. To do so, convert your wallet 
-WIF to 32-byte hex (via `neofs-cli` for example) and save it to a file.
+WIF to 32-byte hex (via `frostfs-cli` for example) and save it to a file.
 
 ```
 // Print WIF in a 32-byte hex format
-$ neofs-cli util keyer Kwp4Q933QujZLUCcn39tzY94itNQJS4EjTp28oAMzuxMwabm3p1s
+$ frostfs-cli util keyer Kwp4Q933QujZLUCcn39tzY94itNQJS4EjTp28oAMzuxMwabm3p1s
 PrivateKey      11ab917cd99170cb8d0d48e78fca317564e6b3aaff7f7058952d6175cdca0f56
 PublicKey       02be8b2e837cab232168f5c3303f1b985818b7583682fb49026b8d2f43df7c1059
 WIF             Kwp4Q933QujZLUCcn39tzY94itNQJS4EjTp28oAMzuxMwabm3p1s
@@ -99,18 +99,18 @@ $ echo '11ab917cd99170cb8d0d48e78fca317564e6b3aaff7f7058952d6175cdca0f56' | xxd 
 Then, specify the path to this file in `docker-compose.yml`
 ```yaml
      volumes:
-      - neofs_storage:/storage
+      - frostfs_storage:/storage
       - ./my_wallet.key:/node.key
 ```
 
 
 NeoFS objects will be stored on your machine. By default, docker-compose 
-is configured to store objects in named docker volume `neofs_storage`. You can 
+is configured to store objects in named docker volume `frostfs_storage`. You can 
 specify a directory on the filesystem to store objects there.
 
 ```yaml
      volumes:
-       - /home/username/neofs/rc3/storage:/storage
+       - /home/username/frostfs/rc3/storage:/storage
        - ./my_wallet.key:/node.key
 ```
 
@@ -120,7 +120,7 @@ Run the node with `docker-compose up` command and stop it with `docker-compose d
 
 ### Debug
 
-To print node logs, use `docker logs neofs-testnet`. To print debug messages in 
+To print node logs, use `docker logs frostfs-testnet`. To print debug messages in 
 log, set up log level to debug with this env:
 
 ```yaml

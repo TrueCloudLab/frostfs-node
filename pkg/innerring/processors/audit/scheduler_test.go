@@ -3,9 +3,9 @@ package audit_test
 import (
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/audit"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/audit"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
 	"github.com/stretchr/testify/require"
 )
 

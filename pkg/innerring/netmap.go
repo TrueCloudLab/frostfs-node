@@ -3,8 +3,8 @@ package innerring
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap/nodevalidation/state"
-	netmapclient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap/nodevalidation/state"
+	netmapclient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 )
 
 /*

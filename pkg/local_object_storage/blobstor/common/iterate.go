@@ -1,6 +1,6 @@
 package common
 
-import oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+import oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 
 // IterationElement represents a unit of elements through which Iterate operation passes.
 type IterationElement struct {

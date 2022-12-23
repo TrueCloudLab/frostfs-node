@@ -3,9 +3,9 @@ package neofsid
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/fixedn"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
 )
 
 // Client is a wrapper over StaticClient

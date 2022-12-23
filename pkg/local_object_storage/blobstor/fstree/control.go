@@ -1,7 +1,7 @@
 package fstree
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
 )
 
 // Open implements common.Storage.

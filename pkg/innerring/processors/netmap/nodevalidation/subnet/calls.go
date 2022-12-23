@@ -3,9 +3,9 @@ package subnet
 import (
 	"fmt"
 
-	morphsubnet "github.com/nspcc-dev/neofs-node/pkg/morph/client/subnet"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
-	subnetid "github.com/nspcc-dev/neofs-sdk-go/subnet/id"
+	morphsubnet "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/subnet"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	subnetid "github.com/TrueCloudLab/frostfs-sdk-go/subnet/id"
 )
 
 // VerifyAndUpdate calls subnet contract's `NodeAllowed` method.

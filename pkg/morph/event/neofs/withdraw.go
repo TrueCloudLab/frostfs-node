@@ -1,15 +1,15 @@
-package neofs
+package frostfs
 
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 )
 
-// Withdraw structure of neofs.Withdraw notification from mainnet chain.
+// Withdraw structure of frostfs.Withdraw notification from mainnet chain.
 type Withdraw struct {
 	id     []byte
 	amount int64 // Fixed8

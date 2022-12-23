@@ -8,8 +8,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
-	locodedb "github.com/nspcc-dev/neofs-node/pkg/util/locode/db"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
+	locodedb "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/db"
 )
 
 const (

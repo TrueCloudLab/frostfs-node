@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/accounting"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/balance"
-	accountingSvc "github.com/nspcc-dev/neofs-node/pkg/services/accounting"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/accounting"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
+	accountingSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/accounting"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 type morphExecutor struct {

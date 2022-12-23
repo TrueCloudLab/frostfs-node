@@ -1,0 +1,16 @@
+[Unit]
+Description=NeoFS InnerRing node
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/frostfs-ir --config /etc/frostfs/ir/config.yml
+User=frostfs-ir
+Group=frostfs-ir
+WorkingDirectory=/var/lib/frostfs/ir
+Restart=always
+RestartSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

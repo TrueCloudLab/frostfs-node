@@ -3,10 +3,10 @@ package rolemanagement
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/core/native/noderoles"
 	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 )
 
 // Designate represents designation event of the mainnet RoleManagement contract.

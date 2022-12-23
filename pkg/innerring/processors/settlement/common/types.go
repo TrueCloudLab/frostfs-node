@@ -3,8 +3,8 @@ package common
 import (
 	"math/big"
 
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 // NodeInfo groups the data about the storage node

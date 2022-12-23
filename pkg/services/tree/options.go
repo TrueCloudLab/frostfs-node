@@ -3,12 +3,12 @@ package tree
 import (
 	"crypto/ecdsa"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/pilorama"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/pilorama"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
 )
 
 type ContainerSource interface {

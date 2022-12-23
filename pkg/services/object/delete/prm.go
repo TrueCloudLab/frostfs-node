@@ -1,8 +1,8 @@
 package deletesvc
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 // TombstoneAddressWriter is an interface of tombstone address setter.

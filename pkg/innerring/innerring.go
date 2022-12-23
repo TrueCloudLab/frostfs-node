@@ -8,48 +8,48 @@ import (
 	"io"
 	"net"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/config"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/alphabet"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/balance"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/governance"
+	frostfs "github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/neofs"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap"
+	nodevalidator "github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap/nodevalidation"
+	addrvalidator "github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap/nodevalidation/maddress"
+	statevalidation "github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap/nodevalidation/state"
+	subnetvalidator "github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap/nodevalidation/subnet"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement"
+	auditSettlement "github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement/audit"
+	timerEvent "github.com/TrueCloudLab/frostfs-node/pkg/innerring/timers"
+	"github.com/TrueCloudLab/frostfs-node/pkg/metrics"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	auditClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/audit"
+	balanceClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
+	cntClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
+	frostfsClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	repClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/reputation"
+	morphsubnet "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/subnet"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/subscriber"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/timer"
+	audittask "github.com/TrueCloudLab/frostfs-node/pkg/services/audit/taskmanager"
+	control "github.com/TrueCloudLab/frostfs-node/pkg/services/control/ir"
+	controlsrv "github.com/TrueCloudLab/frostfs-node/pkg/services/control/ir/server"
+	reputationcommon "github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/common"
+	util2 "github.com/TrueCloudLab/frostfs-node/pkg/util"
+	utilConfig "github.com/TrueCloudLab/frostfs-node/pkg/util/config"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/precision"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/state"
 	"github.com/nspcc-dev/neo-go/pkg/core/block"
 	"github.com/nspcc-dev/neo-go/pkg/core/transaction"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/fixedn"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/config"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/alphabet"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/audit"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/balance"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/container"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/governance"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/neofs"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap"
-	nodevalidator "github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap/nodevalidation"
-	addrvalidator "github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap/nodevalidation/maddress"
-	statevalidation "github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap/nodevalidation/state"
-	subnetvalidator "github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap/nodevalidation/subnet"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/reputation"
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement"
-	auditSettlement "github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement/audit"
-	timerEvent "github.com/nspcc-dev/neofs-node/pkg/innerring/timers"
-	"github.com/nspcc-dev/neofs-node/pkg/metrics"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	auditClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/audit"
-	balanceClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/balance"
-	cntClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
-	neofsClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/neofs"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/neofsid"
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	repClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/reputation"
-	morphsubnet "github.com/nspcc-dev/neofs-node/pkg/morph/client/subnet"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/subscriber"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/timer"
-	audittask "github.com/nspcc-dev/neofs-node/pkg/services/audit/taskmanager"
-	control "github.com/nspcc-dev/neofs-node/pkg/services/control/ir"
-	controlsrv "github.com/nspcc-dev/neofs-node/pkg/services/control/ir/server"
-	reputationcommon "github.com/nspcc-dev/neofs-node/pkg/services/reputation/common"
-	util2 "github.com/nspcc-dev/neofs-node/pkg/util"
-	utilConfig "github.com/nspcc-dev/neofs-node/pkg/util/config"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	"github.com/nspcc-dev/neofs-node/pkg/util/precision"
-	"github.com/nspcc-dev/neofs-node/pkg/util/state"
 	"github.com/panjf2000/ants/v2"
 	"github.com/spf13/viper"
 	"go.uber.org/atomic"
@@ -508,13 +508,13 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 		return nil, err
 	}
 
-	neofsIDClient, err := neofsid.NewFromMorph(server.morphClient, server.contracts.neofsID, fee, neofsid.TryNotary(), neofsid.AsAlphabet())
+	frostfsIDClient, err := neofsid.NewFromMorph(server.morphClient, server.contracts.frostfsID, fee, neofsid.TryNotary(), neofsid.AsAlphabet())
 	if err != nil {
 		return nil, err
 	}
 
-	neofsCli, err := neofsClient.NewFromMorph(server.mainnetClient, server.contracts.neofs,
-		server.feeConfig.MainChainFee(), neofsClient.TryNotary(), neofsClient.AsAlphabet())
+	frostfsCli, err := frostfsClient.NewFromMorph(server.mainnetClient, server.contracts.frostfs,
+		server.feeConfig.MainChainFee(), frostfsClient.TryNotary(), frostfsClient.AsAlphabet())
 	if err != nil {
 		return nil, err
 	}
@@ -670,7 +670,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 		// create governance processor
 		governanceProcessor, err := governance.New(&governance.Params{
 			Log:            log,
-			NeoFSClient:    neofsCli,
+			NeoFSClient:    frostfsCli,
 			NetmapClient:   server.netmapClient,
 			AlphabetState:  server,
 			EpochState:     server,
@@ -743,7 +743,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 		PoolSize:        cfg.GetInt("workers.container"),
 		AlphabetState:   server,
 		ContainerClient: cnrClient,
-		NeoFSIDClient:   neofsIDClient,
+		NeoFSIDClient:   frostfsIDClient,
 		NetworkState:    server.netmapClient,
 		NotaryDisabled:  server.sideNotaryConfig.disabled,
 		SubnetClient:    subnetClient,
@@ -761,7 +761,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 	balanceProcessor, err := balance.New(&balance.Params{
 		Log:           log,
 		PoolSize:      cfg.GetInt("workers.balance"),
-		NeoFSClient:   neofsCli,
+		NeoFSClient:   frostfsCli,
 		BalanceSC:     server.contracts.balance,
 		AlphabetState: server,
 		Converter:     &server.precision,
@@ -776,12 +776,12 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 	}
 
 	if !server.withoutMainNet {
-		// create mainnnet neofs processor
-		neofsProcessor, err := neofs.New(&neofs.Params{
+		// create mainnnet frostfs processor
+		frostfsProcessor, err := frostfs.New(&frostfs.Params{
 			Log:                 log,
-			PoolSize:            cfg.GetInt("workers.neofs"),
-			NeoFSContract:       server.contracts.neofs,
-			NeoFSIDClient:       neofsIDClient,
+			PoolSize:            cfg.GetInt("workers.frostfs"),
+			NeoFSContract:       server.contracts.frostfs,
+			NeoFSIDClient:       frostfsIDClient,
 			BalanceClient:       server.balanceClient,
 			NetmapClient:        server.netmapClient,
 			MorphClient:         server.morphClient,
@@ -797,7 +797,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 			return nil, err
 		}
 
-		err = bindMainnetProcessor(neofsProcessor, server)
+		err = bindMainnetProcessor(frostfsProcessor, server)
 		if err != nil {
 			return nil, err
 		}

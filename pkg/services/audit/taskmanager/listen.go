@@ -3,8 +3,8 @@ package audittask
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit"
-	"github.com/nspcc-dev/neofs-node/pkg/services/audit/auditor"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/audit/auditor"
 	"go.uber.org/zap"
 )
 

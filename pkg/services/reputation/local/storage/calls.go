@@ -4,8 +4,8 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation"
-	apireputation "github.com/nspcc-dev/neofs-sdk-go/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation"
+	apireputation "github.com/TrueCloudLab/frostfs-sdk-go/reputation"
 )
 
 // UpdatePrm groups the parameters of Storage's Update operation.

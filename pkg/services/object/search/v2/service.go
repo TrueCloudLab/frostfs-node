@@ -1,10 +1,10 @@
 package searchsvc
 
 import (
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	objectSvc "github.com/nspcc-dev/neofs-node/pkg/services/object"
-	searchsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/search"
-	objutil "github.com/nspcc-dev/neofs-node/pkg/services/object/util"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	objectSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	searchsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/search"
+	objutil "github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
 )
 
 // Service implements Search operation of Object service v2.

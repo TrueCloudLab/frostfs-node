@@ -3,8 +3,8 @@ package state_test
 import (
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap/nodevalidation/state"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap/nodevalidation/state"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"github.com/stretchr/testify/require"
 )
 

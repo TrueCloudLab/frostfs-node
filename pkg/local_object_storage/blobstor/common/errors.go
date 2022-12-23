@@ -1,7 +1,7 @@
 package common
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util/logicerr"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
 )
 
 // ErrReadOnly MUST be returned for modifying operations when the storage was opened

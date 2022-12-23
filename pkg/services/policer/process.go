@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	objectcore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
+	objectcore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
 	"go.uber.org/zap"
 )
 
@@ -83,8 +83,8 @@ func (p *Policer) poolCapacityWorker(ctx context.Context) {
 			ticker.Stop()
 			return
 		case <-ticker.C:
-			neofsSysLoad := p.loader.ObjectServiceLoad()
-			newCapacity := int((1.0 - neofsSysLoad) * float64(p.maxCapacity))
+			frostfsSysLoad := p.loader.ObjectServiceLoad()
+			newCapacity := int((1.0 - frostfsSysLoad) * float64(p.maxCapacity))
 			if newCapacity == 0 {
 				newCapacity++
 			}
@@ -92,7 +92,7 @@ func (p *Policer) poolCapacityWorker(ctx context.Context) {
 			if p.taskPool.Cap() != newCapacity {
 				p.taskPool.Tune(newCapacity)
 				p.log.Debug("tune replication capacity",
-					zap.Float64("system_load", neofsSysLoad),
+					zap.Float64("system_load", frostfsSysLoad),
 					zap.Int("new_capacity", newCapacity))
 			}
 		}

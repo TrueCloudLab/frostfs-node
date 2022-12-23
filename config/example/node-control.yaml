@@ -1,5 +1,5 @@
 ---
 
 endpoint: 'localhost:8091'
-wallet: '/etc/neofs/storage/wallet.json'
+wallet: '/etc/frostfs/storage/wallet.json'
 password: ''

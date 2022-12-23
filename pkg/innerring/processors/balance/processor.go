@@ -4,11 +4,11 @@ import (
 	"errors"
 	"fmt"
 
+	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	balanceEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/balance"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	neofscontract "github.com/nspcc-dev/neofs-node/pkg/morph/client/neofs"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	balanceEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/balance"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"github.com/panjf2000/ants/v2"
 	"go.uber.org/zap"
 )
@@ -28,7 +28,7 @@ type (
 	Processor struct {
 		log           *logger.Logger
 		pool          *ants.Pool
-		neofsClient   *neofscontract.Client
+		neofsClient   *frostfscontract.Client
 		balanceSC     util.Uint160
 		alphabetState AlphabetState
 		converter     PrecisionConverter
@@ -38,7 +38,7 @@ type (
 	Params struct {
 		Log           *logger.Logger
 		PoolSize      int
-		NeoFSClient   *neofscontract.Client
+		NeoFSClient   *frostfscontract.Client
 		BalanceSC     util.Uint160
 		AlphabetState AlphabetState
 		Converter     PrecisionConverter

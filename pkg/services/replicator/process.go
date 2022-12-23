@@ -3,9 +3,9 @@ package replicator
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/engine"
-	putsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/put"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
+	putsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/put"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"go.uber.org/zap"
 )
 

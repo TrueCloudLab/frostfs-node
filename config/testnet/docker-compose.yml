@@ -4,12 +4,12 @@ version: "2.4"
 services:
   storage01:
     image: nspccdev/neofs-storage-testnet:0.27.7
-    container_name: neofs-testnet
+    container_name: frostfs-testnet
     env_file: node_config.env
     network_mode: host
     restart: always
     volumes:
-      - neofs_storage:/storage
+      - frostfs_storage:/storage
       - <NEOFS_NODE_KEY>:/node.key
     stop_signal: SIGINT
 
@@ -28,4 +28,4 @@ services:
       - ./prometheus.yml:/configs/prometheus.yml
 
 volumes:
-  neofs_storage:
+  frostfs_storage:

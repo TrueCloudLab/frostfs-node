@@ -5,11 +5,11 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/neofsid"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	neofsecdsa "github.com/nspcc-dev/neofs-sdk-go/crypto/ecdsa"
-	"github.com/nspcc-dev/neofs-sdk-go/session"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
+	"github.com/TrueCloudLab/frostfs-sdk-go/session"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 var (
@@ -48,7 +48,7 @@ type signatureVerificationData struct {
 //   - session is "alive"
 func (cp *Processor) verifySignature(v signatureVerificationData) error {
 	var err error
-	var key neofsecdsa.PublicKeyRFC6979
+	var key frostfsecdsa.PublicKeyRFC6979
 	keyProvided := v.binPublicKey != nil
 
 	if keyProvided {
@@ -122,7 +122,7 @@ func (cp *Processor) verifySignature(v signatureVerificationData) error {
 		}
 
 		for i := range ownerKeys {
-			if (*neofsecdsa.PublicKeyRFC6979)(ownerKeys[i]).Verify(v.signedData, v.signature) {
+			if (*frostfsecdsa.PublicKeyRFC6979)(ownerKeys[i]).Verify(v.signedData, v.signature) {
 				return nil
 			}
 		}

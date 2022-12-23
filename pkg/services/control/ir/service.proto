@@ -4,7 +4,7 @@ package ircontrol;
 
 import "pkg/services/control/ir/types.proto";
 
-option go_package = "github.com/nspcc-dev/neofs-node/pkg/services/ir/control";
+option go_package = "github.com/TrueCloudLab/frostfs-node/pkg/services/ir/control";
 
 // `ControlService` provides an interface for internal work with the Inner Ring node.
 service ControlService {

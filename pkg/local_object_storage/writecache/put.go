@@ -3,8 +3,8 @@ package writecache
 import (
 	"errors"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	storagelog "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/internal/log"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	storagelog "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/internal/log"
 	"go.etcd.io/bbolt"
 )
 

@@ -3,8 +3,8 @@ package deletesvc
 import (
 	"context"
 
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	deletesvc "github.com/nspcc-dev/neofs-node/pkg/services/object/delete"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	deletesvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/delete"
 )
 
 // Service implements Delete operation of Object service v2.

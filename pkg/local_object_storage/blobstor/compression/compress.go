@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"strings"
 
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"github.com/klauspost/compress/zstd"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
 )
 
 // Config represents common compression-related configuration.

@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/internal/storagetest"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/internal/storagetest"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap/zaptest"
 )

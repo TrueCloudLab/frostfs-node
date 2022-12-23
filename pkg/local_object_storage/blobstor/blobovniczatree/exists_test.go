@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/internal/blobstortest"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/nspcc-dev/neo-go/pkg/util/slice"
-	"github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/common"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/internal/blobstortest"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap/zaptest"
 )

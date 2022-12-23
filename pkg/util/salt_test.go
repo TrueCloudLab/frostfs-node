@@ -5,7 +5,7 @@ import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util"
 	"github.com/stretchr/testify/require"
 )
 

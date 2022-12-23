@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
 )
 
 // SourceTable is an interface of the UN/LOCODE table.

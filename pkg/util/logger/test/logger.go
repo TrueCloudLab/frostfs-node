@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

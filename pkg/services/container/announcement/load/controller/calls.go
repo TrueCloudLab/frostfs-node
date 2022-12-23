@@ -3,8 +3,8 @@ package loadcontroller
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
 	"go.uber.org/zap"
 )
 

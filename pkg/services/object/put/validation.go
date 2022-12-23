@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"hash"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object_manager/transformer"
-	"github.com/nspcc-dev/neofs-sdk-go/checksum"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	"github.com/nspcc-dev/tzhash/tz"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/transformer"
+	"github.com/TrueCloudLab/frostfs-sdk-go/checksum"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	"github.com/TrueCloudLab/tzhash/tz"
 )
 
 // validatingTarget validates object format and content.

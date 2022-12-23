@@ -1,9 +1,9 @@
-package neofsapiclient
+package frostfsapiclient
 
 import (
 	"context"
 
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 type contextPrm struct {

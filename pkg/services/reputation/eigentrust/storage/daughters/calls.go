@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation"
-	eigentrustcalc "github.com/nspcc-dev/neofs-node/pkg/services/reputation/eigentrust/calculator"
-	apireputation "github.com/nspcc-dev/neofs-sdk-go/reputation"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation"
+	eigentrustcalc "github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/eigentrust/calculator"
+	apireputation "github.com/TrueCloudLab/frostfs-sdk-go/reputation"
 )
 
 // Put saves daughter peer's trust to its provider for the epoch.

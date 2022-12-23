@@ -7,17 +7,17 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	core "github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-sdk-go/bearer"
+	"github.com/TrueCloudLab/frostfs-sdk-go/client"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container/acl"
+	cidSDK "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	frostfscrypto "github.com/TrueCloudLab/frostfs-sdk-go/crypto"
+	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
+	"github.com/TrueCloudLab/frostfs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	core "github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-sdk-go/bearer"
-	"github.com/nspcc-dev/neofs-sdk-go/client"
-	"github.com/nspcc-dev/neofs-sdk-go/container/acl"
-	cidSDK "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	neofscrypto "github.com/nspcc-dev/neofs-sdk-go/crypto"
-	neofsecdsa "github.com/nspcc-dev/neofs-sdk-go/crypto/ecdsa"
-	"github.com/nspcc-dev/neofs-sdk-go/eacl"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 	"go.uber.org/zap"
 )
 
@@ -132,7 +132,7 @@ func verifyMessage(m message) error {
 	sigV2.SetSign(sig.GetSign())
 	sigV2.SetScheme(refs.ECDSA_SHA512)
 
-	var sigSDK neofscrypto.Signature
+	var sigSDK frostfscrypto.Signature
 	if err := sigSDK.ReadFromV2(sigV2); err != nil {
 		return fmt.Errorf("can't read signature: %w", err)
 	}
@@ -145,14 +145,14 @@ func verifyMessage(m message) error {
 
 // SignMessage uses the provided key and signs any protobuf
 // message that was generated for the TreeService by the
-// protoc-gen-go-neofs generator. Returns any errors directly.
+// protoc-gen-go-frostfs generator. Returns any errors directly.
 func SignMessage(m message, key *ecdsa.PrivateKey) error {
 	binBody, err := m.ReadSignedData(nil)
 	if err != nil {
 		return err
 	}
 
-	keySDK := neofsecdsa.Signer(*key)
+	keySDK := frostfsecdsa.Signer(*key)
 	data, err := keySDK.Sign(binBody)
 	if err != nil {
 		return err
@@ -218,7 +218,7 @@ var errNoAllowRules = errors.New("not found allowing rules for the request")
 // requests do not contain any "object" information that could be filtered and,
 // therefore, filtering leads to unexpected results.
 // The code was copied with the minor updates from the SDK repo:
-// https://github.com/nspcc-dev/neofs-sdk-go/blob/43a57d42dd50dc60465bfd3482f7f12bcfcf3411/eacl/validator.go#L28.
+// https://github.com/nspcc-dev/frostfs-sdk-go/blob/43a57d42dd50dc60465bfd3482f7f12bcfcf3411/eacl/validator.go#L28.
 func checkEACL(tb eacl.Table, signer []byte, role eacl.Role, op eacl.Operation) error {
 	for _, record := range tb.Records() {
 		// check type of operation

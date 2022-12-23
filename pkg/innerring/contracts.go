@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
 	"github.com/spf13/viper"
 )
 
 type contracts struct {
-	neofs      util.Uint160 // in mainnet
+	frostfs    util.Uint160 // in mainnet
 	netmap     util.Uint160 // in morph
 	balance    util.Uint160 // in morph
 	container  util.Uint160 // in morph
@@ -20,7 +20,7 @@ type contracts struct {
 	processing util.Uint160 // in mainnet
 	reputation util.Uint160 // in morph
 	subnet     util.Uint160 // in morph
-	neofsID    util.Uint160 // in morph
+	frostfsID  util.Uint160 // in morph
 
 	alphabet alphabetContracts // in morph
 }
@@ -32,9 +32,9 @@ func parseContracts(cfg *viper.Viper, morph *client.Client, withoutMainNet, with
 	)
 
 	if !withoutMainNet {
-		result.neofs, err = util.Uint160DecodeStringLE(cfg.GetString("contracts.neofs"))
+		result.frostfs, err = util.Uint160DecodeStringLE(cfg.GetString("contracts.frostfs"))
 		if err != nil {
-			return nil, fmt.Errorf("can't get neofs script hash: %w", err)
+			return nil, fmt.Errorf("can't get frostfs script hash: %w", err)
 		}
 
 		if !withoutMainNotary {
@@ -63,7 +63,7 @@ func parseContracts(cfg *viper.Viper, morph *client.Client, withoutMainNet, with
 		{"contracts.audit", client.NNSAuditContractName, &result.audit},
 		{"contracts.reputation", client.NNSReputationContractName, &result.reputation},
 		{"contracts.subnet", client.NNSSubnetworkContractName, &result.subnet},
-		{"contracts.neofsid", client.NNSNeoFSIDContractName, &result.neofsID},
+		{"contracts.frostfsid", client.NNSNeoFSIDContractName, &result.frostfsID},
 	}
 
 	for _, t := range targets {

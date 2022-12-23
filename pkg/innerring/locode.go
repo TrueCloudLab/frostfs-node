@@ -1,11 +1,11 @@
 package innerring
 
 import (
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap"
-	irlocode "github.com/nspcc-dev/neofs-node/pkg/innerring/processors/netmap/nodevalidation/locode"
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
-	locodedb "github.com/nspcc-dev/neofs-node/pkg/util/locode/db"
-	locodebolt "github.com/nspcc-dev/neofs-node/pkg/util/locode/db/boltdb"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap"
+	irlocode "github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/netmap/nodevalidation/locode"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
+	locodedb "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/db"
+	locodebolt "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/db/boltdb"
 	"github.com/spf13/viper"
 )
 

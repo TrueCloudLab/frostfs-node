@@ -3,8 +3,8 @@ package tombstone
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	lru "github.com/hashicorp/golang-lru"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
 

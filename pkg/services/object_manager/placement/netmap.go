@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"github.com/hashicorp/golang-lru/simplelru"
-	"github.com/nspcc-dev/neofs-node/pkg/core/netmap"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	netmapSDK "github.com/nspcc-dev/neofs-sdk-go/netmap"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
 )
 
 type netMapBuilder struct {

@@ -3,7 +3,7 @@ package loadcontroller
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-sdk-go/container"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
 )
 
 func usedSpaceFilterEpochEQ(epoch uint64) UsedSpaceFilter {

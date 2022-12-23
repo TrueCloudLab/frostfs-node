@@ -3,8 +3,8 @@ package engine
 import (
 	"sort"
 
-	objectcore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
+	objectcore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
 )
 
 // ErrEndOfListing is returned from an object listing with cursor

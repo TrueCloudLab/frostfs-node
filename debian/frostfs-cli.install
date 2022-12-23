@@ -1,0 +1,3 @@
+bin/frostfs-adm   usr/bin
+bin/frostfs-cli   usr/bin
+bin/frostfs-lens  usr/bin

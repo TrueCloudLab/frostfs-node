@@ -1,11 +1,11 @@
 package putsvc
 
 import (
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	refsV2 "github.com/nspcc-dev/neofs-api-go/v2/refs"
-	putsvc "github.com/nspcc-dev/neofs-node/pkg/services/object/put"
-	"github.com/nspcc-dev/neofs-node/pkg/services/object/util"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	refsV2 "github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	putsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object/put"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
 
 func (s *streamer) toInitPrm(part *objectV2.PutObjectPartInit, req *objectV2.PutRequest) (*putsvc.PutInitPrm, error) {

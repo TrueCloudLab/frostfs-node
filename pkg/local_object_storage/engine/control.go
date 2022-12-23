@@ -7,8 +7,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/shard"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/shard"
 	"go.uber.org/zap"
 )
 

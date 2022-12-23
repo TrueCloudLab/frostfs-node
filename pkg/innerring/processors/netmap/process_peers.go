@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/hex"
 
-	netmapclient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	netmapEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/netmap"
-	subnetEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/subnet"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
-	subnetid "github.com/nspcc-dev/neofs-sdk-go/subnet/id"
+	netmapclient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	netmapEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/netmap"
+	subnetEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/subnet"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
+	subnetid "github.com/TrueCloudLab/frostfs-sdk-go/subnet/id"
 	"go.uber.org/zap"
 )
 
@@ -70,7 +70,7 @@ func (np *Processor) processAddPeer(ev netmapEvent.AddPeer) {
 
 		// In notary environments we call AddPeerIR method instead of AddPeer.
 		// It differs from AddPeer only by name, so we can do this in the same form.
-		// See https://github.com/nspcc-dev/neofs-contract/issues/154.
+		// See https://github.com/nspcc-dev/frostfs-contract/issues/154.
 		const methodAddPeerNotary = "addPeerIR"
 
 		if nr := ev.NotaryRequest(); nr != nil {

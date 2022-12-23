@@ -6,13 +6,13 @@ import (
 	"fmt"
 	gio "io"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	objectCore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
+	storagelog "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/internal/log"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util"
+	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"github.com/nspcc-dev/neo-go/pkg/io"
-	"github.com/nspcc-dev/neofs-node/pkg/core/object"
-	objectCore "github.com/nspcc-dev/neofs-node/pkg/core/object"
-	storagelog "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/internal/log"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/util"
-	objectSDK "github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
 )
 

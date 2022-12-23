@@ -1,14 +1,14 @@
-package neofs
+package frostfs
 
 import (
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	neofsEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/neofs"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
 	"go.uber.org/zap"
 )
 
 // Process config event by setting configuration value from the mainchain in
 // the sidechain.
-func (np *Processor) processConfig(config *neofsEvent.Config) {
+func (np *Processor) processConfig(config *frostfsEvent.Config) {
 	if !np.alphabetState.IsAlphabet() {
 		np.log.Info("non alphabet mode, ignore config")
 		return

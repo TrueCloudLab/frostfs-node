@@ -1,20 +1,20 @@
-package neofs
+package frostfs
 
 import (
 	"errors"
 	"fmt"
 	"sync"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
+	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/fixedn"
 	"github.com/nspcc-dev/neo-go/pkg/util"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/balance"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client/neofsid"
-	nmClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
-	neofsEvent "github.com/nspcc-dev/neofs-node/pkg/morph/event/neofs"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"github.com/panjf2000/ants/v2"
 	"go.uber.org/zap"
 )
@@ -35,11 +35,11 @@ type (
 		ToBalancePrecision(int64) int64
 	}
 
-	// Processor of events produced by neofs contract in main net.
+	// Processor of events produced by frostfs contract in main net.
 	Processor struct {
 		log                 *logger.Logger
 		pool                *ants.Pool
-		neofsContract       util.Uint160
+		frostfsContract     util.Uint160
 		balanceClient       *balance.Client
 		netmapClient        *nmClient.Client
 		morphClient         *client.Client
@@ -52,7 +52,7 @@ type (
 		mintEmitValue       fixedn.Fixed8
 		gasBalanceThreshold int64
 
-		neofsIDClient *neofsid.Client
+		frostfsIDClient *neofsid.Client
 	}
 
 	// Params of the processor constructor.
@@ -83,37 +83,37 @@ const (
 	unbindNotification   = "Unbind"
 )
 
-// New creates neofs mainnet contract processor instance.
+// New creates frostfs mainnet contract processor instance.
 func New(p *Params) (*Processor, error) {
 	switch {
 	case p.Log == nil:
-		return nil, errors.New("ir/neofs: logger is not set")
+		return nil, errors.New("ir/frostfs: logger is not set")
 	case p.MorphClient == nil:
-		return nil, errors.New("ir/neofs: neo:morph client is not set")
+		return nil, errors.New("ir/frostfs: neo:morph client is not set")
 	case p.EpochState == nil:
-		return nil, errors.New("ir/neofs: global state is not set")
+		return nil, errors.New("ir/frostfs: global state is not set")
 	case p.AlphabetState == nil:
-		return nil, errors.New("ir/neofs: global state is not set")
+		return nil, errors.New("ir/frostfs: global state is not set")
 	case p.Converter == nil:
-		return nil, errors.New("ir/neofs: balance precision converter is not set")
+		return nil, errors.New("ir/frostfs: balance precision converter is not set")
 	}
 
-	p.Log.Debug("neofs worker pool", zap.Int("size", p.PoolSize))
+	p.Log.Debug("frostfs worker pool", zap.Int("size", p.PoolSize))
 
 	pool, err := ants.NewPool(p.PoolSize, ants.WithNonblocking(true))
 	if err != nil {
-		return nil, fmt.Errorf("ir/neofs: can't create worker pool: %w", err)
+		return nil, fmt.Errorf("ir/frostfs: can't create worker pool: %w", err)
 	}
 
 	lruCache, err := lru.New(p.MintEmitCacheSize)
 	if err != nil {
-		return nil, fmt.Errorf("ir/neofs: can't create LRU cache for gas emission: %w", err)
+		return nil, fmt.Errorf("ir/frostfs: can't create LRU cache for gas emission: %w", err)
 	}
 
 	return &Processor{
 		log:                 p.Log,
 		pool:                pool,
-		neofsContract:       p.NeoFSContract,
+		frostfsContract:     p.NeoFSContract,
 		balanceClient:       p.BalanceClient,
 		netmapClient:        p.NetmapClient,
 		morphClient:         p.MorphClient,
@@ -126,7 +126,7 @@ func New(p *Params) (*Processor, error) {
 		mintEmitValue:       p.MintEmitValue,
 		gasBalanceThreshold: p.GasBalanceThreshold,
 
-		neofsIDClient: p.NeoFSIDClient,
+		frostfsIDClient: p.NeoFSIDClient,
 	}, nil
 }
 
@@ -138,36 +138,36 @@ func (np *Processor) ListenerNotificationParsers() []event.NotificationParserInf
 		p event.NotificationParserInfo
 	)
 
-	p.SetScriptHash(np.neofsContract)
+	p.SetScriptHash(np.frostfsContract)
 
 	// deposit event
 	p.SetType(event.TypeFromString(depositNotification))
-	p.SetParser(neofsEvent.ParseDeposit)
+	p.SetParser(frostfsEvent.ParseDeposit)
 	parsers = append(parsers, p)
 
 	// withdraw event
 	p.SetType(event.TypeFromString(withdrawNotification))
-	p.SetParser(neofsEvent.ParseWithdraw)
+	p.SetParser(frostfsEvent.ParseWithdraw)
 	parsers = append(parsers, p)
 
 	// cheque event
 	p.SetType(event.TypeFromString(chequeNotification))
-	p.SetParser(neofsEvent.ParseCheque)
+	p.SetParser(frostfsEvent.ParseCheque)
 	parsers = append(parsers, p)
 
 	// config event
 	p.SetType(event.TypeFromString(configNotification))
-	p.SetParser(neofsEvent.ParseConfig)
+	p.SetParser(frostfsEvent.ParseConfig)
 	parsers = append(parsers, p)
 
 	// bind event
 	p.SetType(event.TypeFromString(bindNotification))
-	p.SetParser(neofsEvent.ParseBind)
+	p.SetParser(frostfsEvent.ParseBind)
 	parsers = append(parsers, p)
 
 	// unbind event
 	p.SetType(event.TypeFromString(unbindNotification))
-	p.SetParser(neofsEvent.ParseUnbind)
+	p.SetParser(frostfsEvent.ParseUnbind)
 	parsers = append(parsers, p)
 
 	return parsers
@@ -181,7 +181,7 @@ func (np *Processor) ListenerNotificationHandlers() []event.NotificationHandlerI
 		h event.NotificationHandlerInfo
 	)
 
-	h.SetScriptHash(np.neofsContract)
+	h.SetScriptHash(np.frostfsContract)
 
 	// deposit handler
 	h.SetType(event.TypeFromString(depositNotification))

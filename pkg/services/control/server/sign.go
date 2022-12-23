@@ -6,10 +6,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	"github.com/nspcc-dev/neofs-node/pkg/services/control"
-	neofscrypto "github.com/nspcc-dev/neofs-sdk-go/crypto"
-	neofsecdsa "github.com/nspcc-dev/neofs-sdk-go/crypto/ecdsa"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/control"
+	frostfscrypto "github.com/TrueCloudLab/frostfs-sdk-go/crypto"
+	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
 )
 
 // SignedMessage is an interface of Control service message.
@@ -56,7 +56,7 @@ func (s *Server) isValidRequest(req SignedMessage) error {
 	sigV2.SetSign(sign.GetSign())
 	sigV2.SetScheme(refs.ECDSA_SHA512)
 
-	var sig neofscrypto.Signature
+	var sig frostfscrypto.Signature
 	if err := sig.ReadFromV2(sigV2); err != nil {
 		return fmt.Errorf("can't read signature: %w", err)
 	}
@@ -76,9 +76,9 @@ func SignMessage(key *ecdsa.PrivateKey, msg SignedMessage) error {
 		return fmt.Errorf("marshal request body: %w", err)
 	}
 
-	var sig neofscrypto.Signature
+	var sig frostfscrypto.Signature
 
-	err = sig.Calculate(neofsecdsa.Signer(*key), binBody)
+	err = sig.Calculate(frostfsecdsa.Signer(*key), binBody)
 	if err != nil {
 		return fmt.Errorf("calculate signature: %w", err)
 	}

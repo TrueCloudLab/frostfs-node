@@ -1,0 +1,3 @@
+/etc/frostfs/storage
+/srv/frostfs
+/var/lib/frostfs/storage

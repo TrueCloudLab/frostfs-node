@@ -1,0 +1,31 @@
+package writecache
+
+import (
+	common "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-lens/internal"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/writecache"
+	"github.com/spf13/cobra"
+	"go.etcd.io/bbolt"
+)
+
+var (
+	vAddress string
+	vPath    string
+	vOut     string
+)
+
+// Root contains `write-cache` command definition.
+var Root = &cobra.Command{
+	Use:   "write-cache",
+	Short: "Operations with write-cache",
+}
+
+func init() {
+	Root.AddCommand(listCMD, inspectCMD)
+}
+
+func openWC(cmd *cobra.Command) *bbolt.DB {
+	db, err := writecache.OpenDB(vPath, true)
+	common.ExitOnErr(cmd, common.Errf("could not open write-cache db: %w", err))
+
+	return db
+}

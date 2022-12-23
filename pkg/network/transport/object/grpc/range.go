@@ -1,8 +1,8 @@
 package object
 
 import (
-	"github.com/nspcc-dev/neofs-api-go/v2/object"
-	objectGRPC "github.com/nspcc-dev/neofs-api-go/v2/object/grpc"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	objectGRPC "github.com/TrueCloudLab/frostfs-api-go/v2/object/grpc"
 )
 
 type getRangeStreamerV2 struct {

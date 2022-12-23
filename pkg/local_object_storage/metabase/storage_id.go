@@ -1,8 +1,8 @@
 package meta
 
 import (
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"github.com/nspcc-dev/neo-go/pkg/util/slice"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
 )
 

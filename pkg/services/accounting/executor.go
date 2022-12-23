@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/accounting"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/accounting"
 )
 
 type ServiceExecutor interface {

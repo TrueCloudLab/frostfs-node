@@ -1,6 +1,6 @@
 package settlement
 
-import "github.com/nspcc-dev/neofs-node/pkg/util/logger"
+import "github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 
 type auditEventHandler struct {
 	log *logger.Logger

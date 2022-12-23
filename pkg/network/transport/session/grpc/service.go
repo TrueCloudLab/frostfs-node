@@ -3,9 +3,9 @@ package session
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/session"
-	sessionGRPC "github.com/nspcc-dev/neofs-api-go/v2/session/grpc"
-	sessionsvc "github.com/nspcc-dev/neofs-node/pkg/services/session"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	sessionGRPC "github.com/TrueCloudLab/frostfs-api-go/v2/session/grpc"
+	sessionsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/session"
 )
 
 // Server wraps NeoFS API Session service and

@@ -3,8 +3,8 @@ package basic
 import (
 	"math/big"
 
-	"github.com/nspcc-dev/neofs-node/pkg/innerring/processors/settlement/common"
-	cntClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/innerring/processors/settlement/common"
+	cntClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
 	"go.uber.org/zap"
 )
 

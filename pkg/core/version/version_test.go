@@ -3,8 +3,8 @@ package version_test
 import (
 	"testing"
 
-	"github.com/nspcc-dev/neofs-node/pkg/core/version"
-	versionSDK "github.com/nspcc-dev/neofs-sdk-go/version"
+	"github.com/TrueCloudLab/frostfs-node/pkg/core/version"
+	versionSDK "github.com/TrueCloudLab/frostfs-sdk-go/version"
 	"github.com/stretchr/testify/require"
 )
 

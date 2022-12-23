@@ -3,9 +3,9 @@ package audit
 import (
 	"sync"
 
-	"github.com/nspcc-dev/neofs-sdk-go/audit"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	"github.com/TrueCloudLab/frostfs-sdk-go/audit"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 // Report tracks the progress of auditing container data.

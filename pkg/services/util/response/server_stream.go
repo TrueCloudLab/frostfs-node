@@ -3,7 +3,7 @@ package response
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 )
 
 // ServerMessageStreamer represents server-side message streamer

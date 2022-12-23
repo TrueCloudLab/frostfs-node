@@ -19,7 +19,7 @@ from the network map.
 
 To check the possibility of MM-switching at the moment, exec:
 ```shell
-$ neofs-cli netmap netinfo
+$ frostfs-cli netmap netinfo
 ...
 Maintenance mode allowed: true
 ...
@@ -27,12 +27,12 @@ Maintenance mode allowed: true
 
 To toggle the setting in the running NeoFS Sidechain, exec:
 ```shell
-$ neofs-adm morph set-config MaintenanceModeAllowed=true|false
+$ frostfs-adm morph set-config MaintenanceModeAllowed=true|false
 ```
 
 To switch the node to MM, exec:
 ```shell
-$ neofs-cli control set-status --status maintenance [--force|-f]
+$ frostfs-cli control set-status --status maintenance [--force|-f]
 ```
 `-f` flag allows to force local maintenance regardless of the network settings.
 

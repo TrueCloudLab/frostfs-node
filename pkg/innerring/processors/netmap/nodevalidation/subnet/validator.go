@@ -3,7 +3,7 @@ package subnet
 import (
 	"errors"
 
-	morphsubnet "github.com/nspcc-dev/neofs-node/pkg/morph/client/subnet"
+	morphsubnet "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/subnet"
 )
 
 // Validator is an utility that verifies node subnet

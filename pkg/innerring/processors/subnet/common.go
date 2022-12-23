@@ -3,7 +3,7 @@ package subnetevents
 import (
 	"fmt"
 
-	subnetid "github.com/nspcc-dev/neofs-sdk-go/subnet/id"
+	subnetid "github.com/TrueCloudLab/frostfs-sdk-go/subnet/id"
 )
 
 // common interface of subnet notifications with subnet ID.

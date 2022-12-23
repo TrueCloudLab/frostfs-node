@@ -3,8 +3,8 @@ package audit
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	auditAPI "github.com/nspcc-dev/neofs-sdk-go/audit"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	auditAPI "github.com/TrueCloudLab/frostfs-sdk-go/audit"
 )
 
 // ResultID is an identity of audit result inside audit contract.

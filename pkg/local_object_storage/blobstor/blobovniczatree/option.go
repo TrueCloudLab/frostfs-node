@@ -3,9 +3,9 @@ package blobovniczatree
 import (
 	"io/fs"
 
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobovnicza"
-	"github.com/nspcc-dev/neofs-node/pkg/local_object_storage/blobstor/compression"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobovnicza"
+	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/compression"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
 

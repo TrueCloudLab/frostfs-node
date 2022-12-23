@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 
-	cntClient "github.com/nspcc-dev/neofs-node/pkg/morph/client/container"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event/container"
-	"github.com/nspcc-dev/neofs-sdk-go/eacl"
-	"github.com/nspcc-dev/neofs-sdk-go/session"
+	cntClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event/container"
+	"github.com/TrueCloudLab/frostfs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-sdk-go/session"
 	"go.uber.org/zap"
 )
 

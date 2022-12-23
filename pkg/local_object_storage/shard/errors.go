@@ -3,8 +3,8 @@ package shard
 import (
 	"errors"
 
-	meta "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/metabase"
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
+	meta "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/metabase"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
 )
 
 // IsErrNotFound checks if error returned by Shard Get/Head/GetRange method

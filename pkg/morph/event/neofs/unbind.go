@@ -1,10 +1,10 @@
-package neofs
+package frostfs
 
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/core/state"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 )
 
 type Unbind struct {

@@ -5,10 +5,10 @@ import (
 	"errors"
 	"io"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/object"
-	objectGRPC "github.com/nspcc-dev/neofs-api-go/v2/object/grpc"
-	objectSvc "github.com/nspcc-dev/neofs-node/pkg/services/object"
-	"github.com/nspcc-dev/neofs-node/pkg/services/util"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	objectGRPC "github.com/TrueCloudLab/frostfs-api-go/v2/object/grpc"
+	objectSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/object"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 )
 
 // Server wraps NeoFS API Object service and

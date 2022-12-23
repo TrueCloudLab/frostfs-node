@@ -5,15 +5,15 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/container"
-	"github.com/nspcc-dev/neofs-api-go/v2/refs"
-	sessionV2 "github.com/nspcc-dev/neofs-api-go/v2/session"
-	containercore "github.com/nspcc-dev/neofs-node/pkg/core/container"
-	containerSvc "github.com/nspcc-dev/neofs-node/pkg/services/container"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	eaclSDK "github.com/nspcc-dev/neofs-sdk-go/eacl"
-	"github.com/nspcc-dev/neofs-sdk-go/session"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/container"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	sessionV2 "github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	containercore "github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	containerSvc "github.com/TrueCloudLab/frostfs-node/pkg/services/container"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	eaclSDK "github.com/TrueCloudLab/frostfs-sdk-go/eacl"
+	"github.com/TrueCloudLab/frostfs-sdk-go/session"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 )
 
 type morphExecutor struct {

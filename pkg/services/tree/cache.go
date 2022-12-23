@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/network"
 	"github.com/hashicorp/golang-lru/simplelru"
-	"github.com/nspcc-dev/neofs-node/pkg/network"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"

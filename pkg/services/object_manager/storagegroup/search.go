@@ -1,7 +1,7 @@
 package storagegroup
 
 import (
-	"github.com/nspcc-dev/neofs-sdk-go/object"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
 
 // SearchQuery returns search query to filter

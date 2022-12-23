@@ -3,7 +3,7 @@ package reputation
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 )
 
 func (p *Put) setEpoch(v uint64) {

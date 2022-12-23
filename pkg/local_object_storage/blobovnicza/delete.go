@@ -1,8 +1,8 @@
 package blobovnicza
 
 import (
-	apistatus "github.com/nspcc-dev/neofs-sdk-go/client/status"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
 	"go.uber.org/zap"
 )

@@ -6,16 +6,16 @@ import (
 	"errors"
 	"fmt"
 
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	refsV2 "github.com/TrueCloudLab/frostfs-api-go/v2/refs"
+	sessionV2 "github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-sdk-go/bearer"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container/acl"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	sessionSDK "github.com/TrueCloudLab/frostfs-sdk-go/session"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	refsV2 "github.com/nspcc-dev/neofs-api-go/v2/refs"
-	sessionV2 "github.com/nspcc-dev/neofs-api-go/v2/session"
-	"github.com/nspcc-dev/neofs-sdk-go/bearer"
-	"github.com/nspcc-dev/neofs-sdk-go/container/acl"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	sessionSDK "github.com/nspcc-dev/neofs-sdk-go/session"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 )
 
 var errMissingContainerID = errors.New("missing container ID")
@@ -130,7 +130,7 @@ func ownerFromToken(token *sessionSDK.Object) (*user.ID, *keys.PublicKey, error)
 	tokenIssuer := token.Issuer()
 
 	if !isOwnerFromKey(tokenIssuer, tokenIssuerKey) {
-		// TODO: #767 in this case we can issue all owner keys from neofs.id and check once again
+		// TODO: #767 in this case we can issue all owner keys from frostfs.id and check once again
 		return nil, nil, errInvalidSessionOwner
 	}
 

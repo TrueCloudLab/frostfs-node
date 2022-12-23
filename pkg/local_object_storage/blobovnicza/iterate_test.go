@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
 	"github.com/nspcc-dev/neo-go/pkg/util/slice"
-	oidtest "github.com/nspcc-dev/neofs-sdk-go/object/id/test"
 	"github.com/stretchr/testify/require"
 	"go.etcd.io/bbolt"
 )

@@ -1,9 +1,9 @@
 package blobstor
 
 import (
-	storagelog "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/internal/log"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	storagelog "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/internal/log"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
 const deleteOp = "DELETE"

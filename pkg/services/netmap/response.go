@@ -3,9 +3,9 @@ package netmap
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-api-go/v2/netmap"
-	"github.com/nspcc-dev/neofs-node/pkg/services/util"
-	"github.com/nspcc-dev/neofs-node/pkg/services/util/response"
+	"github.com/TrueCloudLab/frostfs-api-go/v2/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util/response"
 )
 
 type responseService struct {

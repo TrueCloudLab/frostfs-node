@@ -3,7 +3,7 @@ package neofsid
 import (
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
 type CommonBindPrm struct {

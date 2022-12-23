@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/nspcc-dev/neofs-node/pkg/util/locode"
-	"github.com/nspcc-dev/neofs-sdk-go/netmap"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/locode"
+	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 )
 
 var errMissingRequiredAttr = errors.New("missing required attribute in DB record")

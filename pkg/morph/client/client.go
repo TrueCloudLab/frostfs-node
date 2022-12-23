@@ -8,6 +8,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/nspcc-dev/neo-go/pkg/core/native/noderoles"
 	"github.com/nspcc-dev/neo-go/pkg/core/transaction"
@@ -24,7 +25,6 @@ import (
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
 	"github.com/nspcc-dev/neo-go/pkg/vm/vmstate"
 	"github.com/nspcc-dev/neo-go/pkg/wallet"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
 	"go.uber.org/atomic"
 	"go.uber.org/zap"
 )
@@ -164,17 +164,17 @@ func (e *notHaltStateError) Error() string {
 var errEmptyInvocationScript = errors.New("got empty invocation script from neo node")
 
 // implementation of error interface for NeoFS-specific errors.
-type neofsError struct {
+type frostfsError struct {
 	err error
 }
 
-func (e neofsError) Error() string {
-	return fmt.Sprintf("neofs error: %v", e.err)
+func (e frostfsError) Error() string {
+	return fmt.Sprintf("frostfs error: %v", e.err)
 }
 
-// wraps NeoFS-specific error into neofsError. Arg must not be nil.
+// wraps NeoFS-specific error into frostfsError. Arg must not be nil.
 func wrapNeoFSError(err error) error {
-	return neofsError{err}
+	return frostfsError{err}
 }
 
 // Invoke invokes contract method by sending transaction into blockchain.
@@ -383,7 +383,7 @@ func (c *Client) roleList(r noderoles.Role) (keys.PublicKeys, error) {
 
 // tries to resolve sc.Parameter from the arg.
 //
-// Wraps any error to neofsError.
+// Wraps any error to frostfsError.
 func toStackParameter(value interface{}) (sc.Parameter, error) {
 	var result = sc.Parameter{
 		Value: value,

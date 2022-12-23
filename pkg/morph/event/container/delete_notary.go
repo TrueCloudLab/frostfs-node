@@ -1,8 +1,8 @@
 package container
 
 import (
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/vm/opcode"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 )
 
 func (d *Delete) setContainerID(v []byte) {

@@ -4,9 +4,9 @@ import (
 	"crypto/sha256"
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
-	cid "github.com/nspcc-dev/neofs-sdk-go/container/id"
 )
 
 // ListAllAuditResultID returns a list of all audit result IDs inside audit contract.

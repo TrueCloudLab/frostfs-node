@@ -5,15 +5,15 @@ import (
 	"strconv"
 	"testing"
 
+	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
+	"github.com/TrueCloudLab/frostfs-sdk-go/object"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
+	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
+	sessiontest "github.com/TrueCloudLab/frostfs-sdk-go/session/test"
+	"github.com/TrueCloudLab/frostfs-sdk-go/storagegroup"
+	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
-	objectV2 "github.com/nspcc-dev/neofs-api-go/v2/object"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
-	"github.com/nspcc-dev/neofs-sdk-go/object"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
-	oidtest "github.com/nspcc-dev/neofs-sdk-go/object/id/test"
-	sessiontest "github.com/nspcc-dev/neofs-sdk-go/session/test"
-	"github.com/nspcc-dev/neofs-sdk-go/storagegroup"
-	"github.com/nspcc-dev/neofs-sdk-go/user"
 	"github.com/stretchr/testify/require"
 )
 

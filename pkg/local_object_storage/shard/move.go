@@ -1,8 +1,8 @@
 package shard
 
 import (
-	meta "github.com/nspcc-dev/neofs-node/pkg/local_object_storage/metabase"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
+	meta "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/metabase"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.uber.org/zap"
 )
 

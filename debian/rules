@@ -12,26 +12,26 @@ override_dh_auto_install:
 	echo $(DEB_BUILD_OPTIONS)
 	dh_auto_install
 
-	bin/neofs-adm gendoc -t man man/
-	bin/neofs-cli gendoc -t man man/
+	bin/frostfs-adm gendoc -t man man/
+	bin/frostfs-cli gendoc -t man man/
 
-	bin/neofs-adm completion bash > debian/neofs-adm.bash-completion
-	bin/neofs-cli completion bash > debian/neofs-cli.bash-completion
-	install -m 0755 -d debian/neofs-cli/usr/share/fish/completions/
-	install -m 0755 -d debian/neofs-cli/usr/share/zsh/vendor-completions/
-	bin/neofs-adm completion fish > debian/neofs-cli/usr/share/fish/completions/neofs-adm.fish
-	bin/neofs-adm completion zsh > debian/neofs-cli/usr/share/zsh/vendor-completions/_neofs-adm
-	bin/neofs-cli completion fish > debian/neofs-cli/usr/share/fish/completions/neofs-cli.fish
-	bin/neofs-cli completion zsh > debian/neofs-cli/usr/share/zsh/vendor-completions/_neofs-cli
+	bin/frostfs-adm completion bash > debian/frostfs-adm.bash-completion
+	bin/frostfs-cli completion bash > debian/frostfs-cli.bash-completion
+	install -m 0755 -d debian/frostfs-cli/usr/share/fish/completions/
+	install -m 0755 -d debian/frostfs-cli/usr/share/zsh/vendor-completions/
+	bin/frostfs-adm completion fish > debian/frostfs-cli/usr/share/fish/completions/frostfs-adm.fish
+	bin/frostfs-adm completion zsh > debian/frostfs-cli/usr/share/zsh/vendor-completions/_frostfs-adm
+	bin/frostfs-cli completion fish > debian/frostfs-cli/usr/share/fish/completions/frostfs-cli.fish
+	bin/frostfs-cli completion zsh > debian/frostfs-cli/usr/share/zsh/vendor-completions/_frostfs-cli
 
-	install -T -m 0640 config/example/ir.yaml debian/neofs-ir/etc/neofs/ir/config.yml
-	install -T -m 0640 config/example/ir-control.yaml debian/neofs-ir/etc/neofs/ir/control.yml
-	install -T -m 0640 config/example/node.yaml debian/neofs-storage/etc/neofs/storage/config.yml
-	install -T -m 0640 config/example/node-control.yaml debian/neofs-storage/etc/neofs/storage/control.yml
+	install -T -m 0640 config/example/ir.yaml debian/frostfs-ir/etc/frostfs/ir/config.yml
+	install -T -m 0640 config/example/ir-control.yaml debian/frostfs-ir/etc/frostfs/ir/control.yml
+	install -T -m 0640 config/example/node.yaml debian/frostfs-storage/etc/frostfs/storage/config.yml
+	install -T -m 0640 config/example/node-control.yaml debian/frostfs-storage/etc/frostfs/storage/control.yml
 
 override_dh_installsystemd:
-	dh_installsystemd --no-enable --no-start --name=neofs-ir
-	dh_installsystemd --no-enable --no-start --name=neofs-storage
+	dh_installsystemd --no-enable --no-start --name=frostfs-ir
+	dh_installsystemd --no-enable --no-start --name=frostfs-storage
 
 override_dh_installchangelogs:
 	dh_installchangelogs -k CHANGELOG.md

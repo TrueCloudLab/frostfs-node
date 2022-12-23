@@ -6,9 +6,9 @@ import (
 	"sync"
 	"testing"
 
-	loadcontroller "github.com/nspcc-dev/neofs-node/pkg/services/container/announcement/load/controller"
-	"github.com/nspcc-dev/neofs-sdk-go/container"
-	cidtest "github.com/nspcc-dev/neofs-sdk-go/container/id/test"
+	loadcontroller "github.com/TrueCloudLab/frostfs-node/pkg/services/container/announcement/load/controller"
+	"github.com/TrueCloudLab/frostfs-sdk-go/container"
+	cidtest "github.com/TrueCloudLab/frostfs-sdk-go/container/id/test"
 	"github.com/stretchr/testify/require"
 )
 

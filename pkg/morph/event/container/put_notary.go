@@ -3,9 +3,9 @@ package container
 import (
 	"fmt"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/nspcc-dev/neo-go/pkg/network/payload"
 	"github.com/nspcc-dev/neo-go/pkg/vm/opcode"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/event"
 )
 
 func (p *Put) setRawContainer(v []byte) {

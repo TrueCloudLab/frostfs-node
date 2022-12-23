@@ -1,0 +1,16 @@
+[Unit]
+Description=NeoFS Storage node
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/frostfs-node --config /etc/frostfs/storage/config.yml
+User=frostfs-storage
+Group=frostfs-storage
+WorkingDirectory=/srv/frostfs
+Restart=always
+RestartSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

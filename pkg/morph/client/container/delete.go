@@ -4,8 +4,8 @@ import (
 	"crypto/sha256"
 	"fmt"
 
-	core "github.com/nspcc-dev/neofs-node/pkg/core/container"
-	"github.com/nspcc-dev/neofs-node/pkg/morph/client"
+	core "github.com/TrueCloudLab/frostfs-node/pkg/core/container"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
 // Delete marshals container ID, and passes it to Wrapper's Delete method

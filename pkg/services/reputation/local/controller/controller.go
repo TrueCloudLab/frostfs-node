@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	reputationcommon "github.com/nspcc-dev/neofs-node/pkg/services/reputation/common"
+	reputationcommon "github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/common"
 )
 
 // Prm groups the required parameters of the Controller's constructor.

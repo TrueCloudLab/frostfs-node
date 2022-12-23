@@ -6,6 +6,7 @@ import (
 	"math/big"
 	"strconv"
 
+	"github.com/TrueCloudLab/frostfs-contract/nns"
 	"github.com/nspcc-dev/neo-go/pkg/core/transaction"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/address"
@@ -14,30 +15,29 @@ import (
 	"github.com/nspcc-dev/neo-go/pkg/util"
 	"github.com/nspcc-dev/neo-go/pkg/vm/stackitem"
 	"github.com/nspcc-dev/neo-go/pkg/vm/vmstate"
-	"github.com/nspcc-dev/neofs-contract/nns"
 )
 
 const (
 	nnsContractID = 1 // NNS contract must be deployed first in the sidechain
 
 	// NNSAuditContractName is a name of the audit contract in NNS.
-	NNSAuditContractName = "audit.neofs"
+	NNSAuditContractName = "audit.frostfs"
 	// NNSBalanceContractName is a name of the balance contract in NNS.
-	NNSBalanceContractName = "balance.neofs"
+	NNSBalanceContractName = "balance.frostfs"
 	// NNSContainerContractName is a name of the container contract in NNS.
-	NNSContainerContractName = "container.neofs"
-	// NNSNeoFSIDContractName is a name of the neofsid contract in NNS.
-	NNSNeoFSIDContractName = "neofsid.neofs"
+	NNSContainerContractName = "container.frostfs"
+	// NNSNeoFSIDContractName is a name of the frostfsid contract in NNS.
+	NNSNeoFSIDContractName = "frostfsid.frostfs"
 	// NNSNetmapContractName is a name of the netmap contract in NNS.
-	NNSNetmapContractName = "netmap.neofs"
+	NNSNetmapContractName = "netmap.frostfs"
 	// NNSProxyContractName is a name of the proxy contract in NNS.
-	NNSProxyContractName = "proxy.neofs"
+	NNSProxyContractName = "proxy.frostfs"
 	// NNSReputationContractName is a name of the reputation contract in NNS.
-	NNSReputationContractName = "reputation.neofs"
+	NNSReputationContractName = "reputation.frostfs"
 	// NNSSubnetworkContractName is a name of the subnet contract in NNS.
-	NNSSubnetworkContractName = "subnet.neofs"
+	NNSSubnetworkContractName = "subnet.frostfs"
 	// NNSGroupKeyName is a name for the NeoFS group key record in NNS.
-	NNSGroupKeyName = "group.neofs"
+	NNSGroupKeyName = "group.frostfs"
 )
 
 var (
@@ -50,7 +50,7 @@ var (
 // NNSAlphabetContractName returns contract name of the alphabet contract in NNS
 // based on alphabet index.
 func NNSAlphabetContractName(index int) string {
-	return "alphabet" + strconv.Itoa(index) + ".neofs"
+	return "alphabet" + strconv.Itoa(index) + ".frostfs"
 }
 
 // NNSContractAddress returns contract address script hash based on its name
@@ -152,7 +152,7 @@ func nnsResolve(c *rpcclient.WSClient, nnsHash util.Uint160, domain string) (uti
 	}
 
 	// We support several formats for hash encoding, this logic should be maintained in sync
-	// with parseNNSResolveResult from cmd/neofs-adm/internal/modules/morph/initialize_nns.go
+	// with parseNNSResolveResult from cmd/frostfs-adm/internal/modules/morph/initialize_nns.go
 	h, err := util.Uint160DecodeStringLE(string(bs))
 	if err == nil {
 		return h, nil

@@ -3,7 +3,7 @@ package eigentrustctrl
 import (
 	"context"
 
-	"github.com/nspcc-dev/neofs-node/pkg/services/reputation/eigentrust"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/eigentrust"
 	"go.uber.org/zap"
 )
 

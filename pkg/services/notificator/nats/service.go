@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
+	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"github.com/nats-io/nats.go"
-	"github.com/nspcc-dev/neofs-node/pkg/util/logger"
-	oid "github.com/nspcc-dev/neofs-sdk-go/object/id"
 	"go.uber.org/zap"
 )
 

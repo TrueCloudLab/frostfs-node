@@ -1,7 +1,7 @@
 package version
 
 import (
-	"github.com/nspcc-dev/neofs-sdk-go/version"
+	"github.com/TrueCloudLab/frostfs-sdk-go/version"
 )
 
 // IsValid checks if Version is not earlier than the genesis version of the NeoFS.
