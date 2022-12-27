@@ -8,6 +8,8 @@ Changelog for FrostFS Node
 - Doc for extended headers (#2128)
 
 ### Changed
+- `common.PrintVerbose` prints via `cobra.Command.Printf` (#1962)
+
 ### Fixed
 - Big object removal with non-local parts (#1978)
 - Disable pilorama when moving to degraded mode (#2197)
