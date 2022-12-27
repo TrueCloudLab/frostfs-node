@@ -215,7 +215,8 @@ func (s *lruNetmapSource) Epoch() (uint64, error) {
 // wrapper over TTL cache of values read from the network
 // that implements container lister.
 type ttlContainerLister struct {
-	*ttlNetCache[string, *cacheItemContainerList]
+	inner  *ttlNetCache[string, *cacheItemContainerList]
+	client *cntClient.Client
 }
 
 // value type for ttlNetCache used by ttlContainerLister.
@@ -251,20 +252,18 @@ func newCachedContainerLister(c *cntClient.Client, ttl time.Duration) ttlContain
 		}, nil
 	})
 
-	return ttlContainerLister{lruCnrListerCache}
+	return ttlContainerLister{inner: lruCnrListerCache, client: c}
 }
 
 // List returns list of container IDs from the cache. If list is missing in the
 // cache or expired, then it returns container IDs from side chain and updates
 // the cache.
 func (s ttlContainerLister) List(id *user.ID) ([]cid.ID, error) {
-	var str string
-
-	if id != nil {
-		str = id.EncodeToString()
+	if id == nil {
+		return s.client.List(nil)
 	}
 
-	item, err := s.get(str)
+	item, err := s.inner.get(id.EncodeToString())
 	if err != nil {
 		return nil, err
 	}
@@ -287,14 +286,14 @@ func (s ttlContainerLister) List(id *user.ID) ([]cid.ID, error) {
 func (s *ttlContainerLister) update(owner user.ID, cnr cid.ID, add bool) {
 	strOwner := owner.EncodeToString()
 
-	val, ok := s.cache.Peek(strOwner)
+	val, ok := s.inner.cache.Peek(strOwner)
 	if !ok {
 		// we could cache the single cnr but in this case we will disperse
 		// with the Sidechain a lot
 		return
 	}
 
-	if s.ttl <= time.Since(val.t) {
+	if s.inner.ttl <= time.Since(val.t) {
 		return
 	}
 
