@@ -287,7 +287,7 @@ func (s ttlContainerLister) List(id *user.ID) ([]cid.ID, error) {
 func (s *ttlContainerLister) update(owner user.ID, cnr cid.ID, add bool) {
 	strOwner := owner.EncodeToString()
 
-	val, ok := s.cache.Get(strOwner)
+	val, ok := s.cache.Peek(strOwner)
 	if !ok {
 		// we could cache the single cnr but in this case we will disperse
 		// with the Sidechain a lot
