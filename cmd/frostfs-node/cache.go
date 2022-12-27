@@ -294,6 +294,10 @@ func (s *ttlContainerLister) update(owner user.ID, cnr cid.ID, add bool) {
 		return
 	}
 
+	if s.ttl <= time.Since(val.t) {
+		return
+	}
+
 	item := val.v
 
 	item.mtx.Lock()
