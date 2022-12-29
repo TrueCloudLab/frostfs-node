@@ -5,6 +5,7 @@ Changelog for FrostFS Node
 
 ### Added
 - Separate batching for replicated operations over the same container in pilorama (#1621)
+- Doc for extended headers (#2128)
 
 ### Changed
 ### Fixed
