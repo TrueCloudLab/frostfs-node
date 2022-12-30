@@ -23,8 +23,6 @@ type preparedObjectTarget interface {
 type distributedTarget struct {
 	traversal traversal
 
-	remotePool, localPool util.WorkerPool
-
 	obj     *objectSDK.Object
 	objMeta object.ContentMeta
 
@@ -32,7 +30,7 @@ type distributedTarget struct {
 
 	nodeTargetInitializer func(nodeDesc) preparedObjectTarget
 
-	isLocalKey func([]byte) bool
+	getWorkerPool func([]byte) (util.WorkerPool, bool)
 
 	relay func(nodeDesc) error
 
@@ -195,16 +193,7 @@ loop:
 
 			addr := addrs[i]
 
-			isLocal := t.isLocalKey(addr.PublicKey())
-
-			var workerPool util.WorkerPool
-
-			if isLocal {
-				workerPool = t.localPool
-			} else {
-				workerPool = t.remotePool
-			}
-
+			workerPool, isLocal := t.getWorkerPool(addr.PublicKey())
 			if err := workerPool.Submit(func() {
 				defer wg.Done()
 
