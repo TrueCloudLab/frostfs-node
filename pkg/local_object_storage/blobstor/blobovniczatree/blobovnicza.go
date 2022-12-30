@@ -13,7 +13,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"github.com/TrueCloudLab/hrw"
-	"github.com/hashicorp/golang-lru/simplelru"
+	"github.com/hashicorp/golang-lru/v2/simplelru"
 	"go.uber.org/zap"
 )
 
@@ -61,7 +61,7 @@ type Blobovniczas struct {
 	cfg
 
 	// cache of opened filled Blobovniczas
-	opened *simplelru.LRU
+	opened *simplelru.LRU[string, *blobovnicza.Blobovnicza]
 	// lruMtx protects opened cache.
 	// It isn't RWMutex because `Get` calls must
 	// lock this mutex on write, as LRU info is updated.
@@ -97,21 +97,20 @@ func NewBlobovniczaTree(opts ...Option) (blz *Blobovniczas) {
 		opts[i](&blz.cfg)
 	}
 
-	cache, err := simplelru.NewLRU(blz.openedCacheSize, func(key interface{}, value interface{}) {
-		p := key.(string)
+	cache, err := simplelru.NewLRU[string, *blobovnicza.Blobovnicza](blz.openedCacheSize, func(p string, value *blobovnicza.Blobovnicza) {
 		lvlPath := filepath.Dir(p)
 		if b, ok := blz.active[lvlPath]; ok && b.ind == u64FromHexString(filepath.Base(p)) {
 			// This branch is taken if we have recently updated active blobovnicza and remove
 			// it from opened cache.
 			return
-		} else if err := value.(*blobovnicza.Blobovnicza).Close(); err != nil {
+		} else if err := value.Close(); err != nil {
 			blz.log.Error("could not close Blobovnicza",
-				zap.String("id", key.(string)),
+				zap.String("id", p),
 				zap.String("error", err.Error()),
 			)
 		} else {
 			blz.log.Debug("blobovnicza successfully closed on evict",
-				zap.String("id", key.(string)),
+				zap.String("id", p),
 			)
 		}
 	})
