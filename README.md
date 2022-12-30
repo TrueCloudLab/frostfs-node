@@ -52,7 +52,7 @@ The latest version of neofs-node works with neofs-contract
 
 # Building
 
-To make all binaries you need Go 1.17+ and `make`:
+To make all binaries you need Go 1.18+ and `make`:
 ```
 make all
 ```

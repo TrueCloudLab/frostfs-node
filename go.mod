@@ -1,6 +1,6 @@
 module github.com/TrueCloudLab/frostfs-node
 
-go 1.17
+go 1.18
 
 require (
 	github.com/TrueCloudLab/frostfs-api-go/v2 v2.0.0-20221212144048-1351b6656d68
