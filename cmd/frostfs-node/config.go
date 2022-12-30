@@ -582,7 +582,7 @@ func initCfg(appCfg *config.Config) *cfg {
 		key:            key,
 		binPublicKey:   key.PublicKey().Bytes(),
 		localAddr:      netAddr,
-		respSvc:        response.NewService(response.WithNetworkState(netState)),
+		respSvc:        response.NewService(netState),
 		clientCache:    cache.NewSDKClientCache(cacheOpts),
 		bgClientCache:  cache.NewSDKClientCache(cacheOpts),
 		putClientCache: cache.NewSDKClientCache(cacheOpts),
