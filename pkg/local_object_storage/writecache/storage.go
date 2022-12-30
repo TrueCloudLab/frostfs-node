@@ -11,8 +11,8 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/util"
 	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
-	lru "github.com/hashicorp/golang-lru"
-	"github.com/hashicorp/golang-lru/simplelru"
+	lru "github.com/hashicorp/golang-lru/v2"
+	"github.com/hashicorp/golang-lru/v2/simplelru"
 	"go.etcd.io/bbolt"
 	"go.uber.org/zap"
 )
@@ -23,7 +23,7 @@ type store struct {
 	maxFlushedMarksCount int
 	maxRemoveBatchSize   int
 
-	flushed simplelru.LRUCache
+	flushed simplelru.LRUCache[string, bool]
 	db      *bbolt.DB
 
 	dbKeysToRemove []string
@@ -69,7 +69,7 @@ func (c *cache) openStore(readOnly bool) error {
 	// Write-cache can be opened multiple times during `SetMode`.
 	// flushed map must not be re-created in this case.
 	if c.flushed == nil {
-		c.flushed, _ = lru.NewWithEvict(c.maxFlushedMarksCount, c.removeFlushed)
+		c.flushed, _ = lru.NewWithEvict[string, bool](c.maxFlushedMarksCount, c.removeFlushed)
 	}
 	return nil
 }
@@ -78,12 +78,12 @@ func (c *cache) openStore(readOnly bool) error {
 // To minimize interference with the client operations, the actual removal
 // is done in batches.
 // It is not thread-safe and is used only as an evict callback to LRU cache.
-func (c *cache) removeFlushed(key, value interface{}) {
-	fromDatabase := value.(bool)
+func (c *cache) removeFlushed(key string, value bool) {
+	fromDatabase := value
 	if fromDatabase {
-		c.dbKeysToRemove = append(c.dbKeysToRemove, key.(string))
+		c.dbKeysToRemove = append(c.dbKeysToRemove, key)
 	} else {
-		c.fsKeysToRemove = append(c.fsKeysToRemove, key.(string))
+		c.fsKeysToRemove = append(c.fsKeysToRemove, key)
 	}
 
 	if len(c.dbKeysToRemove)+len(c.fsKeysToRemove) >= c.maxRemoveBatchSize {
