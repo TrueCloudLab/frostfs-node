@@ -39,6 +39,8 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 )
 
+require github.com/hashicorp/golang-lru/v2 v2.0.1
+
 require (
 	github.com/TrueCloudLab/frostfs-crypto v0.5.0 // indirect
 	github.com/TrueCloudLab/rfc6979 v0.3.0 // indirect
