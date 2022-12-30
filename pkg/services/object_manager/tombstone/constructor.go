@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
-	lru "github.com/hashicorp/golang-lru"
+	lru "github.com/hashicorp/golang-lru/v2"
 	"go.uber.org/zap"
 )
 
@@ -48,7 +48,7 @@ func NewChecker(oo ...Option) *ExpirationChecker {
 
 	panicOnNil(cfg.tsSource, "Tombstone source")
 
-	cache, err := lru.New(cfg.cacheSize)
+	cache, err := lru.New[string, uint64](cfg.cacheSize)
 	if err != nil {
 		panic(fmt.Errorf("could not create LRU cache with %d size: %w", cfg.cacheSize, err))
 	}

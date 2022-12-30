@@ -9,7 +9,7 @@ import (
 	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
-	"github.com/hashicorp/golang-lru/simplelru"
+	"github.com/hashicorp/golang-lru/v2/simplelru"
 )
 
 type netMapBuilder struct {
@@ -19,7 +19,7 @@ type netMapBuilder struct {
 	lastNm *netmapSDK.NetMap
 	// containerCache caches container nodes by ID. It is used to skip `GetContainerNodes` invocation if
 	// neither netmap nor container has changed.
-	containerCache simplelru.LRUCache
+	containerCache simplelru.LRUCache[string, [][]netmapSDK.NodeInfo]
 }
 
 type netMapSrc struct {
@@ -32,7 +32,7 @@ type netMapSrc struct {
 const defaultContainerCacheSize = 10
 
 func NewNetworkMapBuilder(nm *netmapSDK.NetMap) Builder {
-	cache, _ := simplelru.NewLRU(defaultContainerCacheSize, nil) // no error
+	cache, _ := simplelru.NewLRU[string, [][]netmapSDK.NodeInfo](defaultContainerCacheSize, nil) // no error
 	return &netMapBuilder{
 		nmSrc:          &netMapSrc{nm: nm},
 		containerCache: cache,
@@ -40,7 +40,7 @@ func NewNetworkMapBuilder(nm *netmapSDK.NetMap) Builder {
 }
 
 func NewNetworkMapSourceBuilder(nmSrc netmap.Source) Builder {
-	cache, _ := simplelru.NewLRU(defaultContainerCacheSize, nil) // no error
+	cache, _ := simplelru.NewLRU[string, [][]netmapSDK.NodeInfo](defaultContainerCacheSize, nil) // no error
 	return &netMapBuilder{
 		nmSrc:          nmSrc,
 		containerCache: cache,
@@ -65,8 +65,7 @@ func (b *netMapBuilder) BuildPlacement(cnr cid.ID, obj *oid.ID, p netmapSDK.Plac
 		raw, ok := b.containerCache.Get(string(binCnr))
 		b.mtx.Unlock()
 		if ok {
-			cn := raw.([][]netmapSDK.NodeInfo)
-			return BuildObjectPlacement(nm, cn, obj)
+			return BuildObjectPlacement(nm, raw, obj)
 		}
 	} else {
 		b.containerCache.Purge()

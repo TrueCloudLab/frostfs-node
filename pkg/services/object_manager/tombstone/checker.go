@@ -8,7 +8,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
-	lru "github.com/hashicorp/golang-lru"
+	lru "github.com/hashicorp/golang-lru/v2"
 	"go.uber.org/zap"
 )
 
@@ -31,7 +31,7 @@ type Source interface {
 // `ExpirationChecker{}` declarations leads to undefined behaviour
 // and may lead to panics.
 type ExpirationChecker struct {
-	cache *lru.Cache
+	cache *lru.Cache[string, uint64]
 
 	log *logger.Logger
 
@@ -51,7 +51,7 @@ func (g *ExpirationChecker) IsTombstoneAvailable(ctx context.Context, a oid.Addr
 
 	expEpoch, ok := g.cache.Get(addrStr)
 	if ok {
-		return expEpoch.(uint64) > epoch
+		return expEpoch > epoch
 	}
 
 	ts, err := g.tsSource.Tombstone(ctx, a, epoch)
