@@ -42,10 +42,10 @@ func (np *Processor) processDeposit(deposit *frostfsEvent.Deposit) {
 	defer np.mintEmitLock.Unlock()
 
 	val, ok := np.mintEmitCache.Get(receiver.String())
-	if ok && val.(uint64)+np.mintEmitThreshold >= curEpoch {
+	if ok && val+np.mintEmitThreshold >= curEpoch {
 		np.log.Warn("double mint emission declined",
 			zap.String("receiver", receiver.String()),
-			zap.Uint64("last_emission", val.(uint64)),
+			zap.Uint64("last_emission", val),
 			zap.Uint64("current_epoch", curEpoch))
 
 		return
