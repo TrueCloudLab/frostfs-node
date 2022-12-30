@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util/response"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	"go.uber.org/zap"
 )
@@ -16,14 +17,17 @@ type ServiceExecutor interface {
 type executorSvc struct {
 	exec ServiceExecutor
 
+	respSvc *response.Service
+
 	log *logger.Logger
 }
 
 // NewExecutionService wraps ServiceExecutor and returns Session Service interface.
-func NewExecutionService(exec ServiceExecutor, l *logger.Logger) Server {
+func NewExecutionService(exec ServiceExecutor, respSvc *response.Service, l *logger.Logger) Server {
 	return &executorSvc{
-		exec: exec,
-		log:  l,
+		exec:    exec,
+		log:     l,
+		respSvc: respSvc,
 	}
 }
 
@@ -41,5 +45,6 @@ func (s *executorSvc) Create(ctx context.Context, req *session.CreateRequest) (*
 	resp := new(session.CreateResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }

@@ -9,7 +9,7 @@ import (
 // ServerMessageStreamer represents server-side message streamer
 // that sets meta values to all response messages.
 type ServerMessageStreamer struct {
-	cfg *cfg
+	srv *Service
 
 	recv util.ResponseMessageReader
 }
@@ -22,7 +22,7 @@ func (s *ServerMessageStreamer) Recv() (util.ResponseMessage, error) {
 		return nil, fmt.Errorf("could not receive response message for signing: %w", err)
 	}
 
-	setMeta(m, s.cfg)
+	s.srv.SetMeta(m)
 
 	return m, nil
 }
@@ -30,7 +30,7 @@ func (s *ServerMessageStreamer) Recv() (util.ResponseMessage, error) {
 // HandleServerStreamRequest builds internal streamer via handlers, wraps it to ServerMessageStreamer and returns the result.
 func (s *Service) HandleServerStreamRequest(respWriter util.ResponseMessageWriter) util.ResponseMessageWriter {
 	return func(resp util.ResponseMessage) error {
-		setMeta(resp, s.cfg)
+		s.SetMeta(resp)
 
 		return respWriter(resp)
 	}

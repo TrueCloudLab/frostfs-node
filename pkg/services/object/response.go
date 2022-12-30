@@ -91,16 +91,13 @@ func (s *ResponseService) Put(ctx context.Context) (PutObjectStream, error) {
 }
 
 func (s *ResponseService) Head(ctx context.Context, req *object.HeadRequest) (*object.HeadResponse, error) {
-	resp, err := s.respSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Head(ctx, req.(*object.HeadRequest))
-		},
-	)
+	resp, err := s.svc.Head(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 
-	return resp.(*object.HeadResponse), nil
+	s.respSvc.SetMeta(resp)
+	return resp, nil
 }
 
 func (s *searchStreamResponser) Send(resp *object.SearchResponse) error {
@@ -117,16 +114,13 @@ func (s *ResponseService) Search(req *object.SearchRequest, stream SearchStream)
 }
 
 func (s *ResponseService) Delete(ctx context.Context, req *object.DeleteRequest) (*object.DeleteResponse, error) {
-	resp, err := s.respSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Delete(ctx, req.(*object.DeleteRequest))
-		},
-	)
+	resp, err := s.svc.Delete(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 
-	return resp.(*object.DeleteResponse), nil
+	s.respSvc.SetMeta(resp)
+	return resp, nil
 }
 
 func (s *getRangeStreamResponser) Send(resp *object.GetRangeResponse) error {
@@ -143,14 +137,11 @@ func (s *ResponseService) GetRange(req *object.GetRangeRequest, stream GetObject
 }
 
 func (s *ResponseService) GetRangeHash(ctx context.Context, req *object.GetRangeHashRequest) (*object.GetRangeHashResponse, error) {
-	resp, err := s.respSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.GetRangeHash(ctx, req.(*object.GetRangeHashRequest))
-		},
-	)
+	resp, err := s.svc.GetRangeHash(ctx, req)
 	if err != nil {
 		return nil, err
 	}
 
-	return resp.(*object.GetRangeHashResponse), nil
+	s.respSvc.SetMeta(resp)
+	return resp, nil
 }

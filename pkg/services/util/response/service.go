@@ -44,11 +44,12 @@ func NewService(opts ...Option) *Service {
 	}
 }
 
-func setMeta(resp util.ResponseMessage, cfg *cfg) {
+// SetMeta sets adds meta-header to resp.
+func (s *Service) SetMeta(resp util.ResponseMessage) {
 	meta := new(session.ResponseMetaHeader)
-	meta.SetVersion(&cfg.version)
+	meta.SetVersion(&s.cfg.version)
 	meta.SetTTL(1) // FIXME: #1160 TTL must be calculated
-	meta.SetEpoch(cfg.state.CurrentEpoch())
+	meta.SetEpoch(s.cfg.state.CurrentEpoch())
 
 	if origin := resp.GetMetaHeader(); origin != nil {
 		// FIXME: #1160 what if origin is set by local server?

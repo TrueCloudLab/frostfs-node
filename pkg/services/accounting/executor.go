@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TrueCloudLab/frostfs-api-go/v2/accounting"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util/response"
 )
 
 type ServiceExecutor interface {
@@ -12,13 +13,15 @@ type ServiceExecutor interface {
 }
 
 type executorSvc struct {
-	exec ServiceExecutor
+	exec    ServiceExecutor
+	respSvc *response.Service
 }
 
 // NewExecutionService wraps ServiceExecutor and returns Accounting Service interface.
-func NewExecutionService(exec ServiceExecutor) Server {
+func NewExecutionService(exec ServiceExecutor, respSvc *response.Service) Server {
 	return &executorSvc{
-		exec: exec,
+		exec:    exec,
+		respSvc: respSvc,
 	}
 }
 
@@ -31,5 +34,6 @@ func (s *executorSvc) Balance(ctx context.Context, req *accounting.BalanceReques
 	resp := new(accounting.BalanceResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }

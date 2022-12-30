@@ -198,16 +198,13 @@ func initReputationService(c *cfg) {
 	server := grpcreputation.New(
 		reputationrpc.NewSignService(
 			&c.key.PrivateKey,
-			reputationrpc.NewResponseService(
-				&reputationServer{
-					cfg:                c,
-					log:                c.log,
-					localRouter:        localTrustRouter,
-					intermediateRouter: intermediateTrustRouter,
-					routeBuilder:       localRouteBuilder,
-				},
-				c.respSvc,
-			),
+			&reputationServer{
+				cfg:                c,
+				log:                c.log,
+				localRouter:        localTrustRouter,
+				intermediateRouter: intermediateTrustRouter,
+				routeBuilder:       localRouteBuilder,
+			},
 		),
 	)
 
@@ -288,6 +285,7 @@ func (s *reputationServer) AnnounceLocalTrust(ctx context.Context, req *v2reputa
 	resp := new(v2reputation.AnnounceLocalTrustResponse)
 	resp.SetBody(new(v2reputation.AnnounceLocalTrustResponseBody))
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
@@ -316,6 +314,7 @@ func (s *reputationServer) AnnounceIntermediateResult(ctx context.Context, req *
 	resp := new(v2reputation.AnnounceIntermediateResultResponse)
 	resp.SetBody(new(v2reputation.AnnounceIntermediateResultResponseBody))
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
