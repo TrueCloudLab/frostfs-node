@@ -10,7 +10,6 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
-	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	objectSDK "github.com/TrueCloudLab/frostfs-sdk-go/object"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.uber.org/zap"
@@ -30,7 +29,7 @@ type execCtx struct {
 
 	statusError
 
-	infoSplit *objectSDK.SplitInfo
+	splitInfo *objectSDK.SplitInfo
 
 	log *logger.Logger
 
@@ -38,7 +37,7 @@ type execCtx struct {
 
 	curOff uint64
 
-	head bool
+	headOnly bool
 
 	curProcEpoch uint64
 }
@@ -55,7 +54,7 @@ const (
 
 func headOnly() execOption {
 	return func(c *execCtx) {
-		c.head = true
+		c.headOnly = true
 	}
 }
 
@@ -67,36 +66,20 @@ func withPayloadRange(r *objectSDK.Range) execOption {
 
 func (exec *execCtx) setLogger(l *logger.Logger) {
 	req := "GET"
-	if exec.headOnly() {
+	if exec.headOnly {
 		req = "HEAD"
-	} else if exec.ctxRange() != nil {
+	} else if exec.prm.rng != nil {
 		req = "GET_RANGE"
 	}
 
 	exec.log = &logger.Logger{Logger: l.With(
 		zap.String("request", req),
-		zap.Stringer("address", exec.address()),
-		zap.Bool("raw", exec.isRaw()),
-		zap.Bool("local", exec.isLocal()),
+		zap.Stringer("address", exec.prm.addr),
+		zap.Bool("raw", exec.prm.raw),
+		zap.Bool("local", exec.prm.common.LocalOnly()),
 		zap.Bool("with session", exec.prm.common.SessionToken() != nil),
 		zap.Bool("with bearer", exec.prm.common.BearerToken() != nil),
 	)}
-}
-
-func (exec execCtx) context() context.Context {
-	return exec.ctx
-}
-
-func (exec execCtx) isLocal() bool {
-	return exec.prm.common.LocalOnly()
-}
-
-func (exec execCtx) isRaw() bool {
-	return exec.prm.raw
-}
-
-func (exec execCtx) address() oid.Address {
-	return exec.prm.addr
 }
 
 // isChild checks if reading object is a parent of the given object.
@@ -105,7 +88,7 @@ func (exec execCtx) address() oid.Address {
 // upper level logic.
 func (exec execCtx) isChild(obj *objectSDK.Object) bool {
 	par := obj.Parent()
-	return par == nil || equalAddresses(exec.address(), object.AddressOf(par))
+	return par == nil || equalAddresses(exec.prm.addr, object.AddressOf(par))
 }
 
 func (exec execCtx) key() (*ecdsa.PrivateKey, error) {
@@ -128,35 +111,11 @@ func (exec execCtx) key() (*ecdsa.PrivateKey, error) {
 }
 
 func (exec *execCtx) canAssemble() bool {
-	return exec.svc.assembly && !exec.isRaw() && !exec.headOnly() && !exec.isLocal()
-}
-
-func (exec *execCtx) splitInfo() *objectSDK.SplitInfo {
-	return exec.infoSplit
-}
-
-func (exec *execCtx) containerID() cid.ID {
-	return exec.address().Container()
-}
-
-func (exec *execCtx) ctxRange() *objectSDK.Range {
-	return exec.prm.rng
-}
-
-func (exec *execCtx) headOnly() bool {
-	return exec.head
-}
-
-func (exec *execCtx) netmapEpoch() uint64 {
-	return exec.prm.common.NetmapEpoch()
-}
-
-func (exec *execCtx) netmapLookupDepth() uint64 {
-	return exec.prm.common.NetmapLookupDepth()
+	return exec.svc.assembly && !exec.prm.raw && !exec.headOnly && !exec.prm.common.LocalOnly()
 }
 
 func (exec *execCtx) initEpoch() bool {
-	exec.curProcEpoch = exec.netmapEpoch()
+	exec.curProcEpoch = exec.prm.common.NetmapEpoch()
 	if exec.curProcEpoch > 0 {
 		return true
 	}
@@ -207,10 +166,10 @@ func (exec *execCtx) getChild(id oid.ID, rng *objectSDK.Range, withHdr bool) (*o
 	p.objWriter = w
 	p.SetRange(rng)
 
-	p.addr.SetContainer(exec.containerID())
+	p.addr.SetContainer(exec.prm.addr.Container())
 	p.addr.SetObject(id)
 
-	exec.statusError = exec.svc.get(exec.context(), p.commonPrm, withPayloadRange(rng))
+	exec.statusError = exec.svc.get(exec.ctx, p.commonPrm, withPayloadRange(rng))
 
 	child := w.Object()
 	ok := exec.status == statusOK
@@ -228,7 +187,7 @@ func (exec *execCtx) getChild(id oid.ID, rng *objectSDK.Range, withHdr bool) (*o
 func (exec *execCtx) headChild(id oid.ID) (*objectSDK.Object, bool) {
 	p := exec.prm
 	p.common = p.common.WithLocalOnly(false)
-	p.addr.SetContainer(exec.containerID())
+	p.addr.SetContainer(exec.prm.addr.Container())
 	p.addr.SetObject(id)
 
 	prm := HeadPrm{
@@ -238,7 +197,7 @@ func (exec *execCtx) headChild(id oid.ID) (*objectSDK.Object, bool) {
 	w := NewSimpleObjectWriter()
 	prm.SetHeaderWriter(w)
 
-	err := exec.svc.Head(exec.context(), prm)
+	err := exec.svc.Head(exec.ctx, prm)
 
 	switch {
 	default:
@@ -298,7 +257,7 @@ func mergeSplitInfo(dst, src *objectSDK.SplitInfo) {
 }
 
 func (exec *execCtx) writeCollectedHeader() bool {
-	if exec.ctxRange() != nil {
+	if exec.prm.rng != nil {
 		return true
 	}
 
@@ -323,7 +282,7 @@ func (exec *execCtx) writeCollectedHeader() bool {
 }
 
 func (exec *execCtx) writeObjectPayload(obj *objectSDK.Object) bool {
-	if exec.headOnly() {
+	if exec.headOnly {
 		return true
 	}
 
@@ -349,12 +308,6 @@ func (exec *execCtx) writeCollectedObject() {
 	if ok := exec.writeCollectedHeader(); ok {
 		exec.writeObjectPayload(exec.collectedObject)
 	}
-}
-
-// isForwardingEnabled returns true if common execution
-// parameters has request forwarding closure set.
-func (exec execCtx) isForwardingEnabled() bool {
-	return exec.prm.forwarder != nil
 }
 
 // disableForwarding removes request forwarding closure from common

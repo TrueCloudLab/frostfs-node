@@ -5,9 +5,7 @@ import (
 	"strconv"
 
 	objectV2 "github.com/TrueCloudLab/frostfs-api-go/v2/object"
-	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
-	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.uber.org/zap"
@@ -44,37 +42,17 @@ const (
 func (exec *execCtx) setLogger(l *logger.Logger) {
 	exec.log = &logger.Logger{Logger: l.With(
 		zap.String("request", "DELETE"),
-		zap.Stringer("address", exec.address()),
-		zap.Bool("local", exec.isLocal()),
+		zap.Stringer("address", exec.prm.addr),
+		zap.Bool("local", exec.prm.common.LocalOnly()),
 		zap.Bool("with session", exec.prm.common.SessionToken() != nil),
 		zap.Bool("with bearer", exec.prm.common.BearerToken() != nil),
 	)}
 }
 
-func (exec execCtx) context() context.Context {
-	return exec.ctx
-}
-
-func (exec execCtx) isLocal() bool {
-	return exec.prm.common.LocalOnly()
-}
-
-func (exec *execCtx) address() oid.Address {
-	return exec.prm.addr
-}
-
-func (exec *execCtx) containerID() cid.ID {
-	return exec.prm.addr.Container()
-}
-
-func (exec *execCtx) commonParameters() *util.CommonPrm {
-	return exec.prm.common
-}
-
 func (exec *execCtx) newAddress(id oid.ID) oid.Address {
 	var a oid.Address
 	a.SetObject(id)
-	a.SetContainer(exec.containerID())
+	a.SetContainer(exec.prm.addr.Container())
 
 	return a
 }
@@ -240,11 +218,11 @@ func (exec *execCtx) initTombstoneObject() bool {
 	}
 
 	exec.tombstoneObj = object.New()
-	exec.tombstoneObj.SetContainerID(exec.containerID())
+	exec.tombstoneObj.SetContainerID(exec.prm.addr.Container())
 	exec.tombstoneObj.SetType(object.TypeTombstone)
 	exec.tombstoneObj.SetPayload(payload)
 
-	tokenSession := exec.commonParameters().SessionToken()
+	tokenSession := exec.prm.common.SessionToken()
 	if tokenSession != nil {
 		issuer := tokenSession.Issuer()
 		exec.tombstoneObj.SetOwnerID(&issuer)

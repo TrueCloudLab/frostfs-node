@@ -98,7 +98,7 @@ func (c *clientWrapper) searchObjects(exec *execCtx, info client.NodeInfo) ([]oi
 
 	var prm internalclient.SearchObjectsPrm
 
-	prm.SetContext(exec.context())
+	prm.SetContext(exec.ctx)
 	prm.SetClient(c.client)
 	prm.SetPrivateKey(key)
 	prm.SetSessionToken(exec.prm.common.SessionToken())
@@ -106,8 +106,8 @@ func (c *clientWrapper) searchObjects(exec *execCtx, info client.NodeInfo) ([]oi
 	prm.SetTTL(exec.prm.common.TTL())
 	prm.SetXHeaders(exec.prm.common.XHeaders())
 	prm.SetNetmapEpoch(exec.curProcEpoch)
-	prm.SetContainerID(exec.containerID())
-	prm.SetFilters(exec.searchFilters())
+	prm.SetContainerID(exec.prm.cnr)
+	prm.SetFilters(exec.prm.filters)
 
 	res, err := internalclient.SearchObjects(prm)
 	if err != nil {
@@ -119,8 +119,8 @@ func (c *clientWrapper) searchObjects(exec *execCtx, info client.NodeInfo) ([]oi
 
 func (e *storageEngineWrapper) search(exec *execCtx) ([]oid.ID, error) {
 	var selectPrm engine.SelectPrm
-	selectPrm.WithFilters(exec.searchFilters())
-	selectPrm.WithContainerID(exec.containerID())
+	selectPrm.WithFilters(exec.prm.filters)
+	selectPrm.WithContainerID(exec.prm.cnr)
 
 	r, err := e.storage.Select(selectPrm)
 	if err != nil {

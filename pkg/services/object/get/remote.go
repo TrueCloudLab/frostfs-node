@@ -53,8 +53,8 @@ func (exec *execCtx) processNode(ctx context.Context, info client.NodeInfo) bool
 		exec.err = errOutOfRange
 	case errors.As(err, &errSplitInfo):
 		exec.status = statusVIRTUAL
-		mergeSplitInfo(exec.splitInfo(), errSplitInfo.SplitInfo())
-		exec.err = objectSDK.NewSplitInfoError(exec.infoSplit)
+		mergeSplitInfo(exec.splitInfo, errSplitInfo.SplitInfo())
+		exec.err = objectSDK.NewSplitInfoError(exec.splitInfo)
 	}
 
 	return exec.status != statusUndefined

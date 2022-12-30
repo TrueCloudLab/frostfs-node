@@ -118,7 +118,7 @@ func newTestClient() *testClient {
 }
 
 func (c *testClient) getObject(exec *execCtx, _ client.NodeInfo) (*objectSDK.Object, error) {
-	v, ok := c.results[exec.address().EncodeToString()]
+	v, ok := c.results[exec.prm.addr.EncodeToString()]
 	if !ok {
 		var errNotFound apistatus.ObjectNotFound
 
@@ -129,7 +129,7 @@ func (c *testClient) getObject(exec *execCtx, _ client.NodeInfo) (*objectSDK.Obj
 		return nil, v.err
 	}
 
-	return cutToRange(v.obj, exec.ctxRange()), nil
+	return cutToRange(v.obj, exec.prm.rng), nil
 }
 
 func (c *testClient) addResult(addr oid.Address, obj *objectSDK.Object, err error) {
@@ -143,7 +143,7 @@ func (s *testStorage) get(exec *execCtx) (*objectSDK.Object, error) {
 	var (
 		ok    bool
 		obj   *objectSDK.Object
-		sAddr = exec.address().EncodeToString()
+		sAddr = exec.prm.addr.EncodeToString()
 	)
 
 	if _, ok = s.inhumed[sAddr]; ok {
@@ -157,7 +157,7 @@ func (s *testStorage) get(exec *execCtx) (*objectSDK.Object, error) {
 	}
 
 	if obj, ok = s.phy[sAddr]; ok {
-		return cutToRange(obj, exec.ctxRange()), nil
+		return cutToRange(obj, exec.prm.rng), nil
 	}
 
 	var errNotFound apistatus.ObjectNotFound

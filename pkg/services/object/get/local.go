@@ -34,8 +34,8 @@ func (exec *execCtx) executeLocal() {
 		exec.err = errRemoved
 	case errors.As(err, &errSplitInfo):
 		exec.status = statusVIRTUAL
-		mergeSplitInfo(exec.splitInfo(), errSplitInfo.SplitInfo())
-		exec.err = objectSDK.NewSplitInfoError(exec.infoSplit)
+		mergeSplitInfo(exec.splitInfo, errSplitInfo.SplitInfo())
+		exec.err = objectSDK.NewSplitInfoError(exec.splitInfo)
 	case errors.As(err, &errOutOfRange):
 		exec.status = statusOutOfRange
 		exec.err = errOutOfRange

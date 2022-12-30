@@ -87,7 +87,7 @@ func (c *clientCacheWrapper) get(info coreclient.NodeInfo) (getClient, error) {
 }
 
 func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*object.Object, error) {
-	if exec.isForwardingEnabled() {
+	if exec.prm.forwarder != nil {
 		return exec.prm.forwarder(info, c.client)
 	}
 
@@ -96,20 +96,20 @@ func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*obj
 		return nil, err
 	}
 
-	if exec.headOnly() {
+	if exec.headOnly {
 		var prm internalclient.HeadObjectPrm
 
-		prm.SetContext(exec.context())
+		prm.SetContext(exec.ctx)
 		prm.SetClient(c.client)
 		prm.SetTTL(exec.prm.common.TTL())
 		prm.SetNetmapEpoch(exec.curProcEpoch)
-		prm.SetAddress(exec.address())
+		prm.SetAddress(exec.prm.addr)
 		prm.SetPrivateKey(key)
 		prm.SetSessionToken(exec.prm.common.SessionToken())
 		prm.SetBearerToken(exec.prm.common.BearerToken())
 		prm.SetXHeaders(exec.prm.common.XHeaders())
 
-		if exec.isRaw() {
+		if exec.prm.raw {
 			prm.SetRawFlag()
 		}
 
@@ -122,21 +122,21 @@ func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*obj
 	}
 	// we don't specify payload writer because we accumulate
 	// the object locally (even huge).
-	if rng := exec.ctxRange(); rng != nil {
+	if rng := exec.prm.rng; rng != nil {
 		var prm internalclient.PayloadRangePrm
 
-		prm.SetContext(exec.context())
+		prm.SetContext(exec.ctx)
 		prm.SetClient(c.client)
 		prm.SetTTL(exec.prm.common.TTL())
 		prm.SetNetmapEpoch(exec.curProcEpoch)
-		prm.SetAddress(exec.address())
+		prm.SetAddress(exec.prm.addr)
 		prm.SetPrivateKey(key)
 		prm.SetSessionToken(exec.prm.common.SessionToken())
 		prm.SetBearerToken(exec.prm.common.BearerToken())
 		prm.SetXHeaders(exec.prm.common.XHeaders())
 		prm.SetRange(rng)
 
-		if exec.isRaw() {
+		if exec.prm.raw {
 			prm.SetRawFlag()
 		}
 
@@ -173,17 +173,17 @@ func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*obj
 func (c *clientWrapper) get(exec *execCtx, key *ecdsa.PrivateKey) (*object.Object, error) {
 	var prm internalclient.GetObjectPrm
 
-	prm.SetContext(exec.context())
+	prm.SetContext(exec.ctx)
 	prm.SetClient(c.client)
 	prm.SetTTL(exec.prm.common.TTL())
 	prm.SetNetmapEpoch(exec.curProcEpoch)
-	prm.SetAddress(exec.address())
+	prm.SetAddress(exec.prm.addr)
 	prm.SetPrivateKey(key)
 	prm.SetSessionToken(exec.prm.common.SessionToken())
 	prm.SetBearerToken(exec.prm.common.BearerToken())
 	prm.SetXHeaders(exec.prm.common.XHeaders())
 
-	if exec.isRaw() {
+	if exec.prm.raw {
 		prm.SetRawFlag()
 	}
 
@@ -196,10 +196,10 @@ func (c *clientWrapper) get(exec *execCtx, key *ecdsa.PrivateKey) (*object.Objec
 }
 
 func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
-	if exec.headOnly() {
+	if exec.headOnly {
 		var headPrm engine.HeadPrm
-		headPrm.WithAddress(exec.address())
-		headPrm.WithRaw(exec.isRaw())
+		headPrm.WithAddress(exec.prm.addr)
+		headPrm.WithRaw(exec.prm.raw)
 
 		r, err := e.engine.Head(headPrm)
 		if err != nil {
@@ -207,9 +207,9 @@ func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
 		}
 
 		return r.Header(), nil
-	} else if rng := exec.ctxRange(); rng != nil {
+	} else if rng := exec.prm.rng; rng != nil {
 		var getRange engine.RngPrm
-		getRange.WithAddress(exec.address())
+		getRange.WithAddress(exec.prm.addr)
 		getRange.WithPayloadRange(rng)
 
 		r, err := e.engine.GetRange(getRange)
@@ -220,7 +220,7 @@ func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
 		return r.Object(), nil
 	} else {
 		var getPrm engine.GetPrm
-		getPrm.WithAddress(exec.address())
+		getPrm.WithAddress(exec.prm.addr)
 
 		r, err := e.engine.Get(getPrm)
 		if err != nil {

@@ -6,7 +6,6 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
-	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.uber.org/zap"
 )
@@ -44,39 +43,15 @@ func (exec *execCtx) prepare() {
 func (exec *execCtx) setLogger(l *logger.Logger) {
 	exec.log = &logger.Logger{Logger: l.With(
 		zap.String("request", "SEARCH"),
-		zap.Stringer("container", exec.containerID()),
-		zap.Bool("local", exec.isLocal()),
+		zap.Stringer("container", exec.prm.cnr),
+		zap.Bool("local", exec.prm.common.LocalOnly()),
 		zap.Bool("with session", exec.prm.common.SessionToken() != nil),
 		zap.Bool("with bearer", exec.prm.common.BearerToken() != nil),
 	)}
 }
 
-func (exec execCtx) context() context.Context {
-	return exec.ctx
-}
-
-func (exec execCtx) isLocal() bool {
-	return exec.prm.common.LocalOnly()
-}
-
-func (exec *execCtx) containerID() cid.ID {
-	return exec.prm.cnr
-}
-
-func (exec *execCtx) searchFilters() object.SearchFilters {
-	return exec.prm.filters
-}
-
-func (exec *execCtx) netmapEpoch() uint64 {
-	return exec.prm.common.NetmapEpoch()
-}
-
-func (exec *execCtx) netmapLookupDepth() uint64 {
-	return exec.prm.common.NetmapLookupDepth()
-}
-
 func (exec *execCtx) initEpoch() bool {
-	exec.curProcEpoch = exec.netmapEpoch()
+	exec.curProcEpoch = exec.prm.common.NetmapEpoch()
 	if exec.curProcEpoch > 0 {
 		return true
 	}

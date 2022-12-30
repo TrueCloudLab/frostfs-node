@@ -103,7 +103,7 @@ func (c *testClientCache) get(info clientcore.NodeInfo) (searchClient, error) {
 }
 
 func (s *testStorage) search(exec *execCtx) ([]oid.ID, error) {
-	v, ok := s.items[exec.containerID().EncodeToString()]
+	v, ok := s.items[exec.prm.cnr.EncodeToString()]
 	if !ok {
 		return nil, nil
 	}
@@ -112,7 +112,7 @@ func (s *testStorage) search(exec *execCtx) ([]oid.ID, error) {
 }
 
 func (c *testStorage) searchObjects(exec *execCtx, _ clientcore.NodeInfo) ([]oid.ID, error) {
-	v, ok := c.items[exec.containerID().EncodeToString()]
+	v, ok := c.items[exec.prm.cnr.EncodeToString()]
 	if !ok {
 		return nil, nil
 	}
