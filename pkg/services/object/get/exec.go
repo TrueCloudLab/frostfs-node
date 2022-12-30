@@ -120,7 +120,7 @@ func (exec *execCtx) initEpoch() bool {
 		return true
 	}
 
-	e, err := exec.svc.currentEpochReceiver.currentEpoch()
+	e, err := exec.svc.epochSource.Epoch()
 
 	switch {
 	default:

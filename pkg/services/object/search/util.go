@@ -4,7 +4,6 @@ import (
 	"sync"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/core/client"
-	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
 	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
 	internalclient "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
@@ -34,10 +33,6 @@ type storageEngineWrapper struct {
 }
 
 type traverseGeneratorWrapper util.TraverserGenerator
-
-type nmSrcWrapper struct {
-	nmSrc netmap.Source
-}
 
 func newUniqueAddressWriter(w IDListWriter) IDListWriter {
 	return &uniqueIDWriter{
@@ -142,8 +137,4 @@ func idsFromAddresses(addrs []oid.Address) []oid.ID {
 
 func (e *traverseGeneratorWrapper) generateTraverser(cnr cid.ID, epoch uint64) (*placement.Traverser, error) {
 	return (*util.TraverserGenerator)(e).GenerateTraverser(cnr, nil, epoch)
-}
-
-func (n *nmSrcWrapper) currentEpoch() (uint64, error) {
-	return n.nmSrc.Epoch()
 }

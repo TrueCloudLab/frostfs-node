@@ -51,7 +51,7 @@ type simpleIDWriter struct {
 
 type testEpochReceiver uint64
 
-func (e testEpochReceiver) currentEpoch() (uint64, error) {
+func (e testEpochReceiver) Epoch() (uint64, error) {
 	return uint64(e), nil
 }
 
@@ -261,7 +261,7 @@ func TestGetRemoteSmall(t *testing.T) {
 			},
 		}
 		svc.clientConstructor = c
-		svc.currentEpochReceiver = testEpochReceiver(curEpoch)
+		svc.epochSource = testEpochReceiver(curEpoch)
 
 		return svc
 	}
@@ -388,7 +388,7 @@ func TestGetFromPastEpoch(t *testing.T) {
 		},
 	}
 
-	svc.currentEpochReceiver = testEpochReceiver(curEpoch)
+	svc.epochSource = testEpochReceiver(curEpoch)
 
 	w := new(simpleIDWriter)
 

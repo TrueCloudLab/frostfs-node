@@ -6,7 +6,6 @@ import (
 	"io"
 
 	coreclient "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
-	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
 	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
 	internal "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
 	internalclient "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
@@ -42,10 +41,6 @@ type partWriter struct {
 
 type hasherWrapper struct {
 	hash io.Writer
-}
-
-type nmSrcWrapper struct {
-	nmSrc netmap.Source
 }
 
 func NewSimpleObjectWriter() *SimpleObjectWriter {
@@ -249,8 +244,4 @@ func payloadOnlyObject(payload []byte) *object.Object {
 func (h *hasherWrapper) WriteChunk(p []byte) error {
 	_, err := h.hash.Write(p)
 	return err
-}
-
-func (n *nmSrcWrapper) currentEpoch() (uint64, error) {
-	return n.nmSrc.Epoch()
 }

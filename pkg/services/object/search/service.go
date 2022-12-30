@@ -46,11 +46,13 @@ type cfg struct {
 		generateTraverser(cid.ID, uint64) (*placement.Traverser, error)
 	}
 
-	currentEpochReceiver interface {
-		currentEpoch() (uint64, error)
-	}
+	epochSource epochSource
 
 	keyStore *util.KeyStorage
+}
+
+type epochSource interface {
+	Epoch() (uint64, error)
 }
 
 func defaultCfg() *cfg {
@@ -110,9 +112,7 @@ func WithTraverserGenerator(t *util.TraverserGenerator) Option {
 // map storage to receive current network state.
 func WithNetMapSource(nmSrc netmap.Source) Option {
 	return func(c *cfg) {
-		c.currentEpochReceiver = &nmSrcWrapper{
-			nmSrc: nmSrc,
-		}
+		c.epochSource = nmSrc
 	}
 }
 
