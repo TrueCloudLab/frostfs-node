@@ -657,8 +657,8 @@ type morphContainerWriter struct {
 	neoClient *cntClient.Client
 
 	cacheEnabled bool
-	eacls        *ttlEACLStorage
-	lists        *ttlContainerLister
+	eacls        ttlEACLStorage
+	lists        ttlContainerLister
 }
 
 func (m morphContainerWriter) Put(cnr containerCore.Container) (*cid.ID, error) {
