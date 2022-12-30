@@ -51,11 +51,11 @@ func (oiw *objectsInWork) add(addr oid.Address) {
 // Policer represents the utility that verifies
 // compliance with the object storage policy.
 type Policer struct {
-	*cfg
+	cfg
 
 	cache *lru.Cache[oid.Address, time.Time]
 
-	objsInWork *objectsInWork
+	objsInWork objectsInWork
 }
 
 // Option is an option for Policer constructor.
@@ -95,38 +95,33 @@ type cfg struct {
 	rebalanceFreq, evictDuration time.Duration
 }
 
-func defaultCfg() *cfg {
-	return &cfg{
-		log:           &logger.Logger{Logger: zap.L()},
-		batchSize:     10,
-		cacheSize:     1024, // 1024 * address size = 1024 * 64 = 64 MiB
-		rebalanceFreq: 1 * time.Second,
-		evictDuration: 30 * time.Second,
-	}
+func (c *cfg) initDefault() {
+	c.log = &logger.Logger{Logger: zap.L()}
+	c.batchSize = 10
+	c.cacheSize = 1024 // 1024 * address size = 1024 * 64 = 64 MiB
+	c.rebalanceFreq = 1 * time.Second
+	c.evictDuration = 30 * time.Second
 }
 
 // New creates, initializes and returns Policer instance.
 func New(opts ...Option) *Policer {
-	c := defaultCfg()
+	var p Policer
+	p.cfg.initDefault()
 
 	for i := range opts {
-		opts[i](c)
+		opts[i](&p.cfg)
 	}
 
-	c.log = &logger.Logger{Logger: c.log.With(zap.String("component", "Object Policer"))}
+	p.log = &logger.Logger{Logger: p.cfg.log.With(zap.String("component", "Object Policer"))}
 
-	cache, err := lru.New[oid.Address, time.Time](int(c.cacheSize))
+	cache, err := lru.New[oid.Address, time.Time](int(p.cacheSize))
 	if err != nil {
 		panic(err)
 	}
 
-	return &Policer{
-		cfg:   c,
-		cache: cache,
-		objsInWork: &objectsInWork{
-			objs: make(map[oid.Address]struct{}, c.maxCapacity),
-		},
-	}
+	p.cache = cache
+	p.objsInWork.objs = make(map[oid.Address]struct{}, p.maxCapacity)
+	return &p
 }
 
 // WithHeadTimeout returns option to set Head timeout of Policer.
