@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/network"
-	"github.com/hashicorp/golang-lru/simplelru"
+	"github.com/hashicorp/golang-lru/v2/simplelru"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"
@@ -17,7 +17,7 @@ import (
 
 type clientCache struct {
 	sync.Mutex
-	simplelru.LRU
+	simplelru.LRU[string, cacheItem]
 }
 
 type cacheItem struct {
@@ -34,8 +34,8 @@ const (
 var errRecentlyFailed = errors.New("client has recently failed")
 
 func (c *clientCache) init() {
-	l, _ := simplelru.NewLRU(defaultClientCacheSize, func(key, value interface{}) {
-		_ = value.(*grpc.ClientConn).Close()
+	l, _ := simplelru.NewLRU[string, cacheItem](defaultClientCacheSize, func(_ string, value cacheItem) {
+		_ = value.cc.Close()
 	})
 	c.LRU = *l
 }
@@ -46,7 +46,7 @@ func (c *clientCache) get(ctx context.Context, netmapAddr string) (TreeServiceCl
 	c.Unlock()
 
 	if ok {
-		item := ccInt.(cacheItem)
+		item := ccInt
 		if item.cc == nil {
 			if d := time.Since(item.lastTry); d < defaultReconnectInterval {
 				return nil, fmt.Errorf("%w: %s till the next reconnection to %s",

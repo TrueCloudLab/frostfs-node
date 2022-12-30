@@ -10,17 +10,17 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
 	cidSDK "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
-	"github.com/hashicorp/golang-lru/simplelru"
+	"github.com/hashicorp/golang-lru/v2/simplelru"
 )
 
 type containerCache struct {
 	sync.Mutex
 	nm  *netmapSDK.NetMap
-	lru *simplelru.LRU
+	lru *simplelru.LRU[string, containerCacheItem]
 }
 
 func (c *containerCache) init(size int) {
-	c.lru, _ = simplelru.NewLRU(size, nil) // no error, size is positive
+	c.lru, _ = simplelru.NewLRU[string, containerCacheItem](size, nil) // no error, size is positive
 }
 
 type containerCacheItem struct {
@@ -48,8 +48,7 @@ func (s *Service) getContainerNodes(cid cidSDK.ID) ([]netmapSDK.NodeInfo, int, e
 	s.containerCache.Lock()
 	if s.containerCache.nm != nm {
 		s.containerCache.lru.Purge()
-	} else if v, ok := s.containerCache.lru.Get(cidStr); ok {
-		item := v.(containerCacheItem)
+	} else if item, ok := s.containerCache.lru.Get(cidStr); ok {
 		if item.cnr == cnr {
 			s.containerCache.Unlock()
 			return item.nodes, item.local, nil
