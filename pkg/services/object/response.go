@@ -16,21 +16,21 @@ type ResponseService struct {
 }
 
 type searchStreamResponser struct {
-	util.ServerStream
+	SearchStream
 
-	respWriter util.ResponseMessageWriter
+	respSvc *response.Service
 }
 
 type getStreamResponser struct {
-	util.ServerStream
+	GetObjectStream
 
-	respWriter util.ResponseMessageWriter
+	respSvc *response.Service
 }
 
 type getRangeStreamResponser struct {
-	util.ServerStream
+	GetObjectRangeStream
 
-	respWriter util.ResponseMessageWriter
+	respSvc *response.Service
 }
 
 type putStreamResponser struct {
@@ -47,15 +47,14 @@ func NewResponseService(objSvc ServiceServer, respSvc *response.Service) *Respon
 }
 
 func (s *getStreamResponser) Send(resp *object.GetResponse) error {
-	return s.respWriter(resp)
+	s.respSvc.SetMeta(resp)
+	return s.GetObjectStream.Send(resp)
 }
 
 func (s *ResponseService) Get(req *object.GetRequest, stream GetObjectStream) error {
 	return s.svc.Get(req, &getStreamResponser{
-		ServerStream: stream,
-		respWriter: s.respSvc.HandleServerStreamRequest(func(resp util.ResponseMessage) error {
-			return stream.Send(resp.(*object.GetResponse))
-		}),
+		GetObjectStream: stream,
+		respSvc:         s.respSvc,
 	})
 }
 
@@ -101,15 +100,14 @@ func (s *ResponseService) Head(ctx context.Context, req *object.HeadRequest) (*o
 }
 
 func (s *searchStreamResponser) Send(resp *object.SearchResponse) error {
-	return s.respWriter(resp)
+	s.respSvc.SetMeta(resp)
+	return s.SearchStream.Send(resp)
 }
 
 func (s *ResponseService) Search(req *object.SearchRequest, stream SearchStream) error {
 	return s.svc.Search(req, &searchStreamResponser{
-		ServerStream: stream,
-		respWriter: s.respSvc.HandleServerStreamRequest(func(resp util.ResponseMessage) error {
-			return stream.Send(resp.(*object.SearchResponse))
-		}),
+		SearchStream: stream,
+		respSvc:      s.respSvc,
 	})
 }
 
@@ -124,15 +122,14 @@ func (s *ResponseService) Delete(ctx context.Context, req *object.DeleteRequest)
 }
 
 func (s *getRangeStreamResponser) Send(resp *object.GetRangeResponse) error {
-	return s.respWriter(resp)
+	s.respSvc.SetMeta(resp)
+	return s.GetObjectRangeStream.Send(resp)
 }
 
 func (s *ResponseService) GetRange(req *object.GetRangeRequest, stream GetObjectRangeStream) error {
 	return s.svc.GetRange(req, &getRangeStreamResponser{
-		ServerStream: stream,
-		respWriter: s.respSvc.HandleServerStreamRequest(func(resp util.ResponseMessage) error {
-			return stream.Send(resp.(*object.GetRangeResponse))
-		}),
+		GetObjectRangeStream: stream,
+		respSvc:              s.respSvc,
 	})
 }
 
