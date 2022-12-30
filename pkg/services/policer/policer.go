@@ -12,7 +12,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/replicator"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
-	lru "github.com/hashicorp/golang-lru"
+	lru "github.com/hashicorp/golang-lru/v2"
 	"github.com/panjf2000/ants/v2"
 	"go.uber.org/zap"
 )
@@ -53,7 +53,7 @@ func (oiw *objectsInWork) add(addr oid.Address) {
 type Policer struct {
 	*cfg
 
-	cache *lru.Cache
+	cache *lru.Cache[oid.Address, time.Time]
 
 	objsInWork *objectsInWork
 }
@@ -115,7 +115,7 @@ func New(opts ...Option) *Policer {
 
 	c.log = &logger.Logger{Logger: c.log.With(zap.String("component", "Object Policer"))}
 
-	cache, err := lru.New(int(c.cacheSize))
+	cache, err := lru.New[oid.Address, time.Time](int(c.cacheSize))
 	if err != nil {
 		panic(err)
 	}
