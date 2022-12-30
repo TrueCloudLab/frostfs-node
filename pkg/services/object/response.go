@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/TrueCloudLab/frostfs-api-go/v2/object"
-	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/util/response"
 )
 
@@ -34,7 +33,8 @@ type getRangeStreamResponser struct {
 }
 
 type putStreamResponser struct {
-	stream *response.ClientMessageStreamer
+	stream  PutObjectStream
+	respSvc *response.Service
 }
 
 // NewResponseService returns object service instance that passes internal service
@@ -59,16 +59,20 @@ func (s *ResponseService) Get(req *object.GetRequest, stream GetObjectStream) er
 }
 
 func (s *putStreamResponser) Send(req *object.PutRequest) error {
-	return s.stream.Send(req)
+	if err := s.stream.Send(req); err != nil {
+		return fmt.Errorf("could not send the request: %w", err)
+	}
+	return nil
 }
 
 func (s *putStreamResponser) CloseAndRecv() (*object.PutResponse, error) {
 	r, err := s.stream.CloseAndRecv()
 	if err != nil {
-		return nil, fmt.Errorf("(%T) could not receive response: %w", s, err)
+		return nil, fmt.Errorf("could not close stream and receive response: %w", err)
 	}
 
-	return r.(*object.PutResponse), nil
+	s.respSvc.SetMeta(r)
+	return r, nil
 }
 
 func (s *ResponseService) Put(ctx context.Context) (PutObjectStream, error) {
@@ -78,14 +82,8 @@ func (s *ResponseService) Put(ctx context.Context) (PutObjectStream, error) {
 	}
 
 	return &putStreamResponser{
-		stream: s.respSvc.CreateRequestStreamer(
-			func(req any) error {
-				return stream.Send(req.(*object.PutRequest))
-			},
-			func() (util.ResponseMessage, error) {
-				return stream.CloseAndRecv()
-			},
-		),
+		stream:  stream,
+		respSvc: s.respSvc,
 	}, nil
 }
 
