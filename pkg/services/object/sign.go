@@ -105,19 +105,12 @@ func (s *SignService) Put(ctx context.Context) (PutObjectStream, error) {
 }
 
 func (s *SignService) Head(ctx context.Context, req *object.HeadRequest) (*object.HeadResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Head(ctx, req.(*object.HeadRequest))
-		},
-		func() util.ResponseMessage {
-			return new(object.HeadResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(object.HeadResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*object.HeadResponse), nil
+	resp, err := util.WrapResponse(s.svc.Head(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *searchStreamSigner) Send(resp *object.SearchResponse) error {
@@ -156,19 +149,12 @@ func (s *SignService) Search(req *object.SearchRequest, stream SearchStream) err
 }
 
 func (s *SignService) Delete(ctx context.Context, req *object.DeleteRequest) (*object.DeleteResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Delete(ctx, req.(*object.DeleteRequest))
-		},
-		func() util.ResponseMessage {
-			return new(object.DeleteResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(object.DeleteResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*object.DeleteResponse), nil
+	resp, err := util.WrapResponse(s.svc.Delete(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *getRangeStreamSigner) Send(resp *object.GetRangeResponse) error {
@@ -193,17 +179,10 @@ func (s *SignService) GetRange(req *object.GetRangeRequest, stream GetObjectRang
 }
 
 func (s *SignService) GetRangeHash(ctx context.Context, req *object.GetRangeHashRequest) (*object.GetRangeHashResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.GetRangeHash(ctx, req.(*object.GetRangeHashRequest))
-		},
-		func() util.ResponseMessage {
-			return new(object.GetRangeHashResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(object.GetRangeHashResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*object.GetRangeHashResponse), nil
+	resp, err := util.WrapResponse(s.svc.GetRangeHash(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }

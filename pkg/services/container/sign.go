@@ -22,113 +22,64 @@ func NewSignService(key *ecdsa.PrivateKey, svc Server) Server {
 }
 
 func (s *signService) Put(ctx context.Context, req *container.PutRequest) (*container.PutResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Put(ctx, req.(*container.PutRequest))
-		},
-		func() util.ResponseMessage {
-			return new(container.PutResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(container.PutResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*container.PutResponse), nil
+	resp, err := util.WrapResponse(s.svc.Put(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *signService) Delete(ctx context.Context, req *container.DeleteRequest) (*container.DeleteResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Delete(ctx, req.(*container.DeleteRequest))
-		},
-		func() util.ResponseMessage {
-			return new(container.DeleteResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(container.DeleteResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*container.DeleteResponse), nil
+	resp, err := util.WrapResponse(s.svc.Delete(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *signService) Get(ctx context.Context, req *container.GetRequest) (*container.GetResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Get(ctx, req.(*container.GetRequest))
-		},
-		func() util.ResponseMessage {
-			return new(container.GetResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(container.GetResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*container.GetResponse), nil
+	resp, err := util.WrapResponse(s.svc.Get(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *signService) List(ctx context.Context, req *container.ListRequest) (*container.ListResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.List(ctx, req.(*container.ListRequest))
-		},
-		func() util.ResponseMessage {
-			return new(container.ListResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(container.ListResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*container.ListResponse), nil
+	resp, err := util.WrapResponse(s.svc.List(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *signService) SetExtendedACL(ctx context.Context, req *container.SetExtendedACLRequest) (*container.SetExtendedACLResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.SetExtendedACL(ctx, req.(*container.SetExtendedACLRequest))
-		},
-		func() util.ResponseMessage {
-			return new(container.SetExtendedACLResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(container.SetExtendedACLResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*container.SetExtendedACLResponse), nil
+	resp, err := util.WrapResponse(s.svc.SetExtendedACL(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *signService) GetExtendedACL(ctx context.Context, req *container.GetExtendedACLRequest) (*container.GetExtendedACLResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.GetExtendedACL(ctx, req.(*container.GetExtendedACLRequest))
-		},
-		func() util.ResponseMessage {
-			return new(container.GetExtendedACLResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(container.GetExtendedACLResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*container.GetExtendedACLResponse), nil
+	resp, err := util.WrapResponse(s.svc.GetExtendedACL(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *signService) AnnounceUsedSpace(ctx context.Context, req *container.AnnounceUsedSpaceRequest) (*container.AnnounceUsedSpaceResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.AnnounceUsedSpace(ctx, req.(*container.AnnounceUsedSpaceRequest))
-		},
-		func() util.ResponseMessage {
-			return new(container.AnnounceUsedSpaceResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(container.AnnounceUsedSpaceResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*container.AnnounceUsedSpaceResponse), nil
+	resp, err := util.WrapResponse(s.svc.AnnounceUsedSpace(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }

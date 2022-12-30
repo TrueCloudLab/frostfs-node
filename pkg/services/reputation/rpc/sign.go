@@ -22,33 +22,19 @@ func NewSignService(key *ecdsa.PrivateKey, svc Server) Server {
 }
 
 func (s *signService) AnnounceLocalTrust(ctx context.Context, req *reputation.AnnounceLocalTrustRequest) (*reputation.AnnounceLocalTrustResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.AnnounceLocalTrust(ctx, req.(*reputation.AnnounceLocalTrustRequest))
-		},
-		func() util.ResponseMessage {
-			return new(reputation.AnnounceLocalTrustResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(reputation.AnnounceLocalTrustResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*reputation.AnnounceLocalTrustResponse), nil
+	resp, err := util.WrapResponse(s.svc.AnnounceLocalTrust(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }
 
 func (s *signService) AnnounceIntermediateResult(ctx context.Context, req *reputation.AnnounceIntermediateResultRequest) (*reputation.AnnounceIntermediateResultResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.AnnounceIntermediateResult(ctx, req.(*reputation.AnnounceIntermediateResultRequest))
-		},
-		func() util.ResponseMessage {
-			return new(reputation.AnnounceIntermediateResultResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(reputation.AnnounceIntermediateResultResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*reputation.AnnounceIntermediateResultResponse), nil
+	resp, err := util.WrapResponse(s.svc.AnnounceIntermediateResult(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }

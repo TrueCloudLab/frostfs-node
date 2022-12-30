@@ -22,17 +22,10 @@ func NewSignService(key *ecdsa.PrivateKey, svc Server) Server {
 }
 
 func (s *signService) Create(ctx context.Context, req *session.CreateRequest) (*session.CreateResponse, error) {
-	resp, err := s.sigSvc.HandleUnaryRequest(ctx, req,
-		func(ctx context.Context, req any) (util.ResponseMessage, error) {
-			return s.svc.Create(ctx, req.(*session.CreateRequest))
-		},
-		func() util.ResponseMessage {
-			return new(session.CreateResponse)
-		},
-	)
-	if err != nil {
-		return nil, err
+	if err := s.sigSvc.VerifyRequest(req); err != nil {
+		resp := new(session.CreateResponse)
+		return resp, s.sigSvc.SignResponse(req, resp, err)
 	}
-
-	return resp.(*session.CreateResponse), nil
+	resp, err := util.WrapResponse(s.svc.Create(ctx, req))
+	return resp, s.sigSvc.SignResponse(req, resp, err)
 }

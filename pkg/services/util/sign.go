@@ -172,44 +172,39 @@ func (s *SignService) HandleServerStreamRequest(
 	return nil
 }
 
-func (s *SignService) HandleUnaryRequest(ctx context.Context, req any, handler UnaryHandler, blankResp ResponseConstructor) (ResponseMessage, error) {
+func (s *SignService) SignResponse(req RequestMessage, resp ResponseMessage, err error) error {
 	// handle protocol versions <=2.10 (API statuses was introduced in 2.11 only)
 
 	// req argument should be strengthen with type RequestMessage
-	statusSupported := isStatusSupported(req.(RequestMessage)) // panic is OK here for now
-
-	var (
-		resp ResponseMessage
-		err  error
-	)
-
-	// verify request signatures
-	if err = signature.VerifyServiceMessage(req); err != nil {
-		var sigErr apistatus.SignatureVerification
-		sigErr.SetMessage(err.Error())
-
-		err = sigErr
-	} else {
-		// process request
-		resp, err = handler(ctx, req)
-	}
+	statusSupported := isStatusSupported(req)
 
 	if err != nil {
 		if !statusSupported {
-			return nil, err
+			return err
 		}
-
-		resp = blankResp()
 
 		setStatusV2(resp, err)
 	}
 
 	// sign the response
-	if err = signResponse(s.key, resp, statusSupported); err != nil {
-		return nil, err
-	}
+	return signResponse(s.key, resp, statusSupported)
+}
 
-	return resp, nil
+func (s *SignService) VerifyRequest(req RequestMessage) error {
+	if err := signature.VerifyServiceMessage(req); err != nil {
+		var sigErr apistatus.SignatureVerification
+		sigErr.SetMessage(err.Error())
+		return sigErr
+	}
+	return nil
+}
+
+// WrapResponse creates an appropriate response struct if it is nil.
+func WrapResponse[T any](resp *T, err error) (*T, error) {
+	if resp != nil {
+		return resp, err
+	}
+	return new(T), nil
 }
 
 func isStatusSupported(req RequestMessage) bool {
