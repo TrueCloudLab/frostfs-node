@@ -26,26 +26,26 @@ func (s *signService) LocalNodeInfo(
 	req *netmap.LocalNodeInfoRequest) (*netmap.LocalNodeInfoResponse, error) {
 	if err := s.sigSvc.VerifyRequest(req); err != nil {
 		resp := new(netmap.LocalNodeInfoResponse)
-		return resp, s.sigSvc.SignResponse(req, resp, err)
+		return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 	}
 	resp, err := util.WrapResponse(s.svc.LocalNodeInfo(ctx, req))
-	return resp, s.sigSvc.SignResponse(req, resp, err)
+	return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 }
 
 func (s *signService) NetworkInfo(ctx context.Context, req *netmap.NetworkInfoRequest) (*netmap.NetworkInfoResponse, error) {
 	if err := s.sigSvc.VerifyRequest(req); err != nil {
 		resp := new(netmap.NetworkInfoResponse)
-		return resp, s.sigSvc.SignResponse(req, resp, err)
+		return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 	}
 	resp, err := util.WrapResponse(s.svc.NetworkInfo(ctx, req))
-	return resp, s.sigSvc.SignResponse(req, resp, err)
+	return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 }
 
 func (s *signService) Snapshot(ctx context.Context, req *netmap.SnapshotRequest) (*netmap.SnapshotResponse, error) {
 	if err := s.sigSvc.VerifyRequest(req); err != nil {
 		resp := new(netmap.SnapshotResponse)
-		return resp, s.sigSvc.SignResponse(req, resp, err)
+		return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 	}
 	resp, err := util.WrapResponse(s.svc.Snapshot(ctx, req))
-	return resp, s.sigSvc.SignResponse(req, resp, err)
+	return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 }

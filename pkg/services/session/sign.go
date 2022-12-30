@@ -24,8 +24,8 @@ func NewSignService(key *ecdsa.PrivateKey, svc Server) Server {
 func (s *signService) Create(ctx context.Context, req *session.CreateRequest) (*session.CreateResponse, error) {
 	if err := s.sigSvc.VerifyRequest(req); err != nil {
 		resp := new(session.CreateResponse)
-		return resp, s.sigSvc.SignResponse(req, resp, err)
+		return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 	}
 	resp, err := util.WrapResponse(s.svc.Create(ctx, req))
-	return resp, s.sigSvc.SignResponse(req, resp, err)
+	return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 }

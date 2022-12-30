@@ -24,17 +24,17 @@ func NewSignService(key *ecdsa.PrivateKey, svc Server) Server {
 func (s *signService) AnnounceLocalTrust(ctx context.Context, req *reputation.AnnounceLocalTrustRequest) (*reputation.AnnounceLocalTrustResponse, error) {
 	if err := s.sigSvc.VerifyRequest(req); err != nil {
 		resp := new(reputation.AnnounceLocalTrustResponse)
-		return resp, s.sigSvc.SignResponse(req, resp, err)
+		return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 	}
 	resp, err := util.WrapResponse(s.svc.AnnounceLocalTrust(ctx, req))
-	return resp, s.sigSvc.SignResponse(req, resp, err)
+	return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 }
 
 func (s *signService) AnnounceIntermediateResult(ctx context.Context, req *reputation.AnnounceIntermediateResultRequest) (*reputation.AnnounceIntermediateResultResponse, error) {
 	if err := s.sigSvc.VerifyRequest(req); err != nil {
 		resp := new(reputation.AnnounceIntermediateResultResponse)
-		return resp, s.sigSvc.SignResponse(req, resp, err)
+		return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 	}
 	resp, err := util.WrapResponse(s.svc.AnnounceIntermediateResult(ctx, req))
-	return resp, s.sigSvc.SignResponse(req, resp, err)
+	return resp, s.sigSvc.SignResponse(util.IsStatusSupported(req), resp, err)
 }
