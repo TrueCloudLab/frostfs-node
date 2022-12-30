@@ -211,7 +211,7 @@ func TestGetLocalOnly(t *testing.T) {
 	ctx := context.Background()
 
 	newSvc := func(storage *testStorage) *Service {
-		svc := &Service{cfg: new(cfg)}
+		svc := &Service{}
 		svc.log = test.NewLogger(false)
 		svc.localStorage = storage
 		svc.assembly = true
@@ -473,7 +473,7 @@ func TestGetRemoteSmall(t *testing.T) {
 	container.CalculateID(&idCnr, cnr)
 
 	newSvc := func(b *testPlacementBuilder, c *testClientCache) *Service {
-		svc := &Service{cfg: new(cfg)}
+		svc := &Service{}
 		svc.log = test.NewLogger(false)
 		svc.localStorage = newTestStorage()
 		svc.assembly = true
@@ -1150,7 +1150,7 @@ func TestGetFromPastEpoch(t *testing.T) {
 	c22 := newTestClient()
 	c22.addResult(addr, obj, nil)
 
-	svc := &Service{cfg: new(cfg)}
+	svc := &Service{}
 	svc.log = test.NewLogger(false)
 	svc.localStorage = newTestStorage()
 	svc.assembly = true

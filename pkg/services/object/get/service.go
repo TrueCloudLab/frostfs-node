@@ -15,7 +15,7 @@ import (
 
 // Service utility serving requests of Object.Get service.
 type Service struct {
-	*cfg
+	cfg
 }
 
 // Option is a Service's constructor option.
@@ -51,27 +51,24 @@ type epochSource interface {
 	Epoch() (uint64, error)
 }
 
-func defaultCfg() *cfg {
-	return &cfg{
-		assembly:     true,
-		log:          &logger.Logger{Logger: zap.L()},
-		localStorage: new(storageEngineWrapper),
-		clientCache:  new(clientCacheWrapper),
-	}
+func (c *cfg) initDefault() {
+	c.log = &logger.Logger{Logger: zap.L()}
+	c.localStorage = new(storageEngineWrapper)
+	c.assembly = true
+	c.clientCache = new(clientCacheWrapper)
 }
 
 // New creates, initializes and returns utility serving
 // Object.Get service requests.
 func New(opts ...Option) *Service {
-	c := defaultCfg()
+	var s Service
+	s.cfg.initDefault()
 
 	for i := range opts {
-		opts[i](c)
+		opts[i](&s.cfg)
 	}
 
-	return &Service{
-		cfg: c,
-	}
+	return &s
 }
 
 // WithLogger returns option to specify Get service's logger.

@@ -21,7 +21,7 @@ import (
 
 // Service checks basic ACL rules.
 type Service struct {
-	*cfg
+	cfg
 
 	c senderClassifier
 }
@@ -72,18 +72,17 @@ type cfg struct {
 	next object.ServiceServer
 }
 
-func defaultCfg() *cfg {
-	return &cfg{
-		log: &logger.Logger{Logger: zap.L()},
-	}
+func (c *cfg) initDefault() {
+	c.log = &logger.Logger{Logger: zap.L()}
 }
 
 // New is a constructor for object ACL checking service.
-func New(opts ...Option) Service {
-	cfg := defaultCfg()
+func New(opts ...Option) *Service {
+	var s Service
+	s.cfg.initDefault()
 
 	for i := range opts {
-		opts[i](cfg)
+		opts[i](&s.cfg)
 	}
 
 	panicOnNil := func(v any, name string) {
@@ -92,20 +91,18 @@ func New(opts ...Option) Service {
 		}
 	}
 
-	panicOnNil(cfg.next, "next Service")
-	panicOnNil(cfg.nm, "netmap client")
-	panicOnNil(cfg.irFetcher, "inner Ring fetcher")
-	panicOnNil(cfg.checker, "acl checker")
-	panicOnNil(cfg.containers, "container source")
+	panicOnNil(s.cfg.next, "next Service")
+	panicOnNil(s.cfg.nm, "netmap client")
+	panicOnNil(s.cfg.irFetcher, "inner Ring fetcher")
+	panicOnNil(s.cfg.checker, "acl checker")
+	panicOnNil(s.cfg.containers, "container source")
 
-	return Service{
-		cfg: cfg,
-		c: senderClassifier{
-			log:       cfg.log,
-			innerRing: cfg.irFetcher,
-			netmap:    cfg.nm,
-		},
+	s.c = senderClassifier{
+		log:       s.cfg.log,
+		innerRing: s.cfg.irFetcher,
+		netmap:    s.cfg.nm,
 	}
+	return &s
 }
 
 // Get implements ServiceServer interface, makes ACL checks and calls

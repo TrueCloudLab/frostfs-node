@@ -45,31 +45,30 @@ type headerSource struct {
 	incompleteObjectHeaders bool
 }
 
-func defaultCfg() *cfg {
-	return &cfg{
-		storage: new(localStorage),
-	}
+func (c *cfg) initDefault() {
+	c.storage = new(localStorage)
 }
 
 func NewMessageHeaderSource(opts ...Option) (eaclSDK.TypedHeaderSource, error) {
-	cfg := defaultCfg()
+	var c cfg
+	c.initDefault()
 
 	for i := range opts {
-		opts[i](cfg)
+		opts[i](&c)
 	}
 
-	if cfg.msg == nil {
+	if c.msg == nil {
 		return nil, errors.New("message is not provided")
 	}
 
 	var res headerSource
 
-	err := cfg.readObjectHeaders(&res)
+	err := c.readObjectHeaders(&res)
 	if err != nil {
 		return nil, err
 	}
 
-	res.requestHeaders = requestHeaders(cfg.msg)
+	res.requestHeaders = requestHeaders(c.msg)
 
 	return res, nil
 }
