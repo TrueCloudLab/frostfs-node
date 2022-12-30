@@ -53,7 +53,6 @@ type epochSource interface {
 
 func (c *cfg) initDefault() {
 	c.log = &logger.Logger{Logger: zap.L()}
-	c.localStorage = new(storageEngineWrapper)
 	c.assembly = true
 	c.clientCache = new(clientCacheWrapper)
 }
@@ -89,7 +88,7 @@ func WithoutAssembly() Option {
 // instance.
 func WithLocalStorageEngine(e *engine.StorageEngine) Option {
 	return func(c *cfg) {
-		c.localStorage.(*storageEngineWrapper).engine = e
+		c.localStorage = (*storageEngineWrapper)(e)
 	}
 }
 

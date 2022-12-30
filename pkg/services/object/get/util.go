@@ -27,9 +27,7 @@ type clientWrapper struct {
 	client coreclient.MultiAddressClient
 }
 
-type storageEngineWrapper struct {
-	engine *engine.StorageEngine
-}
+type storageEngineWrapper engine.StorageEngine
 
 type partWriter struct {
 	ObjectWriter
@@ -190,13 +188,14 @@ func (c *clientWrapper) get(exec *execCtx, key *ecdsa.PrivateKey) (*object.Objec
 	return res.Object(), nil
 }
 
-func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
+func (w *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
+	e := (*engine.StorageEngine)(w)
 	if exec.headOnly {
 		var headPrm engine.HeadPrm
 		headPrm.WithAddress(exec.prm.addr)
 		headPrm.WithRaw(exec.prm.raw)
 
-		r, err := e.engine.Head(headPrm)
+		r, err := e.Head(headPrm)
 		if err != nil {
 			return nil, err
 		}
@@ -207,7 +206,7 @@ func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
 		getRange.WithAddress(exec.prm.addr)
 		getRange.WithPayloadRange(rng)
 
-		r, err := e.engine.GetRange(getRange)
+		r, err := e.GetRange(getRange)
 		if err != nil {
 			return nil, err
 		}
@@ -217,7 +216,7 @@ func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
 		var getPrm engine.GetPrm
 		getPrm.WithAddress(exec.prm.addr)
 
-		r, err := e.engine.Get(getPrm)
+		r, err := e.Get(getPrm)
 		if err != nil {
 			return nil, err
 		}

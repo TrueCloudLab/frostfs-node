@@ -46,7 +46,7 @@ type headerSource struct {
 }
 
 func (c *cfg) initDefault() {
-	c.storage = new(localStorage)
+	c.storage = (*localStorage)(nil)
 }
 
 func NewMessageHeaderSource(opts ...Option) (eaclSDK.TypedHeaderSource, error) {

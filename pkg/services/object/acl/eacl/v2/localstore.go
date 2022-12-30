@@ -8,14 +8,12 @@ import (
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
-type localStorage struct {
-	ls *engine.StorageEngine
-}
+type localStorage engine.StorageEngine
 
 func (s *localStorage) Head(addr oid.Address) (*objectSDK.Object, error) {
-	if s.ls == nil {
+	if s == nil {
 		return nil, io.ErrUnexpectedEOF
 	}
 
-	return engine.Head(s.ls, addr)
+	return engine.Head((*engine.StorageEngine)(s), addr)
 }
