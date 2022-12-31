@@ -47,16 +47,10 @@ func (s *SignService) SignResponse(statusSupported bool, resp ResponseMessage, e
 
 	err = signature.SignServiceMessage(s.key, resp)
 	if err != nil {
-		err = fmt.Errorf("could not sign response: %w", err)
-
-		if statusSupported {
-			// We can't pass this error as status code since response will be unsigned.
-			// Isn't expected in practice, so panic is ok here.
-			panic(err)
-		}
+		return fmt.Errorf("could not sign response: %w", err)
 	}
 
-	return err
+	return nil
 }
 
 func (s *SignService) VerifyRequest(req RequestMessage) error {
