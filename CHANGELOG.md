@@ -6,6 +6,7 @@ Changelog for FrostFS Node
 ### Added
 ### Changed
 ### Fixed
+- Big object removal with non-local parts (#1978)
 ### Removed
 ### Updated
 - `neo-go` to `v0.100.1`
