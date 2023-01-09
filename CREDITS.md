@@ -1,5 +1,7 @@
 # Credits
 
+FrostFS continues the development of NeoFS.
+
 Initial NeoFS research and development (2018-2020) was done by
 [NeoSPCC](https://nspcc.ru) team.
 

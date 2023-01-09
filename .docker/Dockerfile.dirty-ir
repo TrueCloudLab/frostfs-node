@@ -3,6 +3,6 @@ RUN apk add --no-cache bash ca-certificates
 
 WORKDIR /
 
-COPY bin/neofs-ir /bin/neofs-ir
+COPY bin/frostfs-ir /bin/frostfs-ir
 
-CMD ["neofs-ir"]
+CMD ["frostfs-ir"]

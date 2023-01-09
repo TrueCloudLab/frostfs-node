@@ -1,5 +1,5 @@
 # Changelog
-Changelog for NeoFS Node
+Changelog for FrostFS Node
 
 ## [Unreleased]
 

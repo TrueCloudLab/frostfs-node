@@ -5,15 +5,15 @@ ARG REPO=repository
 WORKDIR /src
 COPY . /src
 
-RUN make bin/neofs-adm
+RUN make bin/frostfs-adm
 
 # Executable image
-FROM alpine AS neofs-adm
+FROM alpine AS frostfs-adm
 RUN apk add --no-cache bash
 
 WORKDIR /
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /src/bin/neofs-adm /bin/neofs-adm
+COPY --from=builder /src/bin/frostfs-adm /bin/frostfs-adm
 
-CMD ["neofs-adm"]
+CMD ["frostfs-adm"]

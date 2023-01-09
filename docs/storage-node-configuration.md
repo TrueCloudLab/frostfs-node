@@ -1,6 +1,6 @@
 # NeoFS Storage node configuration file
 
-This section contains detailed NeoFS Storage node configuration file description
+This section contains detailed FrostFS Storage node configuration file description
 including default config values and some tips to set up configurable values.
 
 There are some custom types used for brevity:
@@ -18,9 +18,9 @@ There are some custom types used for brevity:
 | `pprof`      | [PProf configuration](#pprof-section)                   |
 | `prometheus` | [Prometheus metrics configuration](#prometheus-section) |
 | `control`    | [Control service configuration](#control-section)       |
-| `contracts`  | [Override NeoFS contracts hashes](#contracts-section)   |
+| `contracts`  | [Override FrostFS contracts hashes](#contracts-section)   |
 | `morph`      | [N3 blockchain client configuration](#morph-section)    |
-| `apiclient`  | [NeoFS API client configuration](#apiclient-section)    |
+| `apiclient`  | [FrostFS API client configuration](#apiclient-section)    |
 | `policer`    | [Policer service configuration](#policer-section)       |
 | `replicator` | [Replicator service configuration](#replicator-section) |
 | `storage`    | [Storage engine configuration](#storage-section)        |
@@ -105,7 +105,7 @@ logger:
 | `level`   | `string` | `info`        | Logging level.<br/>Possible values:  `debug`, `info`, `warn`, `error`, `dpanic`, `panic`, `fatal` |
 
 # `contracts` section
-Contains override values for NeoFS side-chain contract hashes. Most of the time contract
+Contains override values for FrostFS side-chain contract hashes. Most of the time contract
 hashes are fetched from the NNS contract, so this section can be omitted.
 
 ```yaml
@@ -133,9 +133,9 @@ morph:
   dial_timeout: 30s
   cache_ttl: 15s
   rpc_endpoint:
-    - address: wss://rpc1.morph.fs.neo.org:40341/ws
+    - address: wss://rpc1.morph.frostfs.info:40341/ws
       priority: 1
-    - address: wss://rpc2.morph.fs.neo.org:40341/ws
+    - address: wss://rpc2.morph.frostfs.info:40341/ws
       priority: 2
   switch_interval: 2m
  ```
@@ -348,7 +348,7 @@ It is used to correctly handle node restarts or crashes.
 
 | Parameter | Type     | Default value          | Description            |
 |-----------|----------|------------------------|------------------------|
-| `path`    | `string` | `.neofs-storage-state` | Path to the database.  |
+| `path`    | `string` | `.frostfs-storage-state` | Path to the database.  |
 
 ## `subnet` subsection
 This is an advanced section, use with caution.
@@ -372,7 +372,7 @@ This is an advanced section, use with caution.
 | `ca`            | `string`   |                   | Override root CA used to verify server certificates.              |
 
 # `apiclient` section
-Configuration for the NeoFS API client used for communication with other NeoFS nodes.
+Configuration for the FrostFS API client used for communication with other FrostFS nodes.
 
 ```yaml
 apiclient:

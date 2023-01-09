@@ -84,9 +84,9 @@ protoc:
 	done
 	rm -rf vendor
 
-# Build NeoFS component's docker image
+# Build FrostFS component's docker image
 image-%:
-	@echo "⇒ Build NeoFS $* docker image "
+	@echo "⇒ Build FrostFS $* docker image "
 	@docker build \
 		--build-arg REPO=$(REPO) \
 		--build-arg VERSION=$(VERSION) \

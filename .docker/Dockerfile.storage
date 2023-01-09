@@ -5,14 +5,14 @@ ARG REPO=repository
 WORKDIR /src
 COPY . /src
 
-RUN make bin/neofs-node
+RUN make bin/frostfs-node
 
 # Executable image
-FROM alpine AS neofs-node
+FROM alpine AS frostfs-node
 RUN apk add --no-cache bash
 
 WORKDIR /
 
-COPY --from=builder /src/bin/neofs-node /bin/neofs-node
+COPY --from=builder /src/bin/frostfs-node /bin/frostfs-node
 
-CMD ["neofs-node"]
+CMD ["frostfs-node"]

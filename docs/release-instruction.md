@@ -19,20 +19,20 @@ following the [semantic versioning](https://semver.org/) standard.
 Determine the revision number for the release:
 
 ```shell
-$ export NEOFS_REVISION=X.Y.Z[-rc.N]
-$ export NEOFS_TAG_PREFIX=v
+$ export FROSTFS_REVISION=X.Y.Z[-rc.N]
+$ export FROSTFS_TAG_PREFIX=v
 ```
 
 Double-check the number:
 
 ```shell
-$ echo ${NEOFS_REVISION}
+$ echo ${FROSTFS_REVISION}
 ```
 
 Create release branch from the main branch of the origin repository:
 
 ```shell
-$ git checkout -b release/${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
+$ git checkout -b release/${FROSTFS_TAG_PREFIX}${FROSTFS_REVISION}
 ```
 
 ### Update versions
@@ -40,7 +40,7 @@ $ git checkout -b release/${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
 Write new revision number into the root `VERSION` file:
 
 ```shell
-$ echo ${NEOFS_TAG_PREFIX}${NEOFS_REVISION} > VERSION
+$ echo ${FROSTFS_TAG_PREFIX}${FROSTFS_REVISION} > VERSION
 ```
 
 Update version in Debian package changelog file
@@ -68,7 +68,7 @@ Add an entry to the `CHANGELOG.md` following the style established there.
 Stage changed files for commit using `git add`. Commit the changes:
 
 ```shell
-$ git commit -s -m 'Release '${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
+$ git commit -s -m 'Release '${FROSTFS_TAG_PREFIX}${FROSTFS_REVISION}
 ```
 
 ### Open pull request
@@ -76,7 +76,7 @@ $ git commit -s -m 'Release '${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
 Push release branch:
 
 ```shell
-$ git push <remote> release/${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
+$ git push <remote> release/${FROSTFS_TAG_PREFIX}${FROSTFS_REVISION}
 ```
 
 Open pull request to the main branch of the origin repository so that the
@@ -89,13 +89,13 @@ with PGP signature.
 
 ```shell
 $ git checkout master && git pull
-$ git tag -s ${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
+$ git tag -s ${FROSTFS_TAG_PREFIX}${FROSTFS_REVISION}
 ```
 
 ## Push the release tag
 
 ```shell
-$ git push origin ${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
+$ git push origin ${FROSTFS_TAG_PREFIX}${FROSTFS_REVISION}
 ```
 
 ## Post-release
@@ -103,16 +103,16 @@ $ git push origin ${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
 ### Prepare and push images to a Docker Hub (if not automated)
 
 Create Docker images for all applications and push them into Docker Hub
-(requires [organization](https://hub.docker.com/u/nspccdev) privileges)
+(requires [organization](https://hub.docker.com/u/truecloudlab) privileges)
 
 ```shell
-$ git checkout ${NEOFS_TAG_PREFIX}${NEOFS_REVISION}
+$ git checkout ${FROSTFS_TAG_PREFIX}${FROSTFS_REVISION}
 $ make images
-$ docker push nspccdev/neofs-storage:${NEOFS_REVISION}
-$ docker push nspccdev/neofs-storage-testnet:${NEOFS_REVISION}
-$ docker push nspccdev/neofs-ir:${NEOFS_REVISION}
-$ docker push nspccdev/neofs-cli:${NEOFS_REVISION}
-$ docker push nspccdev/neofs-adm:${NEOFS_REVISION}
+$ docker push truecloudlab/frostfs-storage:${FROSTFS_REVISION}
+$ docker push truecloudlab/frostfs-storage-testnet:${FROSTFS_REVISION}
+$ docker push truecloudlab/frostfs-ir:${FROSTFS_REVISION}
+$ docker push truecloudlab/frostfs-cli:${FROSTFS_REVISION}
+$ docker push truecloudlab/frostfs-adm:${FROSTFS_REVISION}
 ```
 
 ### Make a proper GitHub release (if not automated)
@@ -121,7 +121,7 @@ Edit an automatically-created release on GitHub, copy things from `CHANGELOG.md`
 Build and tar release binaries with `make prepare-release`, attach them to
 the release. Publish the release.
 
-### Update NeoFS Developer Environment
+### Update FrostFS Developer Environment
 
 Prepare pull-request in [frostfs-devenv](https://github.com/TrueCloudLab/frostfs-devenv)
 with new versions.
@@ -130,9 +130,9 @@ with new versions.
 
 Look up GitHub [milestones](https://github.com/TrueCloudLab/frostfs-node/milestones) and close the release one if exists.
 
-### Rebuild NeoFS LOCODE database
+### Rebuild FrostFS LOCODE database
 
-If new release contains LOCODE-related changes, rebuild NeoFS LOCODE database via NeoFS CLI
+If new release contains LOCODE-related changes, rebuild FrostFS LOCODE database via FrostFS CLI
 
 ```shell
 $ frostfs-cli util locode generate ...

@@ -3,6 +3,6 @@ RUN apk add --no-cache bash ca-certificates
 
 WORKDIR /
 
-COPY bin/neofs-adm /bin/neofs-adm
+COPY bin/frostfs-adm /bin/frostfs-adm
 
-CMD ["neofs-adm"]
+CMD ["frostfs-adm"]
