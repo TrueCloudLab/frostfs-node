@@ -17,7 +17,6 @@ import (
 
 type preparedObjectTarget interface {
 	WriteObject(*objectSDK.Object, object.ContentMeta) error
-	Close() (*transformer.AccessIdentifiers, error)
 }
 
 type distributedTarget struct {
@@ -154,10 +153,9 @@ func (t *distributedTarget) sendObject(node nodeDesc) error {
 
 	target := t.nodeTargetInitializer(node)
 
-	if err := target.WriteObject(t.obj, t.objMeta); err != nil {
+	err := target.WriteObject(t.obj, t.objMeta)
+	if err != nil {
 		return fmt.Errorf("could not write header: %w", err)
-	} else if _, err := target.Close(); err != nil {
-		return fmt.Errorf("could not close object stream: %w", err)
 	}
 	return nil
 }

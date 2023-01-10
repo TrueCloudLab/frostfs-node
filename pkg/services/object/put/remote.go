@@ -9,7 +9,6 @@ import (
 	objectcore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
 	internalclient "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
-	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/transformer"
 	"github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 )
@@ -22,8 +21,6 @@ type remoteTarget struct {
 	commonPrm *util.CommonPrm
 
 	nodeInfo clientcore.NodeInfo
-
-	obj *object.Object
 
 	clientConstructor ClientConstructor
 }
@@ -44,12 +41,6 @@ type RemotePutPrm struct {
 }
 
 func (t *remoteTarget) WriteObject(obj *object.Object, _ objectcore.ContentMeta) error {
-	t.obj = obj
-
-	return nil
-}
-
-func (t *remoteTarget) Close() (*transformer.AccessIdentifiers, error) {
 	var sessionInfo *util.SessionInfo
 
 	if tok := t.commonPrm.SessionToken(); tok != nil {
@@ -61,12 +52,12 @@ func (t *remoteTarget) Close() (*transformer.AccessIdentifiers, error) {
 
 	key, err := t.keyStorage.GetKey(sessionInfo)
 	if err != nil {
-		return nil, fmt.Errorf("(%T) could not receive private key: %w", t, err)
+		return fmt.Errorf("(%T) could not receive private key: %w", t, err)
 	}
 
 	c, err := t.clientConstructor.Get(t.nodeInfo)
 	if err != nil {
-		return nil, fmt.Errorf("(%T) could not create SDK client %s: %w", t, t.nodeInfo, err)
+		return fmt.Errorf("(%T) could not create SDK client %s: %w", t, t.nodeInfo, err)
 	}
 
 	var prm internalclient.PutObjectPrm
@@ -77,15 +68,14 @@ func (t *remoteTarget) Close() (*transformer.AccessIdentifiers, error) {
 	prm.SetSessionToken(t.commonPrm.SessionToken())
 	prm.SetBearerToken(t.commonPrm.BearerToken())
 	prm.SetXHeaders(t.commonPrm.XHeaders())
-	prm.SetObject(t.obj)
+	prm.SetObject(obj)
 
-	res, err := internalclient.PutObject(prm)
+	_, err = internalclient.PutObject(prm)
 	if err != nil {
-		return nil, fmt.Errorf("(%T) could not put object to %s: %w", t, t.nodeInfo.AddressGroup(), err)
+		return fmt.Errorf("(%T) could not put object to %s: %w", t, t.nodeInfo.AddressGroup(), err)
 	}
 
-	return new(transformer.AccessIdentifiers).
-		WithSelfID(res.ID()), nil
+	return nil
 }
 
 // NewRemoteSender creates, initializes and returns new RemoteSender instance.
@@ -127,9 +117,8 @@ func (s *RemoteSender) PutObject(ctx context.Context, p *RemotePutPrm) error {
 		return fmt.Errorf("parse client node info: %w", err)
 	}
 
-	if err := t.WriteObject(p.obj, objectcore.ContentMeta{}); err != nil {
-		return fmt.Errorf("(%T) could not send object header: %w", s, err)
-	} else if _, err := t.Close(); err != nil {
+	err = t.WriteObject(p.obj, objectcore.ContentMeta{})
+	if err != nil {
 		return fmt.Errorf("(%T) could not send object: %w", s, err)
 	}
 

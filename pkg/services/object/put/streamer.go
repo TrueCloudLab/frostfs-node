@@ -220,7 +220,7 @@ func (p *Streamer) newCommonTarget(prm *PutInitPrm) transformer.ObjectTarget {
 		getWorkerPool: p.getWorkerPool,
 		nodeTargetInitializer: func(node nodeDesc) preparedObjectTarget {
 			if node.local {
-				return &localTarget{
+				return localTarget{
 					storage: p.localStore,
 				}
 			}
