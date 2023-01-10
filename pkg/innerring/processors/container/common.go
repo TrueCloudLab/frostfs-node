@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfsid"
 	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	frostfsecdsa "github.com/TrueCloudLab/frostfs-sdk-go/crypto/ecdsa"
 	"github.com/TrueCloudLab/frostfs-sdk-go/session"
@@ -113,7 +113,7 @@ func (cp *Processor) verifySignature(v signatureVerificationData) error {
 			return errors.New("invalid signature calculated by container owner's key")
 		}
 	} else {
-		var prm neofsid.AccountKeysPrm
+		var prm frostfsid.AccountKeysPrm
 		prm.SetID(v.ownerContainer)
 
 		ownerKeys, err := cp.idClient.AccountKeys(prm)

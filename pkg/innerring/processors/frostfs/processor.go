@@ -7,7 +7,7 @@ import (
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
-	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfsid"
 	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/frostfs"
@@ -52,7 +52,7 @@ type (
 		mintEmitValue       fixedn.Fixed8
 		gasBalanceThreshold int64
 
-		frostfsIDClient *neofsid.Client
+		frostfsIDClient *frostfsid.Client
 	}
 
 	// Params of the processor constructor.
@@ -60,7 +60,7 @@ type (
 		Log                 *logger.Logger
 		PoolSize            int
 		NeoFSContract       util.Uint160
-		NeoFSIDClient       *neofsid.Client
+		NeoFSIDClient       *frostfsid.Client
 		BalanceClient       *balance.Client
 		NetmapClient        *nmClient.Client
 		MorphClient         *client.Client

@@ -1,4 +1,4 @@
-package neofsid
+package frostfsid
 
 import (
 	"crypto/elliptic"

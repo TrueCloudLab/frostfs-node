@@ -42,7 +42,7 @@ const (
 	auditContract      = "audit"
 	balanceContract    = "balance"
 	containerContract  = "container"
-	neofsIDContract    = "neofsid"
+	frostfsIDContract  = "frostfsid"
 	netmapContract     = "netmap"
 	proxyContract      = "proxy"
 	reputationContract = "reputation"
@@ -72,7 +72,7 @@ var (
 		auditContract,
 		balanceContract,
 		containerContract,
-		neofsIDContract,
+		frostfsIDContract,
 		netmapContract,
 		proxyContract,
 		reputationContract,
@@ -543,10 +543,10 @@ func (c *initializeContext) getContractDeployData(ctrName string, keysParam []in
 		items = append(items,
 			c.Contracts[netmapContract].Hash,
 			c.Contracts[balanceContract].Hash,
-			c.Contracts[neofsIDContract].Hash,
+			c.Contracts[frostfsIDContract].Hash,
 			nnsCs.Hash,
 			"container")
-	case neofsIDContract:
+	case frostfsIDContract:
 		items = append(items,
 			c.Contracts[netmapContract].Hash,
 			c.Contracts[containerContract].Hash)

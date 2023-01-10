@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
-	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfsid"
 	morphsubnet "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/subnet"
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	containerEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/container"
@@ -27,7 +27,7 @@ type (
 		pool           *ants.Pool
 		alphabetState  AlphabetState
 		cnrClient      *container.Client // notary must be enabled
-		idClient       *neofsid.Client
+		idClient       *frostfsid.Client
 		subnetClient   *morphsubnet.Client
 		netState       NetworkState
 		notaryDisabled bool
@@ -39,7 +39,7 @@ type (
 		PoolSize        int
 		AlphabetState   AlphabetState
 		ContainerClient *container.Client
-		NeoFSIDClient   *neofsid.Client
+		NeoFSIDClient   *frostfsid.Client
 		SubnetClient    *morphsubnet.Client
 		NetworkState    NetworkState
 		NotaryDisabled  bool

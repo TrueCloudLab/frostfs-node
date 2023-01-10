@@ -30,7 +30,7 @@ import (
 	balanceClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
 	cntClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/container"
 	frostfsClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfs"
-	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfsid"
 	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 	repClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/reputation"
 	morphsubnet "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/subnet"
@@ -508,7 +508,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 		return nil, err
 	}
 
-	frostfsIDClient, err := neofsid.NewFromMorph(server.morphClient, server.contracts.frostfsID, fee, neofsid.TryNotary(), neofsid.AsAlphabet())
+	frostfsIDClient, err := frostfsid.NewFromMorph(server.morphClient, server.contracts.frostfsID, fee, frostfsid.TryNotary(), frostfsid.AsAlphabet())
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@ import (
 	"crypto/elliptic"
 	"fmt"
 
-	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
+	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfsid"
 	frostfs "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/frostfs"
 	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
@@ -87,7 +87,7 @@ func (np *Processor) approveBindCommon(e *bindCommonContext) {
 	var id user.ID
 	id.SetScriptHash(u160)
 
-	prm := neofsid.CommonBindPrm{}
+	prm := frostfsid.CommonBindPrm{}
 	prm.SetOwnerID(id.WalletBytes())
 	prm.SetKeys(e.Keys())
 	prm.SetHash(e.bindCommon.TxHash())
