@@ -84,7 +84,7 @@ type (
 
 		MorphClient   *client.Client
 		MainnetClient *client.Client
-		NeoFSClient   *frostfscontract.Client
+		FrostFSClient *frostfscontract.Client
 		NetmapClient  *nmClient.Client
 
 		NotaryDisabled bool
@@ -121,7 +121,7 @@ func New(p *Params) (*Processor, error) {
 	return &Processor{
 		log:            p.Log,
 		pool:           pool,
-		frostfsClient:  p.NeoFSClient,
+		frostfsClient:  p.FrostFSClient,
 		netmapClient:   p.NetmapClient,
 		alphabetState:  p.AlphabetState,
 		epochState:     p.EpochState,

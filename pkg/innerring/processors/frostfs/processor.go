@@ -59,8 +59,8 @@ type (
 	Params struct {
 		Log                 *logger.Logger
 		PoolSize            int
-		NeoFSContract       util.Uint160
-		NeoFSIDClient       *frostfsid.Client
+		FrostFSContract     util.Uint160
+		FrostFSIDClient     *frostfsid.Client
 		BalanceClient       *balance.Client
 		NetmapClient        *nmClient.Client
 		MorphClient         *client.Client
@@ -113,7 +113,7 @@ func New(p *Params) (*Processor, error) {
 	return &Processor{
 		log:                 p.Log,
 		pool:                pool,
-		frostfsContract:     p.NeoFSContract,
+		frostfsContract:     p.FrostFSContract,
 		balanceClient:       p.BalanceClient,
 		netmapClient:        p.NetmapClient,
 		morphClient:         p.MorphClient,
@@ -126,7 +126,7 @@ func New(p *Params) (*Processor, error) {
 		mintEmitValue:       p.MintEmitValue,
 		gasBalanceThreshold: p.GasBalanceThreshold,
 
-		frostfsIDClient: p.NeoFSIDClient,
+		frostfsIDClient: p.FrostFSIDClient,
 	}, nil
 }
 

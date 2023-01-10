@@ -243,12 +243,12 @@ func (c *Client) GetNotaryDeposit() (res int64, err error) {
 	}
 
 	if len(items) != 1 {
-		return 0, wrapNeoFSError(fmt.Errorf("%v: %w", notaryBalanceErrMsg, errUnexpectedItems))
+		return 0, wrapFrostFSError(fmt.Errorf("%v: %w", notaryBalanceErrMsg, errUnexpectedItems))
 	}
 
 	bigIntDeposit, err := items[0].TryInteger()
 	if err != nil {
-		return 0, wrapNeoFSError(fmt.Errorf("%v: %w", notaryBalanceErrMsg, err))
+		return 0, wrapFrostFSError(fmt.Errorf("%v: %w", notaryBalanceErrMsg, err))
 	}
 
 	return bigIntDeposit.Int64(), nil
@@ -475,12 +475,12 @@ func (c *Client) notaryInvoke(committee, invokedByAlpha bool, contract util.Uint
 
 	// check invocation state
 	if test.State != HaltState {
-		return wrapNeoFSError(&notHaltStateError{state: test.State, exception: test.FaultException})
+		return wrapFrostFSError(&notHaltStateError{state: test.State, exception: test.FaultException})
 	}
 
 	// if test invocation failed, then return error
 	if len(test.Script) == 0 {
-		return wrapNeoFSError(errEmptyInvocationScript)
+		return wrapFrostFSError(errEmptyInvocationScript)
 	}
 
 	// after test invocation we build main multisig transaction
@@ -570,7 +570,7 @@ func (c *Client) notaryCosigners(invokedByAlpha bool, ir []*keys.PublicKey, comm
 	multisigScript, err := sc.CreateMultiSigRedeemScript(m, ir)
 	if err != nil {
 		// wrap error as NeoFS-specific since the call is not related to any client
-		return nil, wrapNeoFSError(fmt.Errorf("can't create ir multisig redeem script: %w", err))
+		return nil, wrapFrostFSError(fmt.Errorf("can't create ir multisig redeem script: %w", err))
 	}
 
 	s = append(s, transaction.Signer{
@@ -704,7 +704,7 @@ func (c *Client) notaryMultisigAccount(ir []*keys.PublicKey, committee, invokedB
 		err := multisigAccount.ConvertMultisig(m, ir)
 		if err != nil {
 			// wrap error as NeoFS-specific since the call is not related to any client
-			return nil, wrapNeoFSError(fmt.Errorf("can't convert account to inner ring multisig wallet: %w", err))
+			return nil, wrapFrostFSError(fmt.Errorf("can't convert account to inner ring multisig wallet: %w", err))
 		}
 	} else {
 		// alphabet multisig redeem script is
@@ -713,7 +713,7 @@ func (c *Client) notaryMultisigAccount(ir []*keys.PublicKey, committee, invokedB
 		multisigAccount, err = notary.FakeMultisigAccount(m, ir)
 		if err != nil {
 			// wrap error as NeoFS-specific since the call is not related to any client
-			return nil, wrapNeoFSError(fmt.Errorf("can't make inner ring multisig wallet: %w", err))
+			return nil, wrapFrostFSError(fmt.Errorf("can't make inner ring multisig wallet: %w", err))
 		}
 	}
 

@@ -163,7 +163,7 @@ func (e *notHaltStateError) Error() string {
 
 var errEmptyInvocationScript = errors.New("got empty invocation script from neo node")
 
-// implementation of error interface for NeoFS-specific errors.
+// implementation of error interface for FrostFS-specific errors.
 type frostfsError struct {
 	err error
 }
@@ -172,8 +172,8 @@ func (e frostfsError) Error() string {
 	return fmt.Sprintf("frostfs error: %v", e.err)
 }
 
-// wraps NeoFS-specific error into frostfsError. Arg must not be nil.
-func wrapNeoFSError(err error) error {
+// wraps FrostFS-specific error into frostfsError. Arg must not be nil.
+func wrapFrostFSError(err error) error {
 	return frostfsError{err}
 }
 
@@ -216,7 +216,7 @@ func (c *Client) TestInvoke(contract util.Uint160, method string, args ...interf
 	}
 
 	if val.State != HaltState {
-		return nil, wrapNeoFSError(&notHaltStateError{state: val.State, exception: val.FaultException})
+		return nil, wrapFrostFSError(&notHaltStateError{state: val.State, exception: val.FaultException})
 	}
 
 	return val.Stack, nil
@@ -433,7 +433,7 @@ func toStackParameter(value interface{}) (sc.Parameter, error) {
 		result.Type = sc.BoolType
 		result.Value = v
 	default:
-		return result, wrapNeoFSError(fmt.Errorf("chain/client: unsupported parameter %v", value))
+		return result, wrapFrostFSError(fmt.Errorf("chain/client: unsupported parameter %v", value))
 	}
 
 	return result, nil

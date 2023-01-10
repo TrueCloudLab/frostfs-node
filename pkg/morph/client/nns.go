@@ -26,8 +26,8 @@ const (
 	NNSBalanceContractName = "balance.frostfs"
 	// NNSContainerContractName is a name of the container contract in NNS.
 	NNSContainerContractName = "container.frostfs"
-	// NNSNeoFSIDContractName is a name of the frostfsid contract in NNS.
-	NNSNeoFSIDContractName = "frostfsid.frostfs"
+	// NNSFrostFSIDContractName is a name of the frostfsid contract in NNS.
+	NNSFrostFSIDContractName = "frostfsid.frostfs"
 	// NNSNetmapContractName is a name of the netmap contract in NNS.
 	NNSNetmapContractName = "netmap.frostfs"
 	// NNSProxyContractName is a name of the proxy contract in NNS.

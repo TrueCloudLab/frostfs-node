@@ -63,7 +63,7 @@ func parseContracts(cfg *viper.Viper, morph *client.Client, withoutMainNet, with
 		{"contracts.audit", client.NNSAuditContractName, &result.audit},
 		{"contracts.reputation", client.NNSReputationContractName, &result.reputation},
 		{"contracts.subnet", client.NNSSubnetworkContractName, &result.subnet},
-		{"contracts.frostfsid", client.NNSNeoFSIDContractName, &result.frostfsID},
+		{"contracts.frostfsid", client.NNSFrostFSIDContractName, &result.frostfsID},
 	}
 
 	for _, t := range targets {

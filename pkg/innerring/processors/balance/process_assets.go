@@ -22,7 +22,7 @@ func (bp *Processor) processLock(lock *balanceEvent.Lock) {
 	prm.SetLock(lock.LockAccount())
 	prm.SetHash(lock.TxHash())
 
-	err := bp.neofsClient.Cheque(prm)
+	err := bp.frostfsClient.Cheque(prm)
 	if err != nil {
 		bp.log.Error("can't send lock asset tx", zap.Error(err))
 	}

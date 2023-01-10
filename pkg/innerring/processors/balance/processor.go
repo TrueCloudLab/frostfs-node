@@ -28,7 +28,7 @@ type (
 	Processor struct {
 		log           *logger.Logger
 		pool          *ants.Pool
-		neofsClient   *frostfscontract.Client
+		frostfsClient *frostfscontract.Client
 		balanceSC     util.Uint160
 		alphabetState AlphabetState
 		converter     PrecisionConverter
@@ -38,7 +38,7 @@ type (
 	Params struct {
 		Log           *logger.Logger
 		PoolSize      int
-		NeoFSClient   *frostfscontract.Client
+		FrostFSClient *frostfscontract.Client
 		BalanceSC     util.Uint160
 		AlphabetState AlphabetState
 		Converter     PrecisionConverter
@@ -70,7 +70,7 @@ func New(p *Params) (*Processor, error) {
 	return &Processor{
 		log:           p.Log,
 		pool:          pool,
-		neofsClient:   p.NeoFSClient,
+		frostfsClient: p.FrostFSClient,
 		balanceSC:     p.BalanceSC,
 		alphabetState: p.AlphabetState,
 		converter:     p.Converter,

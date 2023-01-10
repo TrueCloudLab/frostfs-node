@@ -670,7 +670,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 		// create governance processor
 		governanceProcessor, err := governance.New(&governance.Params{
 			Log:            log,
-			NeoFSClient:    frostfsCli,
+			FrostFSClient:  frostfsCli,
 			NetmapClient:   server.netmapClient,
 			AlphabetState:  server,
 			EpochState:     server,
@@ -743,7 +743,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 		PoolSize:        cfg.GetInt("workers.container"),
 		AlphabetState:   server,
 		ContainerClient: cnrClient,
-		NeoFSIDClient:   frostfsIDClient,
+		FrostFSIDClient: frostfsIDClient,
 		NetworkState:    server.netmapClient,
 		NotaryDisabled:  server.sideNotaryConfig.disabled,
 		SubnetClient:    subnetClient,
@@ -761,7 +761,7 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 	balanceProcessor, err := balance.New(&balance.Params{
 		Log:           log,
 		PoolSize:      cfg.GetInt("workers.balance"),
-		NeoFSClient:   frostfsCli,
+		FrostFSClient: frostfsCli,
 		BalanceSC:     server.contracts.balance,
 		AlphabetState: server,
 		Converter:     &server.precision,
@@ -780,8 +780,8 @@ func New(ctx context.Context, log *logger.Logger, cfg *viper.Viper, errChan chan
 		frostfsProcessor, err := frostfs.New(&frostfs.Params{
 			Log:                 log,
 			PoolSize:            cfg.GetInt("workers.frostfs"),
-			NeoFSContract:       server.contracts.frostfs,
-			NeoFSIDClient:       frostfsIDClient,
+			FrostFSContract:     server.contracts.frostfs,
+			FrostFSIDClient:     frostfsIDClient,
 			BalanceClient:       server.balanceClient,
 			NetmapClient:        server.netmapClient,
 			MorphClient:         server.morphClient,

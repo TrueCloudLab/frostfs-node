@@ -39,7 +39,7 @@ type (
 		PoolSize        int
 		AlphabetState   AlphabetState
 		ContainerClient *container.Client
-		NeoFSIDClient   *frostfsid.Client
+		FrostFSIDClient *frostfsid.Client
 		SubnetClient    *morphsubnet.Client
 		NetworkState    NetworkState
 		NotaryDisabled  bool
@@ -80,7 +80,7 @@ func New(p *Params) (*Processor, error) {
 		return nil, errors.New("ir/container: global state is not set")
 	case p.ContainerClient == nil:
 		return nil, errors.New("ir/container: Container client is not set")
-	case p.NeoFSIDClient == nil:
+	case p.FrostFSIDClient == nil:
 		return nil, errors.New("ir/container: NeoFS ID client is not set")
 	case p.NetworkState == nil:
 		return nil, errors.New("ir/container: network state is not set")
@@ -100,7 +100,7 @@ func New(p *Params) (*Processor, error) {
 		pool:           pool,
 		alphabetState:  p.AlphabetState,
 		cnrClient:      p.ContainerClient,
-		idClient:       p.NeoFSIDClient,
+		idClient:       p.FrostFSIDClient,
 		netState:       p.NetworkState,
 		notaryDisabled: p.NotaryDisabled,
 		subnetClient:   p.SubnetClient,
