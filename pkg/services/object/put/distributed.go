@@ -45,9 +45,6 @@ type traversal struct {
 	// need of additional broadcast after the object is saved
 	extraBroadcastEnabled bool
 
-	// mtx protects mExclude map.
-	mtx sync.RWMutex
-
 	// container nodes which was processed during the primary object placement
 	mExclude map[string]struct{}
 }
@@ -73,21 +70,17 @@ func (x *traversal) submitProcessed(n placement.Node) {
 	if x.extraBroadcastEnabled {
 		key := string(n.PublicKey())
 
-		x.mtx.Lock()
 		if x.mExclude == nil {
 			x.mExclude = make(map[string]struct{}, 1)
 		}
 
 		x.mExclude[key] = struct{}{}
-		x.mtx.Unlock()
 	}
 }
 
 // checks if specified node was processed during the primary object placement.
 func (x *traversal) processed(n placement.Node) bool {
-	x.mtx.RLock()
 	_, ok := x.mExclude[string(n.PublicKey())]
-	x.mtx.RUnlock()
 	return ok
 }
 
@@ -197,12 +190,6 @@ loop:
 
 				err := f(nodeDesc{local: isLocal, info: addr})
 
-				// mark the container node as processed in order to exclude it
-				// in subsequent container broadcast. Note that we don't
-				// process this node during broadcast if primary placement
-				// on it failed.
-				t.traversal.submitProcessed(addr)
-
 				if err != nil {
 					resErr.Store(err)
 					svcutil.LogServiceError(t.log, "PUT", addr.Addresses(), err)
@@ -217,6 +204,12 @@ loop:
 
 				break loop
 			}
+
+			// mark the container node as processed in order to exclude it
+			// in subsequent container broadcast. Note that we don't
+			// process this node during broadcast if primary placement
+			// on it failed.
+			t.traversal.submitProcessed(addrs[i])
 		}
 
 		wg.Wait()
