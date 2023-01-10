@@ -4,7 +4,7 @@ package neo.fs.v2.refs;
 
 option go_package = "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-adm/internal/modules/morph/internal";
 
-// Client group identifier in the NeoFS subnet.
+// Client group identifier in the FrostFS subnet.
 //
 // String representation of a value is base-10 integer.
 //

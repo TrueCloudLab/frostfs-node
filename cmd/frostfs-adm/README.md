@@ -1,4 +1,4 @@
-# NeoFS Admin Tool
+# FrostFS Admin Tool
 
 ## Overview
 
