@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
-	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfs"
 	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event/rolemanagement"

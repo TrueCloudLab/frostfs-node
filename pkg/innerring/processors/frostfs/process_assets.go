@@ -2,7 +2,7 @@ package frostfs
 
 import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/balance"
-	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
+	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/frostfs"
 	"github.com/nspcc-dev/neo-go/pkg/util"
 	"go.uber.org/zap"
 )

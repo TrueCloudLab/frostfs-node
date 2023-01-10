@@ -36,7 +36,7 @@ import (
 
 const (
 	nnsContract        = "nns"
-	neofsContract      = "neofs"      // not deployed in side-chain.
+	frostfsContract    = "frostfs"    // not deployed in side-chain.
 	processingContract = "processing" // not deployed in side-chain.
 	alphabetContract   = "alphabet"
 	auditContract      = "audit"
@@ -80,7 +80,7 @@ var (
 	}
 
 	fullContractList = append([]string{
-		neofsContract,
+		frostfsContract,
 		processingContract,
 		nnsContract,
 		alphabetContract,
@@ -519,13 +519,13 @@ func (c *initializeContext) getContractDeployData(ctrName string, keysParam []in
 	items[0] = false // notaryDisabled is false
 
 	switch ctrName {
-	case neofsContract:
+	case frostfsContract:
 		items = append(items,
 			c.Contracts[processingContract].Hash,
 			keysParam,
 			smartcontract.Parameter{})
 	case processingContract:
-		items = append(items, c.Contracts[neofsContract].Hash)
+		items = append(items, c.Contracts[frostfsContract].Hash)
 		return items[1:] // no notary info
 	case auditContract:
 		items = append(items, c.Contracts[netmapContract].Hash)

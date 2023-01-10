@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
-	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfs"
 	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/util"

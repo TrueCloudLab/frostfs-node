@@ -10,14 +10,14 @@ import (
 
 // Client is a wrapper over StaticClient
 // which makes calls with the names and arguments
-// of the NeoFS contract.
+// of the FrostFS contract.
 //
 // Working client must be created via constructor New.
 // Using the Client that has been created with new(Client)
 // expression (or just declaring a Client variable) is unsafe
 // and can lead to panic.
 type Client struct {
-	client *client.StaticClient // static NeoFS contract client
+	client *client.StaticClient // static FrostFS contract client
 }
 
 const (

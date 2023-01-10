@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	frostfscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfs"
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
 	balanceEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/balance"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"

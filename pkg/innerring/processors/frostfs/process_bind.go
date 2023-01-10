@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
-	frostfs "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
+	frostfs "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/frostfs"
 	"github.com/TrueCloudLab/frostfs-sdk-go/user"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/util"

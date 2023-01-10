@@ -1,7 +1,7 @@
 package balance
 
 import (
-	neofscontract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofs"
+	frostfsContract "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/frostfs"
 	balanceEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/balance"
 	"go.uber.org/zap"
 )
@@ -14,7 +14,7 @@ func (bp *Processor) processLock(lock *balanceEvent.Lock) {
 		return
 	}
 
-	prm := neofscontract.ChequePrm{}
+	prm := frostfsContract.ChequePrm{}
 
 	prm.SetID(lock.ID())
 	prm.SetUser(lock.User())

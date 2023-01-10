@@ -10,7 +10,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client/neofsid"
 	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
-	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
+	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/frostfs"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	lru "github.com/hashicorp/golang-lru/v2"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/fixedn"

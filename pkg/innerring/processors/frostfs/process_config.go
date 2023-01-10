@@ -2,7 +2,7 @@ package frostfs
 
 import (
 	nmClient "github.com/TrueCloudLab/frostfs-node/pkg/morph/client/netmap"
-	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
+	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/frostfs"
 	"go.uber.org/zap"
 )
 

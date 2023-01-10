@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/event"
-	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/neofs"
+	frostfsEvent "github.com/TrueCloudLab/frostfs-node/pkg/morph/event/frostfs"
 	"github.com/nspcc-dev/neo-go/pkg/util/slice"
 	"go.uber.org/zap"
 )
