@@ -1,4 +1,4 @@
-# NeoFS Storage node configuration file
+# FrostFS Storage node configuration file
 
 This section contains detailed FrostFS Storage node configuration file description
 including default config values and some tips to set up configurable values.
@@ -18,9 +18,9 @@ There are some custom types used for brevity:
 | `pprof`      | [PProf configuration](#pprof-section)                   |
 | `prometheus` | [Prometheus metrics configuration](#prometheus-section) |
 | `control`    | [Control service configuration](#control-section)       |
-| `contracts`  | [Override FrostFS contracts hashes](#contracts-section)   |
+| `contracts`  | [Override FrostFS contracts hashes](#contracts-section) |
 | `morph`      | [N3 blockchain client configuration](#morph-section)    |
-| `apiclient`  | [FrostFS API client configuration](#apiclient-section)    |
+| `apiclient`  | [FrostFS API client configuration](#apiclient-section)  |
 | `policer`    | [Policer service configuration](#policer-section)       |
 | `replicator` | [Replicator service configuration](#replicator-section) |
 | `storage`    | [Storage engine configuration](#storage-section)        |

@@ -1,6 +1,6 @@
 # Managing Subnetworks
 
-This is a short guide on how to manage NeoFS subnetworks. This guide
+This is a short guide on how to manage FrostFS subnetworks. This guide
 considers that the sidechain and the inner ring (alphabet nodes) have already been
 deployed, and the sidechain contains a deployed `subnet` contract.
 
@@ -12,7 +12,7 @@ deployed, and the sidechain contains a deployed `subnet` contract.
 - wallet with the account that owns the subnetwork;
 - public key of the Storage Node;
 - public keys of the node and client administrators;
-- owner IDs of the NeoFS users.
+- owner IDs of the FrostFS users.
 
 ## Add node administrator
 
@@ -99,7 +99,7 @@ configuration:
 node:
   ...
   subnet:
-    entries: # list of IDs of subnets to enter in a text format of NeoFS API protocol (overrides corresponding attributes)
+    entries: # list of IDs of subnets to enter in a text format of FrostFS API protocol (overrides corresponding attributes)
       - <subnetwork_ID>
   ...
 ...

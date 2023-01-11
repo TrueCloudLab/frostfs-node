@@ -25,7 +25,7 @@ Maintenance mode allowed: true
 ...
 ```
 
-To toggle the setting in the running NeoFS Sidechain, exec:
+To toggle the setting in the running FrostFS Sidechain, exec:
 ```shell
 $ frostfs-adm morph set-config MaintenanceModeAllowed=true|false
 ```
@@ -46,7 +46,7 @@ in which a new version of the network map is released.
 
 ## Object service
 
-Nodes under maintenance MAY fail operations of the NeoFS Object API. The node
+Nodes under maintenance MAY fail operations of the FrostFS Object API. The node
 maintained in the current repository always denies all object operations with
 dedicated status `NODE_UNDER_MAINTENANCE`.
 

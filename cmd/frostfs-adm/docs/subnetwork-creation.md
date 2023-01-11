@@ -1,6 +1,6 @@
-# NeoFS subnetwork creation
+# FrostFS subnetwork creation
 
-This is a short guide on how to create NeoFS subnetworks. This guide 
+This is a short guide on how to create FrostFS subnetworks. This guide 
 considers that the sidechain and the inner ring (alphabet nodes) have already been 
 deployed and the sidechain contains a deployed `subnet` contract.
 
@@ -9,7 +9,7 @@ deployed and the sidechain contains a deployed `subnet` contract.
 To follow this guide, you need:
 - neo-go sidechain RPC endpoint;
 - latest released version of [frostfs-adm](https://github.com/TrueCloudLab/frostfs-node/releases);
-- wallet with NeoFS account.
+- wallet with FrostFS account.
 
 ## Creation
 

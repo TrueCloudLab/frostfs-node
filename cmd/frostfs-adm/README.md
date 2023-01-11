@@ -3,7 +3,7 @@
 ## Overview
 
 Admin tool provides an easier way to deploy and maintain private installation
-of NeoFS. Private installation provides a set of N3 consensus nodes, NeoFS 
+of FrostFS. Private installation provides a set of N3 consensus nodes, FrostFS 
 Alphabet, and Storage nodes. Admin tool generates consensus keys, initializes 
 the sidechain, and provides functions to update the network and register new
 Storage nodes.
@@ -16,7 +16,7 @@ For clean build inside a docker container, use `make docker/bin/frostfs-adm`.
 
 Build docker image with `make image-adm`.
 
-At NeoFS private install deployment, frostfs-adm requires compiled NeoFS 
+At FrostFS private install deployment, frostfs-adm requires compiled FrostFS 
 contracts. Find them in the latest release of 
 [frostfs-contract repository](https://github.com/TrueCloudLab/frostfs-contract/releases).
 
@@ -35,8 +35,8 @@ Config example:
 rpc-endpoint: https://address:port # sidechain RPC node endpoint
 alphabet-wallets: /path            # path to consensus node / alphabet wallets storage
 network:
-  max_object_size: 67108864 # max size of a single NeoFS object, bytes
-  epoch_duration: 240       # duration of a NeoFS epoch in blocks, consider block generation frequency in the sidechain
+  max_object_size: 67108864 # max size of a single FrostFS object, bytes
+  epoch_duration: 240       # duration of a FrostFS epoch in blocks, consider block generation frequency in the sidechain
   basic_income_rate: 0      # basic income rate, for private consider 0
   fee:
     audit: 0     # network audit fee, for private installation consider 0
@@ -62,18 +62,18 @@ credentials:     # passwords for consensus node / alphabet wallets
   Alphabet nodes. 
 
 - `init` initializes the sidechain by deploying smart contracts and
-  setting provided NeoFS network configuration.
+  setting provided FrostFS network configuration.
 
 - `generate-storage-wallet` generates a wallet for the Storage node that 
   is ready for deployment. It also transfers a bit of sidechain GAS, so this 
-  wallet can be used for NeoFS bootstrap.
+  wallet can be used for FrostFS bootstrap.
 
 #### Network maintenance
 
 - `set-config` add/update configuration values in the Netmap contract.
 
-- `force-new-epoch` increments NeoFS epoch number and executes new epoch
-  handlers in NeoFS nodes.
+- `force-new-epoch` increments FrostFS epoch number and executes new epoch
+  handlers in FrostFS nodes.
 
 - `refill-gas` transfers sidechain GAS to the specified wallet. 
 
@@ -94,9 +94,9 @@ info. These commands **do not migrate actual objects**.
 
 #### Network info
 
-- `dump-config` prints NeoFS network configuration.
+- `dump-config` prints FrostFS network configuration.
 
-- `dump-hashes` prints NeoFS contract addresses stored in NNS.
+- `dump-hashes` prints FrostFS contract addresses stored in NNS.
 
 
 ## Private network deployment

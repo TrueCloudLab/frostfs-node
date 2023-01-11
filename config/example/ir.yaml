@@ -77,7 +77,7 @@ workers:
   alphabet: 10   # Number of workers to process events from alphabet contract in parallel
   balance: 10    # Number of workers to process events from balance contract in parallel
   container: 10  # Number of workers to process events from container contract in parallel
-  neofs: 10      # Number of workers to process events from neofs contracts in parallel
+  frostfs: 10    # Number of workers to process events from frostfs contracts in parallel
   netmap: 10     # Number of workers to process events from netmap contract in parallel
   reputation: 10 # Number of workers to process events from reputation contract in parallel
   subnet: 10     # Number of workers to process events from subnet contract in parallel
@@ -105,12 +105,12 @@ netmap_cleaner:
   threshold: 3  # Number of NeoFS epoch without bootstrap request from storage node before it considered stale
 
 contracts:
-  neofs: ee3dee6d05dc79c24a5b8f6985e10d68b7cacc62      # Address of NeoFS contract in mainchain; ignore if mainchain is disabled
+  frostfs: ee3dee6d05dc79c24a5b8f6985e10d68b7cacc62    # Address of FrostFS contract in mainchain; ignore if mainchain is disabled
   processing: 597f5894867113a41e192801709c02497f611de8 # Address of processing contract in mainchain; ignore if mainchain is disabled or notary is disabled in mainchain
   audit: 219e37aed2180b87e7fe945dbf97d67125e8d73f      # Optional: override address of audit contract in sidechain
   balance: d2aa48d14b17b11bc4c68205027884a96706dd16    # Optional: override address of balance contract in sidechain
   container: ed4a7a66fe3f9bfe50f214b49be8f215a3c886b6  # Optional: override address of container contract in sidechain
-  neofsid: 9f5866decbc751a099e74c7c7bc89f609201755a    # Optional: override address of neofsid contract in sidechain
+  frostfsid: 9f5866decbc751a099e74c7c7bc89f609201755a  # Optional: override address of frostfsid contract in sidechain
   netmap: 83c600c81d47a1b1b7cf58eb49ae7ee7240dc742     # Optional: override address of netmap contract in sidechain
   proxy: abc8794bb40a21f2db5f21ae62741eb46c8cad1c      # Optional: override address of proxy contract in sidechain; ignore if notary is disabled in sidechain
   reputation: d793b842ff0c103fe89e385069e82a27602135ff # Optional: override address of reputation contract in sidechain

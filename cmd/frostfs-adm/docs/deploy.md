@@ -1,6 +1,6 @@
-# Step-by-step private NeoFS deployment
+# Step-by-step private FrostFS deployment
 
-This is a short guide on how to deploy a private NeoFS storage network on bare
+This is a short guide on how to deploy a private FrostFS storage network on bare
 metal without docker images. This guide does not cover details on how to start
 consensus, Alphabet, or Storage nodes. This guide covers only `frostfs-adm` 
 related configuration details.
@@ -118,7 +118,7 @@ and possible overload issues.
 
 ## Step 3: Initialize sidechain
 
-Use archive with compiled NeoFS contracts to initialize the sidechain.
+Use archive with compiled FrostFS contracts to initialize the sidechain.
 
 ```
 $ tar -xzvf frostfs-contract-v0.11.0.tar.gz 
@@ -130,7 +130,7 @@ Stage 2: set notary and alphabet nodes in designate contract.
 Waiting for transactions to persist...
 Stage 3: deploy NNS contract.
 Waiting for transactions to persist...
-Stage 4: deploy NeoFS contracts.
+Stage 4: deploy FrostFS contracts.
 Waiting for transactions to persist...
 Stage 4.1: Transfer GAS to proxy contract.
 Waiting for transactions to persist...
@@ -140,14 +140,14 @@ Stage 6: transfer NEO to alphabet contracts.
 Waiting for transactions to persist...
 Stage 7: set addresses in NNS.
 Waiting for transactions to persist...
-NNS: Set alphabet0.neofs -> f692dfb4d43a15b464eb51a7041160fb29c44b6a
-NNS: Set audit.neofs -> 7df847b993affb3852074345a7c2bd622171ee0d
-NNS: Set balance.neofs -> 103519b3067a66307080a66570c0491ee8f68879
-NNS: Set container.neofs -> cae60bdd689d185901e495352d0247752ce50846
-NNS: Set neofsid.neofs -> c421fb60a3895865a8f24d197d6a80ef686041d2
-NNS: Set netmap.neofs -> 894eb854632f50fb124412ce7951ebc00763525e
-NNS: Set proxy.neofs -> ac6e6fe4b373d0ca0ca4969d1e58fa0988724e7d
-NNS: Set reputation.neofs -> 6eda57c9d93d990573646762d1fea327ce41191f
+NNS: Set alphabet0.frostfs -> f692dfb4d43a15b464eb51a7041160fb29c44b6a
+NNS: Set audit.frostfs -> 7df847b993affb3852074345a7c2bd622171ee0d
+NNS: Set balance.frostfs -> 103519b3067a66307080a66570c0491ee8f68879
+NNS: Set container.frostfs -> cae60bdd689d185901e495352d0247752ce50846
+NNS: Set frostfsid.frostfs -> c421fb60a3895865a8f24d197d6a80ef686041d2
+NNS: Set netmap.frostfs -> 894eb854632f50fb124412ce7951ebc00763525e
+NNS: Set proxy.frostfs -> ac6e6fe4b373d0ca0ca4969d1e58fa0988724e7d
+NNS: Set reputation.frostfs -> 6eda57c9d93d990573646762d1fea327ce41191f
 Waiting for transactions to persist...
 ```
 
@@ -196,7 +196,7 @@ node:
     password: "foobar"
 ```
 
-The storage node will be included in the network map in the next NeoFS epoch. To
+The storage node will be included in the network map in the next FrostFS epoch. To
 speed up this process, you can increment epoch counter immediately.
 
 ```
@@ -207,5 +207,5 @@ Waiting for transactions to persist...
 
 --- 
 
-After that, NeoFS Storage is ready to work. You can access it directly or
+After that, FrostFS Storage is ready to work. You can access it directly or
 with protocol gates.
