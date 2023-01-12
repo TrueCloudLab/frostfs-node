@@ -16,6 +16,7 @@ Changelog for FrostFS Node
 - Fetching blobovnicza objects that not found in write-cache (#2206)
 - Do not search for the small objects in FSTree (#2206)
 - Correct status error for expired session token (#2207)
+- Concurrent morph cache misses (#1248)
 
 ### Removed
 ### Updated
