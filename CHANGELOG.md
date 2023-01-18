@@ -125,7 +125,6 @@ You need to change configuration environment variables to `FROSTFS_*` if you use
 - `spf13/viper` to `v1.8.0`
 - `google.golang.org/grpc` to `v1.50.1`
 
-
 ### Updating from v0.34.0
 Pass CID and OID parameters via the `--cid` and `--oid` flags, not as the command arguments.
 
@@ -139,9 +138,9 @@ to match the container owner. Use `--force` (`-f`) flag to bypass this requireme
 
 Tree service network replication can now be fine-tuned with `tree.replication_timeout` config field.
 
- ## [0.34.0] - 2022-10-31 - Marado (마라도, 馬羅島)
+## [0.34.0] - 2022-10-31 - Marado (마라도, 馬羅島)
 
-# ## Added
+### Added
 - `--timeout` flag in `neofs-cli control` commands (#1917)
 - Document shard modes of operation (#1909)
 - `tree list` CLI command (#1332)
