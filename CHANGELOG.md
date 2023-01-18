@@ -41,7 +41,7 @@ Changelog for FrostFS Node
 ### Updating from v0.35.0
 You need to change configuration environment variables to `FROSTFS_*` if you use any.
 
-## [0.35.0] - 2022-12-28 - Sindo (신도)
+## [0.35.0] - 2022-12-28 - Sindo (신도, 信島)
 
 ### Added
 - `morph list-containers` in `neofs-adm` (#1689)
