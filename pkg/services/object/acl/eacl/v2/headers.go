@@ -101,20 +101,20 @@ func requestHeaders(msg xHeaderSource) []eaclSDK.Header {
 
 var errMissingOID = errors.New("object ID is missing")
 
-func (h *cfg) readObjectHeaders(dst *headerSource) error {
-	switch m := h.msg.(type) {
+func (c *cfg) readObjectHeaders(dst *headerSource) error {
+	switch m := c.msg.(type) {
 	default:
-		panic(fmt.Sprintf("unexpected message type %T", h.msg))
+		panic(fmt.Sprintf("unexpected message type %T", c.msg))
 	case requestXHeaderSource:
 		switch req := m.req.(type) {
 		case
 			*objectV2.GetRequest,
 			*objectV2.HeadRequest:
-			if h.obj == nil {
+			if c.obj == nil {
 				return errMissingOID
 			}
 
-			objHeaders, completed := h.localObjectHeaders(h.cnr, h.obj)
+			objHeaders, completed := c.localObjectHeaders(c.cnr, c.obj)
 
 			dst.objectHeaders = objHeaders
 			dst.incompleteObjectHeaders = !completed
@@ -122,18 +122,18 @@ func (h *cfg) readObjectHeaders(dst *headerSource) error {
 			*objectV2.GetRangeRequest,
 			*objectV2.GetRangeHashRequest,
 			*objectV2.DeleteRequest:
-			if h.obj == nil {
+			if c.obj == nil {
 				return errMissingOID
 			}
 
-			dst.objectHeaders = addressHeaders(h.cnr, h.obj)
+			dst.objectHeaders = addressHeaders(c.cnr, c.obj)
 		case *objectV2.PutRequest:
 			if v, ok := req.GetBody().GetObjectPart().(*objectV2.PutObjectPartInit); ok {
 				oV2 := new(objectV2.Object)
 				oV2.SetObjectID(v.GetObjectID())
 				oV2.SetHeader(v.GetHeader())
 
-				dst.objectHeaders = headersFromObject(object.NewFromV2(oV2), h.cnr, h.obj)
+				dst.objectHeaders = headersFromObject(object.NewFromV2(oV2), c.cnr, c.obj)
 			}
 		case *objectV2.SearchRequest:
 			cnrV2 := req.GetBody().GetContainerID()
@@ -150,7 +150,7 @@ func (h *cfg) readObjectHeaders(dst *headerSource) error {
 	case responseXHeaderSource:
 		switch resp := m.resp.(type) {
 		default:
-			objectHeaders, completed := h.localObjectHeaders(h.cnr, h.obj)
+			objectHeaders, completed := c.localObjectHeaders(c.cnr, c.obj)
 
 			dst.objectHeaders = objectHeaders
 			dst.incompleteObjectHeaders = !completed
@@ -160,7 +160,7 @@ func (h *cfg) readObjectHeaders(dst *headerSource) error {
 				oV2.SetObjectID(v.GetObjectID())
 				oV2.SetHeader(v.GetHeader())
 
-				dst.objectHeaders = headersFromObject(object.NewFromV2(oV2), h.cnr, h.obj)
+				dst.objectHeaders = headersFromObject(object.NewFromV2(oV2), c.cnr, c.obj)
 			}
 		case *objectV2.HeadResponse:
 			oV2 := new(objectV2.Object)
@@ -172,7 +172,7 @@ func (h *cfg) readObjectHeaders(dst *headerSource) error {
 				hdr = new(objectV2.Header)
 
 				var idV2 refsV2.ContainerID
-				h.cnr.WriteToV2(&idV2)
+				c.cnr.WriteToV2(&idV2)
 
 				hdr.SetContainerID(&idV2)
 				hdr.SetVersion(v.GetVersion())
@@ -186,20 +186,20 @@ func (h *cfg) readObjectHeaders(dst *headerSource) error {
 
 			oV2.SetHeader(hdr)
 
-			dst.objectHeaders = headersFromObject(object.NewFromV2(oV2), h.cnr, h.obj)
+			dst.objectHeaders = headersFromObject(object.NewFromV2(oV2), c.cnr, c.obj)
 		}
 	}
 
 	return nil
 }
 
-func (h *cfg) localObjectHeaders(cnr cid.ID, idObj *oid.ID) ([]eaclSDK.Header, bool) {
+func (c *cfg) localObjectHeaders(cnr cid.ID, idObj *oid.ID) ([]eaclSDK.Header, bool) {
 	if idObj != nil {
 		var addr oid.Address
 		addr.SetContainer(cnr)
 		addr.SetObject(*idObj)
 
-		obj, err := h.storage.Head(addr)
+		obj, err := c.storage.Head(addr)
 		if err == nil {
 			return headersFromObject(obj, cnr, idObj), true
 		}
