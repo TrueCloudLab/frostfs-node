@@ -172,17 +172,19 @@ func (t *FSTree) iterate(depth uint64, curPath []string, prm common.IteratePrm) 
 func (t *FSTree) treePath(addr oid.Address) string {
 	sAddr := stringifyAddress(addr)
 
-	dirs := make([]string, 0, t.Depth+1+1) // 1 for root, 1 for file
-	dirs = append(dirs, t.RootPath)
+	var sb strings.Builder
+	sb.Grow(len(t.RootPath) + len(sAddr) + int(t.Depth) + 1)
+	sb.WriteString(t.RootPath)
 
 	for i := 0; uint64(i) < t.Depth; i++ {
-		dirs = append(dirs, sAddr[:t.DirNameLen])
+		sb.WriteRune(filepath.Separator)
+		sb.WriteString(sAddr[:t.DirNameLen])
 		sAddr = sAddr[t.DirNameLen:]
 	}
 
-	dirs = append(dirs, sAddr)
-
-	return filepath.Join(dirs...)
+	sb.WriteRune(filepath.Separator)
+	sb.WriteString(sAddr)
+	return sb.String()
 }
 
 // Delete removes the object with the specified address from the storage.
