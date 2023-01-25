@@ -86,30 +86,23 @@ func (s *Service) synchronizeAllTrees(ctx context.Context, cid cid.ID) error {
 		return fmt.Errorf("could not fetch tree ID list: %w", outErr)
 	}
 
-	s.cnrMapMtx.Lock()
-	oldStatus := s.cnrMap[cid]
-	s.cnrMapMtx.Unlock()
-
-	syncStatus := map[string]uint64{}
-	for i := range treesToSync {
-		syncStatus[treesToSync[i]] = 0
-	}
-	for tid := range oldStatus {
-		if _, ok := syncStatus[tid]; ok {
-			syncStatus[tid] = oldStatus[tid]
-		}
-	}
-
 	for _, tid := range treesToSync {
-		h := s.synchronizeTree(ctx, d, syncStatus[tid], tid, nodes)
-		if syncStatus[tid] < h {
-			syncStatus[tid] = h
+		h, err := s.forest.TreeLastSyncHeight(d.CID, tid)
+		if err != nil && !errors.Is(err, pilorama.ErrTreeNotFound) {
+			s.log.Warn("could not get last synchronized height for a tree",
+				zap.Stringer("cid", d.CID),
+				zap.String("tree", tid))
+			continue
+		}
+		newHeight := s.synchronizeTree(ctx, d, h, tid, nodes)
+		if h < newHeight {
+			if err := s.forest.TreeUpdateLastSyncHeight(d.CID, tid, newHeight); err != nil {
+				s.log.Warn("could not update last synchronized height for a tree",
+					zap.Stringer("cid", d.CID),
+					zap.String("tree", tid))
+			}
 		}
 	}
-
-	s.cnrMapMtx.Lock()
-	s.cnrMap[cid] = syncStatus
-	s.cnrMapMtx.Unlock()
 
 	return nil
 }

@@ -31,10 +31,8 @@ type Service struct {
 	syncChan chan struct{}
 	syncPool *ants.Pool
 
-	// cnrMap maps contrainer and tree ID to the minimum height which was fetched from _each_ client.
-	// This allows us to better handle split-brain scenario, because we always synchronize
-	// from the last seen height. The inner map is read-only and should not be modified in-place.
-	cnrMap map[cidSDK.ID]map[string]uint64
+	// cnrMap contains existing (used) container IDs.
+	cnrMap map[cidSDK.ID]struct{}
 	// cnrMapMtx protects cnrMap
 	cnrMapMtx sync.Mutex
 }
@@ -63,7 +61,7 @@ func New(opts ...Option) *Service {
 	s.replicateLocalCh = make(chan applyOp)
 	s.replicationTasks = make(chan replicationTask, s.replicatorWorkerCount)
 	s.containerCache.init(s.containerCacheSize)
-	s.cnrMap = make(map[cidSDK.ID]map[string]uint64)
+	s.cnrMap = make(map[cidSDK.ID]struct{})
 	s.syncChan = make(chan struct{})
 	s.syncPool, _ = ants.NewPool(defaultSyncWorkerCount)
 
