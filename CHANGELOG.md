@@ -27,6 +27,7 @@ Changelog for FrostFS Node
 - Fix `dirty` suffix in debian package version (#53)
 - Prevent node process from killing by systemd when shutting down (#1465)
 - Restore subscriptions correctly on morph client switch (#2212)
+- Expired objects could be returned if not marked with GC yet (#2213)
 
 ### Removed
 ### Updated
