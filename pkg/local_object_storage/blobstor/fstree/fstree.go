@@ -191,15 +191,9 @@ func (t *FSTree) Delete(prm common.DeletePrm) (common.DeleteRes, error) {
 		return common.DeleteRes{}, common.ErrReadOnly
 	}
 
-	p, err := t.getPath(prm.Address)
-	if err != nil {
-		if os.IsNotExist(err) {
-			err = logicerr.Wrap(apistatus.ObjectNotFound{})
-		}
-		return common.DeleteRes{}, err
-	}
+	p := t.treePath(prm.Address)
 
-	err = os.Remove(p)
+	err := os.Remove(p)
 	if err != nil && os.IsNotExist(err) {
 		err = logicerr.Wrap(apistatus.ObjectNotFound{})
 	}
@@ -209,19 +203,14 @@ func (t *FSTree) Delete(prm common.DeletePrm) (common.DeleteRes, error) {
 // Exists returns the path to the file with object contents if it exists in the storage
 // and an error otherwise.
 func (t *FSTree) Exists(prm common.ExistsPrm) (common.ExistsRes, error) {
-	_, err := t.getPath(prm.Address)
+	p := t.treePath(prm.Address)
+
+	_, err := os.Stat(p)
 	found := err == nil
 	if os.IsNotExist(err) {
 		err = nil
 	}
 	return common.ExistsRes{Exists: found}, err
-}
-
-func (t *FSTree) getPath(addr oid.Address) (string, error) {
-	p := t.treePath(addr)
-
-	_, err := os.Stat(p)
-	return p, err
 }
 
 // Put puts an object in the storage.
