@@ -192,6 +192,46 @@ func (t *boltForest) TreeExists(cid cidSDK.ID, treeID string) (bool, error) {
 	return exists, err
 }
 
+var syncHeightKey = []byte{'h'}
+
+// TreeUpdateLastSyncHeight implements the pilorama.Forest interface.
+func (t *boltForest) TreeUpdateLastSyncHeight(cid cidSDK.ID, treeID string, height uint64) error {
+	rawHeight := make([]byte, 8)
+	binary.LittleEndian.PutUint64(rawHeight, height)
+
+	buck := bucketName(cid, treeID)
+	return t.db.Batch(func(tx *bbolt.Tx) error {
+		treeRoot := tx.Bucket(buck)
+		if treeRoot == nil {
+			return ErrTreeNotFound
+		}
+
+		b := treeRoot.Bucket(dataBucket)
+		return b.Put(syncHeightKey, rawHeight)
+	})
+}
+
+// TreeLastSyncHeight implements the pilorama.Forest interface.
+func (t *boltForest) TreeLastSyncHeight(cid cidSDK.ID, treeID string) (uint64, error) {
+	var height uint64
+
+	buck := bucketName(cid, treeID)
+	err := t.db.View(func(tx *bbolt.Tx) error {
+		treeRoot := tx.Bucket(buck)
+		if treeRoot == nil {
+			return ErrTreeNotFound
+		}
+
+		b := treeRoot.Bucket(dataBucket)
+		data := b.Get(syncHeightKey)
+		if len(data) == 8 {
+			height = binary.LittleEndian.Uint64(data)
+		}
+		return nil
+	})
+	return height, err
+}
+
 // TreeAddByPath implements the Forest interface.
 func (t *boltForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string, path []string, meta []KeyValue) ([]Move, error) {
 	if !d.checkValid() {

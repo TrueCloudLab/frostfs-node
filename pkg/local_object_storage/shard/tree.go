@@ -111,3 +111,19 @@ func (s *Shard) TreeExists(cid cidSDK.ID, treeID string) (bool, error) {
 	}
 	return s.pilorama.TreeExists(cid, treeID)
 }
+
+// TreeUpdateLastSyncHeight implements the pilorama.Forest interface.
+func (s *Shard) TreeUpdateLastSyncHeight(cid cidSDK.ID, treeID string, height uint64) error {
+	if s.pilorama == nil {
+		return ErrPiloramaDisabled
+	}
+	return s.pilorama.TreeUpdateLastSyncHeight(cid, treeID, height)
+}
+
+// TreeLastSyncHeight implements the pilorama.Forest interface.
+func (s *Shard) TreeLastSyncHeight(cid cidSDK.ID, treeID string) (uint64, error) {
+	if s.pilorama == nil {
+		return 0, ErrPiloramaDisabled
+	}
+	return s.pilorama.TreeLastSyncHeight(cid, treeID)
+}

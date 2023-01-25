@@ -44,6 +44,10 @@ type Forest interface {
 	// TreeExists checks if a tree exists locally.
 	// If the tree is not found, false and a nil error should be returned.
 	TreeExists(cid cidSDK.ID, treeID string) (bool, error)
+	// TreeUpdateLastSyncHeight updates last log height synchronized with _all_ container nodes.
+	TreeUpdateLastSyncHeight(cid cidSDK.ID, treeID string, height uint64) error
+	// TreeLastSyncHeight returns last log height synchronized with _all_ container nodes.
+	TreeLastSyncHeight(cid cidSDK.ID, treeID string) (uint64, error)
 }
 
 type ForestStorage interface {

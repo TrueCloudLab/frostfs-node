@@ -1030,3 +1030,52 @@ func testTreeGetTrees(t *testing.T, s Forest) {
 		require.ElementsMatch(t, treeIDs[cid], trees)
 	}
 }
+
+func TestTreeLastSyncHeight(t *testing.T) {
+	for i := range providers {
+		t.Run(providers[i].name, func(t *testing.T) {
+			testTreeLastSyncHeight(t, providers[i].construct(t))
+		})
+	}
+}
+
+func testTreeLastSyncHeight(t *testing.T, f Forest) {
+	cnr := cidtest.ID()
+	treeID := "someTree"
+
+	t.Run("ErrNotFound if no log operations are stored for a tree", func(t *testing.T) {
+		_, err := f.TreeLastSyncHeight(cnr, treeID)
+		require.ErrorIs(t, err, ErrTreeNotFound)
+
+		err = f.TreeUpdateLastSyncHeight(cnr, treeID, 1)
+		require.ErrorIs(t, err, ErrTreeNotFound)
+	})
+
+	_, err := f.TreeMove(CIDDescriptor{CID: cnr, Size: 1}, treeID, &Move{
+		Parent: RootID,
+		Child:  1,
+	})
+	require.NoError(t, err)
+
+	h, err := f.TreeLastSyncHeight(cnr, treeID)
+	require.NoError(t, err)
+	require.EqualValues(t, 0, h)
+
+	t.Run("separate storages for separate containers", func(t *testing.T) {
+		_, err := f.TreeLastSyncHeight(cidtest.ID(), treeID)
+		require.ErrorIs(t, err, ErrTreeNotFound)
+	})
+
+	require.NoError(t, f.TreeUpdateLastSyncHeight(cnr, treeID, 10))
+
+	h, err = f.TreeLastSyncHeight(cnr, treeID)
+	require.NoError(t, err)
+	require.EqualValues(t, 10, h)
+
+	t.Run("removed correctly", func(t *testing.T) {
+		require.NoError(t, f.TreeDrop(cnr, treeID))
+
+		_, err := f.TreeLastSyncHeight(cnr, treeID)
+		require.ErrorIs(t, err, ErrTreeNotFound)
+	})
+}

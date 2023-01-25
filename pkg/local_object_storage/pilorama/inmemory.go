@@ -143,8 +143,9 @@ func (s *state) findSpareID() Node {
 
 // tree is a mapping from the child nodes to their parent and metadata.
 type tree struct {
-	infoMap  map[Node]nodeInfo
-	childMap map[Node][]Node
+	syncHeight uint64
+	infoMap    map[Node]nodeInfo
+	childMap   map[Node][]Node
 }
 
 func newTree() *tree {

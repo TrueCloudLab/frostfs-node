@@ -226,3 +226,24 @@ func (f *memoryForest) TreeExists(cid cidSDK.ID, treeID string) (bool, error) {
 	_, ok := f.treeMap[fullID]
 	return ok, nil
 }
+
+// TreeUpdateLastSyncHeight implements the pilorama.Forest interface.
+func (f *memoryForest) TreeUpdateLastSyncHeight(cid cidSDK.ID, treeID string, height uint64) error {
+	fullID := cid.EncodeToString() + "/" + treeID
+	t, ok := f.treeMap[fullID]
+	if !ok {
+		return ErrTreeNotFound
+	}
+	t.syncHeight = height
+	return nil
+}
+
+// TreeLastSyncHeight implements the pilorama.Forest interface.
+func (f *memoryForest) TreeLastSyncHeight(cid cidSDK.ID, treeID string) (uint64, error) {
+	fullID := cid.EncodeToString() + "/" + treeID
+	t, ok := f.treeMap[fullID]
+	if !ok {
+		return 0, ErrTreeNotFound
+	}
+	return t.syncHeight, nil
+}
