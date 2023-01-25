@@ -142,7 +142,7 @@ func (t *boltForest) Close() error {
 }
 
 // TreeMove implements the Forest interface.
-func (t *boltForest) TreeMove(d CIDDescriptor, treeID string, m *Move) (*LogMove, error) {
+func (t *boltForest) TreeMove(d CIDDescriptor, treeID string, m *Move) (*Move, error) {
 	if !d.checkValid() {
 		return nil, ErrInvalidCIDDescriptor
 	}
@@ -193,7 +193,7 @@ func (t *boltForest) TreeExists(cid cidSDK.ID, treeID string) (bool, error) {
 }
 
 // TreeAddByPath implements the Forest interface.
-func (t *boltForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string, path []string, meta []KeyValue) ([]LogMove, error) {
+func (t *boltForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string, path []string, meta []KeyValue) ([]Move, error) {
 	if !d.checkValid() {
 		return nil, ErrInvalidCIDDescriptor
 	}
@@ -210,7 +210,7 @@ func (t *boltForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string, 
 		return nil, ErrReadOnlyMode
 	}
 
-	var lm []LogMove
+	var lm []Move
 	var key [17]byte
 
 	fullID := bucketName(d.CID, treeID)
@@ -226,7 +226,7 @@ func (t *boltForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string, 
 		}
 
 		ts := t.getLatestTimestamp(bLog, d.Position, d.Size)
-		lm = make([]LogMove, len(path)-i+1)
+		lm = make([]Move, len(path)-i+1)
 		for j := i; j < len(path); j++ {
 			lm[j-i] = Move{
 				Parent: node,
@@ -329,7 +329,7 @@ func (t *boltForest) TreeApply(d CIDDescriptor, treeID string, m *Move, backgrou
 				return err
 			}
 
-			var lm LogMove
+			var lm Move
 			return t.applyOperation(bLog, bTree, []*Move{m}, &lm)
 		})
 	}
@@ -404,8 +404,8 @@ func (t *boltForest) getTreeBuckets(tx *bbolt.Tx, treeRoot []byte) (*bbolt.Bucke
 }
 
 // applyOperations applies log operations. Assumes lm are sorted by timestamp.
-func (t *boltForest) applyOperation(logBucket, treeBucket *bbolt.Bucket, ms []*Move, lm *LogMove) error {
-	var tmp LogMove
+func (t *boltForest) applyOperation(logBucket, treeBucket *bbolt.Bucket, ms []*Move, lm *Move) error {
+	var tmp Move
 	var cKey [17]byte
 
 	c := logBucket.Cursor()
@@ -460,7 +460,7 @@ func (t *boltForest) applyOperation(logBucket, treeBucket *bbolt.Bucket, ms []*M
 	return nil
 }
 
-func (t *boltForest) do(lb *bbolt.Bucket, b *bbolt.Bucket, key []byte, op *LogMove) error {
+func (t *boltForest) do(lb *bbolt.Bucket, b *bbolt.Bucket, key []byte, op *Move) error {
 	binary.BigEndian.PutUint64(key, op.Time)
 	rawLog := t.logToBytes(op)
 	if err := lb.Put(key[:8], rawLog); err != nil {
@@ -470,7 +470,7 @@ func (t *boltForest) do(lb *bbolt.Bucket, b *bbolt.Bucket, key []byte, op *LogMo
 	return t.redo(b, key, op, rawLog[16:])
 }
 
-func (t *boltForest) redo(b *bbolt.Bucket, key []byte, op *LogMove, rawMeta []byte) error {
+func (t *boltForest) redo(b *bbolt.Bucket, key []byte, op *Move, rawMeta []byte) error {
 	var err error
 
 	parent, ts, currMeta, inTree := t.getState(b, stateKey(key, op.Child))
@@ -555,7 +555,7 @@ func (t *boltForest) addNode(b *bbolt.Bucket, key []byte, child, parent Node, ti
 	return nil
 }
 
-func (t *boltForest) undo(m *LogMove, b *bbolt.Bucket, key []byte) error {
+func (t *boltForest) undo(m *Move, b *bbolt.Bucket, key []byte) error {
 	if err := b.Delete(childrenKey(key, m.Child, m.Parent)); err != nil {
 		return err
 	}
@@ -834,13 +834,13 @@ func (t *boltForest) moveFromBytes(m *Move, data []byte) error {
 	return t.logFromBytes(m, data)
 }
 
-func (t *boltForest) logFromBytes(lm *LogMove, data []byte) error {
+func (t *boltForest) logFromBytes(lm *Move, data []byte) error {
 	lm.Child = binary.LittleEndian.Uint64(data)
 	lm.Parent = binary.LittleEndian.Uint64(data[8:])
 	return lm.Meta.FromBytes(data[16:])
 }
 
-func (t *boltForest) logToBytes(lm *LogMove) []byte {
+func (t *boltForest) logToBytes(lm *Move) []byte {
 	w := io.NewBufBinWriter()
 	size := 8 + 8 + lm.Meta.Size() + 1
 	//if lm.HasOld {

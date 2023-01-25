@@ -12,7 +12,7 @@ var _ pilorama.Forest = (*Shard)(nil)
 var ErrPiloramaDisabled = logicerr.New("pilorama is disabled")
 
 // TreeMove implements the pilorama.Forest interface.
-func (s *Shard) TreeMove(d pilorama.CIDDescriptor, treeID string, m *pilorama.Move) (*pilorama.LogMove, error) {
+func (s *Shard) TreeMove(d pilorama.CIDDescriptor, treeID string, m *pilorama.Move) (*pilorama.Move, error) {
 	if s.pilorama == nil {
 		return nil, ErrPiloramaDisabled
 	}
@@ -27,7 +27,7 @@ func (s *Shard) TreeMove(d pilorama.CIDDescriptor, treeID string, m *pilorama.Mo
 }
 
 // TreeAddByPath implements the pilorama.Forest interface.
-func (s *Shard) TreeAddByPath(d pilorama.CIDDescriptor, treeID string, attr string, path []string, meta []pilorama.KeyValue) ([]pilorama.LogMove, error) {
+func (s *Shard) TreeAddByPath(d pilorama.CIDDescriptor, treeID string, attr string, path []string, meta []pilorama.KeyValue) ([]pilorama.Move, error) {
 	if s.pilorama == nil {
 		return nil, ErrPiloramaDisabled
 	}

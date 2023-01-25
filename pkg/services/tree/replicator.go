@@ -17,7 +17,7 @@ import (
 type movePair struct {
 	cid    cidSDK.ID
 	treeID string
-	op     *pilorama.LogMove
+	op     *pilorama.Move
 }
 
 type replicationTask struct {
@@ -141,7 +141,7 @@ func (s *Service) replicate(op movePair) error {
 	return nil
 }
 
-func (s *Service) pushToQueue(cid cidSDK.ID, treeID string, op *pilorama.LogMove) {
+func (s *Service) pushToQueue(cid cidSDK.ID, treeID string, op *pilorama.Move) {
 	select {
 	case s.replicateCh <- movePair{
 		cid:    cid,

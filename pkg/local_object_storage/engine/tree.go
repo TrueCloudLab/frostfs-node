@@ -12,7 +12,7 @@ import (
 var _ pilorama.Forest = (*StorageEngine)(nil)
 
 // TreeMove implements the pilorama.Forest interface.
-func (e *StorageEngine) TreeMove(d pilorama.CIDDescriptor, treeID string, m *pilorama.Move) (*pilorama.LogMove, error) {
+func (e *StorageEngine) TreeMove(d pilorama.CIDDescriptor, treeID string, m *pilorama.Move) (*pilorama.Move, error) {
 	index, lst, err := e.getTreeShard(d.CID, treeID)
 	if err != nil && !errors.Is(err, pilorama.ErrTreeNotFound) {
 		return nil, err
@@ -32,7 +32,7 @@ func (e *StorageEngine) TreeMove(d pilorama.CIDDescriptor, treeID string, m *pil
 }
 
 // TreeAddByPath implements the pilorama.Forest interface.
-func (e *StorageEngine) TreeAddByPath(d pilorama.CIDDescriptor, treeID string, attr string, path []string, m []pilorama.KeyValue) ([]pilorama.LogMove, error) {
+func (e *StorageEngine) TreeAddByPath(d pilorama.CIDDescriptor, treeID string, attr string, path []string, m []pilorama.KeyValue) ([]pilorama.Move, error) {
 	index, lst, err := e.getTreeShard(d.CID, treeID)
 	if err != nil && !errors.Is(err, pilorama.ErrTreeNotFound) {
 		return nil, err

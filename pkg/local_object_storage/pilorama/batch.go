@@ -41,7 +41,7 @@ func (b *batch) run() {
 			return err
 		}
 
-		var lm LogMove
+		var lm Move
 		return b.forest.applyOperation(bLog, bTree, b.operations, &lm)
 	})
 	for i := range b.operations {

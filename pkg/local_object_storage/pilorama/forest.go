@@ -25,7 +25,7 @@ func NewMemoryForest() ForestStorage {
 }
 
 // TreeMove implements the Forest interface.
-func (f *memoryForest) TreeMove(d CIDDescriptor, treeID string, op *Move) (*LogMove, error) {
+func (f *memoryForest) TreeMove(d CIDDescriptor, treeID string, op *Move) (*Move, error) {
 	if !d.checkValid() {
 		return nil, ErrInvalidCIDDescriptor
 	}
@@ -48,7 +48,7 @@ func (f *memoryForest) TreeMove(d CIDDescriptor, treeID string, op *Move) (*LogM
 }
 
 // TreeAddByPath implements the Forest interface.
-func (f *memoryForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string, path []string, m []KeyValue) ([]LogMove, error) {
+func (f *memoryForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string, path []string, m []KeyValue) ([]Move, error) {
 	if !d.checkValid() {
 		return nil, ErrInvalidCIDDescriptor
 	}
@@ -64,7 +64,7 @@ func (f *memoryForest) TreeAddByPath(d CIDDescriptor, treeID string, attr string
 	}
 
 	i, node := s.getPathPrefix(attr, path)
-	lm := make([]LogMove, len(path)-i+1)
+	lm := make([]Move, len(path)-i+1)
 	for j := i; j < len(path); j++ {
 		op := s.do(&Move{
 			Parent: node,

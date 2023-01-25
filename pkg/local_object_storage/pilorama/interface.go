@@ -11,11 +11,11 @@ type Forest interface {
 	// TreeMove moves node in the tree.
 	// If the parent of the move operation is TrashID, the node is removed.
 	// If the child of the move operation is RootID, new ID is generated and added to a tree.
-	TreeMove(d CIDDescriptor, treeID string, m *Move) (*LogMove, error)
+	TreeMove(d CIDDescriptor, treeID string, m *Move) (*Move, error)
 	// TreeAddByPath adds new node in the tree using provided path.
 	// The path is constructed by descending from the root using the values of the attr in meta.
 	// Internal nodes in path should have exactly one attribute, otherwise a new node is created.
-	TreeAddByPath(d CIDDescriptor, treeID string, attr string, path []string, meta []KeyValue) ([]LogMove, error)
+	TreeAddByPath(d CIDDescriptor, treeID string, attr string, path []string, meta []KeyValue) ([]Move, error)
 	// TreeApply applies replicated operation from another node.
 	// If background is true, TreeApply will first check whether an operation exists.
 	TreeApply(d CIDDescriptor, treeID string, m *Move, backgroundSync bool) error

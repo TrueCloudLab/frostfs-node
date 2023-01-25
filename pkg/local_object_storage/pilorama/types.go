@@ -35,9 +35,6 @@ type Move struct {
 	Child Node
 }
 
-// LogMove represents log record for a single move operation.
-type LogMove = Move
-
 const (
 	// RootID represents the ID of a root node.
 	RootID = 0
