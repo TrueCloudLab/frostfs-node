@@ -28,6 +28,7 @@ Changelog for FrostFS Node
 - Prevent node process from killing by systemd when shutting down (#1465)
 - Restore subscriptions correctly on morph client switch (#2212)
 - Expired objects could be returned if not marked with GC yet (#2213)
+- `neofs-adm morph dump-hashes` now properly iterates over custom domain (#2224)
 
 ### Removed
 ### Updated
