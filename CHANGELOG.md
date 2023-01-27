@@ -26,6 +26,7 @@ Changelog for FrostFS Node
 - Set flag `mode` required for `frostfs-cli control shards set-mode` (#8)
 - Fix `dirty` suffix in debian package version (#53)
 - Prevent node process from killing by systemd when shutting down (#1465)
+- Restore subscriptions correctly on morph client switch (#2212)
 
 ### Removed
 ### Updated
