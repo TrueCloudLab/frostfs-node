@@ -100,6 +100,11 @@ func (db *DB) exists(tx *bbolt.Tx, addr oid.Address, currEpoch uint64) (exists b
 //   - 2 if object is covered with tombstone;
 //   - 3 if object is expired.
 func objectStatus(tx *bbolt.Tx, addr oid.Address, currEpoch uint64) uint8 {
+	// locked object could not be removed/marked with GC/expired
+	if objectLocked(tx, addr.Container(), addr.Object()) {
+		return 0
+	}
+
 	// we check only if the object is expired in the current
 	// epoch since it is considered the only corner case: the
 	// GC is expected to collect all the objects that have
