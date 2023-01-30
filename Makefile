@@ -152,7 +152,7 @@ clean:
 
 # Package for Debian
 debpackage:
-	dch --package frostfs-node \
+	dch -b --package frostfs-node \
 			--controlmaint \
 			--newversion $(PKG_VERSION) \
 			--distribution $(OS_RELEASE) \

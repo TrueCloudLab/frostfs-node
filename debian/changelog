@@ -1,18 +1,5 @@
-frostfs-node (0.34.0~97-dirty~g42554a92-jammy) jammy; urgency=medium
+frostfs-node (0.0.1) stable; urgency=medium
 
-  * Please see CHANGELOG.md for code changes for v0.34.0-97-g42554a92-
-    dirty
-
- -- NeoSPCC <tech@nspcc.ru>  Fri, 23 Dec 2022 20:07:36 +0300
-
-frostfs-node (0.33.0~72~g6955fe82) jammy; urgency=medium
-
-  * Please see CHANGELOG.md for code changes for v0.33.0-72-g6955fe82
-
- -- NeoSPCC <tech@nspcc.ru>  Wed, 26 Oct 2022 12:19:45 +0300
-
-frostfs-node (0.33.0) stable; urgency=medium
-
-  * Initial change
+  * Initial package build
 
  -- NeoSPCC <tech@nspcc.ru>  Tue, 25 Oct 2022 21:10:49 +0300
