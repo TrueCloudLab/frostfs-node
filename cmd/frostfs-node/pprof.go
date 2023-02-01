@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"runtime"
 
 	profilerconfig "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/profiler"
 	httputil "github.com/TrueCloudLab/frostfs-node/pkg/util/http"
@@ -13,6 +14,19 @@ func initProfiler(c *cfg) {
 		c.log.Info("pprof is disabled")
 		return
 	}
+
+	profiles := profilerconfig.Profiles(c.appCfg)
+	blockRate := profiles.BlockRates()
+	mutexRate := profiles.MutexRate()
+
+	if mutexRate == 0 {
+		// according to docs, setting mutex rate to "0" just
+		// returns current rate not disables it
+		mutexRate = -1
+	}
+
+	runtime.SetBlockProfileRate(blockRate)
+	runtime.SetMutexProfileFraction(mutexRate)
 
 	var prm httputil.Prm
 
