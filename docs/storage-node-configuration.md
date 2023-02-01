@@ -75,12 +75,22 @@ element.
 
 Contains configuration for the `pprof` profiler.
 
-| Parameter          | Type       | Default value | Description                             |
-|--------------------|------------|---------------|-----------------------------------------|
-| `enabled`          | `bool`     | `false`       | Flag to enable the service.             |
-| `address`          | `string`   |               | Address that service listener binds to. |
-| `shutdown_timeout` | `duration` | `30s`         | Time to wait for a graceful shutdown.   |
+| Parameter          | Type                                    | Default value | Description                             |
+|--------------------|-----------------------------------------|---------------|-----------------------------------------|
+| `enabled`          | `bool`                                  | `false`       | Flag to enable the service.             |
+| `address`          | `string`                                |               | Address that service listener binds to. |
+| `shutdown_timeout` | `duration`                              | `30s`         | Time to wait for a graceful shutdown.   |
+| `profiles`         | [Profiles config](#profiles-subsection) |               | Optional profiles configuration         |
 
+
+## `profiles` subsection
+
+Contains optional profiles configuration.
+
+| Parameter | Type  | Default value | Description                                                                                                                                                                                                                                  |
+|-----------|-------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `block`   | `int` | `0`           | Controls the fraction of goroutine blocking events that are reported in the blocking profile. The profiler aims to sample an average of one blocking event per rate nanoseconds spent blocked. Non-positive values disable profiler reports. |
+| `mutex`   | `int` | `0`           | Controls the fraction of mutex contention events that are reported in the mutex profile. On average 1/rate events are reported. The previous rate is returned. Non-positive values disable profiler reports.                                 |
 
 # `prometheus` section
 

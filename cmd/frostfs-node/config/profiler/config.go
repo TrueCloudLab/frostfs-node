@@ -1,6 +1,7 @@
 package profilerconfig
 
 import (
+	"runtime"
 	"time"
 
 	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config"
@@ -50,4 +51,36 @@ func Address(c *config.Config) string {
 	}
 
 	return AddressDefault
+}
+
+const profilesSubsection = "profiles"
+
+// Profiles returns structure that provides access to a "profiles"
+// configuration subsection.
+func Profiles(c *config.Config) ProfilesConfig {
+	runtime.SetBlockProfileRate()
+	runtime.SetMutexProfileFraction()
+
+	return ProfilesConfig{
+		c.Sub(subsection).Sub(profilesSubsection),
+	}
+}
+
+// ProfilesConfig is a wrapper over "pprof.profiles" config section
+// which provides access to the configuration of the specific
+// profiles.
+type ProfilesConfig struct {
+	cfg *config.Config
+}
+
+// BlockRates returns the value of "block" config parameter
+// from "pprof.profiles" section.
+func (c ProfilesConfig) BlockRates() int {
+	return int(config.IntSafe(c.cfg, "block"))
+}
+
+// MutexRate returns the value of "mutex" config parameter
+// from "pprof.profiles" section.
+func (c ProfilesConfig) MutexRate() int {
+	return int(config.IntSafe(c.cfg, "mutex"))
 }

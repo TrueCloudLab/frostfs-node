@@ -5,7 +5,11 @@
   "pprof": {
     "enabled": true,
     "address": "localhost:6060",
-    "shutdown_timeout": "15s"
+    "shutdown_timeout": "15s",
+    "profiles": {
+      "block": 1,
+      "mutex": 1
+    }
   },
   "prometheus": {
     "enabled": true,

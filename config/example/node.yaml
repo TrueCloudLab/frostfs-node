@@ -5,6 +5,9 @@ pprof:
   enabled: true
   address: localhost:6060  # endpoint for Node profiling
   shutdown_timeout: 15s  # timeout for profiling HTTP server graceful shutdown
+  profiles:
+    block: 1  # sampling rate: an average of one blocking event per rate nanoseconds spent blocked is reported; "1" reports every blocking event; "0" disables profiler
+    mutex: 1  # sampling rate: on average 1/rate events are reported; "0" disables profiler
 
 prometheus:
   enabled: true
