@@ -15,6 +15,7 @@ Changelog for FrostFS Node
 - `common.PrintVerbose` prints via `cobra.Command.Printf` (#1962)
 - Env prefix in configuration changed to `FROSTFS_*` (#43)
 - Link object is broadcast throughout the whole container now (#57)
+- Pilorama now can merge multiple batches into one (#2231)
 
 ### Fixed
 - Increase payload size metric on shards' `put` operation (#1794)
