@@ -11,6 +11,7 @@ Changelog for FrostFS Node
 - Add command `frostfs-adm morph netmap-candidates` (#1889)
 
 ### Changed
+- Change `frostfs_node_engine_container_size` to counting sizes of logical objects
 - `common.PrintVerbose` prints via `cobra.Command.Printf` (#1962)
 - Env prefix in configuration changed to `FROSTFS_*` (#43)
 

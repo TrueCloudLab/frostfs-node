@@ -23,6 +23,7 @@ type DeleteRes struct {
 	rawRemoved       uint64
 	availableRemoved uint64
 	sizes            []uint64
+	availableSizes   []uint64
 }
 
 // AvailableObjectsRemoved returns the number of removed available
@@ -36,9 +37,14 @@ func (d DeleteRes) RawObjectsRemoved() uint64 {
 	return d.rawRemoved
 }
 
-// RemovedObjectSizes returns the sizes of removed objects.
-func (d DeleteRes) RemovedObjectSizes() []uint64 {
+// RemovedPhysicalObjectSizes returns the sizes of removed physical objects.
+func (d DeleteRes) RemovedPhysicalObjectSizes() []uint64 {
 	return d.sizes
+}
+
+// RemovedLogicalObjectSizes returns the sizes of removed logical objects.
+func (d DeleteRes) RemovedLogicalObjectSizes() []uint64 {
+	return d.availableSizes
 }
 
 // SetAddresses is a Delete option to set the addresses of the objects to delete.
@@ -73,10 +79,11 @@ func (db *DB) Delete(prm DeletePrm) (DeleteRes, error) {
 	var availableRemoved uint64
 	var err error
 	var sizes = make([]uint64, len(prm.addrs))
+	var availableSizes = make([]uint64, len(prm.addrs))
 
 	err = db.boltDB.Update(func(tx *bbolt.Tx) error {
 		// We need to clear slice because tx can try to execute multiple times.
-		rawRemoved, availableRemoved, err = db.deleteGroup(tx, prm.addrs, sizes)
+		rawRemoved, availableRemoved, err = db.deleteGroup(tx, prm.addrs, sizes, availableSizes)
 		return err
 	})
 	if err == nil {
@@ -90,6 +97,7 @@ func (db *DB) Delete(prm DeletePrm) (DeleteRes, error) {
 		rawRemoved:       rawRemoved,
 		availableRemoved: availableRemoved,
 		sizes:            sizes,
+		availableSizes:   availableSizes,
 	}, err
 }
 
@@ -99,7 +107,7 @@ func (db *DB) Delete(prm DeletePrm) (DeleteRes, error) {
 // objects that were stored. The second return value is a logical objects
 // removed number: objects that were available (without Tombstones, GCMarks
 // non-expired, etc.)
-func (db *DB) deleteGroup(tx *bbolt.Tx, addrs []oid.Address, sizes []uint64) (uint64, uint64, error) {
+func (db *DB) deleteGroup(tx *bbolt.Tx, addrs []oid.Address, sizes []uint64, availableSizes []uint64) (uint64, uint64, error) {
 	refCounter := make(referenceCounter, len(addrs))
 	currEpoch := db.epochState.CurrentEpoch()
 
@@ -119,6 +127,7 @@ func (db *DB) deleteGroup(tx *bbolt.Tx, addrs []oid.Address, sizes []uint64) (ui
 
 		if available {
 			availableDeleted++
+			availableSizes[i] = size
 		}
 	}
 

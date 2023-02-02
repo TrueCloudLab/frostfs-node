@@ -7,6 +7,7 @@ import (
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/util/logicerr"
 	apistatus "github.com/TrueCloudLab/frostfs-sdk-go/client/status"
+	cid "github.com/TrueCloudLab/frostfs-sdk-go/container/id"
 	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
@@ -23,10 +24,17 @@ type InhumePrm struct {
 	forceRemoval bool
 }
 
+// DeletionInfo contains details on deleted object.
+type DeletionInfo struct {
+	Size uint64
+	CID  cid.ID
+}
+
 // InhumeRes encapsulates results of Inhume operation.
 type InhumeRes struct {
 	deletedLockObj   []oid.Address
 	availableImhumed uint64
+	deletionDetails  []DeletionInfo
 }
 
 // AvailableInhumed return number of available object
@@ -40,6 +48,27 @@ func (i InhumeRes) AvailableInhumed() uint64 {
 // was provided to the InhumePrm.
 func (i InhumeRes) DeletedLockObjects() []oid.Address {
 	return i.deletedLockObj
+}
+
+// GetDeletionInfoLength returns amount of stored elements
+// in deleted sizes array.
+func (i InhumeRes) GetDeletionInfoLength() int {
+	return len(i.deletionDetails)
+}
+
+// GetDeletionInfoByIndex returns both deleted object sizes and
+// associated container ID by index.
+func (i InhumeRes) GetDeletionInfoByIndex(target int) DeletionInfo {
+	return i.deletionDetails[target]
+}
+
+// StoreDeletionInfo stores size of deleted object and associated container ID
+// in corresponding arrays.
+func (i *InhumeRes) storeDeletionInfo(containerID cid.ID, deletedSize uint64) {
+	i.deletionDetails = append(i.deletionDetails, DeletionInfo{
+		Size: deletedSize,
+		CID:  containerID,
+	})
 }
 
 // SetAddresses sets a list of object addresses that should be inhumed.
@@ -164,10 +193,10 @@ func (db *DB) Inhume(prm InhumePrm) (res InhumeRes, err error) {
 			obj, err := db.get(tx, prm.target[i], buf, false, true, currEpoch)
 			targetKey := addressKey(prm.target[i], buf)
 			if err == nil {
+				containerID, _ := obj.ContainerID()
 				if inGraveyardWithKey(targetKey, graveyardBKT, garbageBKT) == 0 {
-					// object is available, decrement the
-					// logical counter
 					inhumed++
+					res.storeDeletionInfo(containerID, obj.PayloadSize())
 				}
 
 				// if object is stored, and it is regular object then update bucket

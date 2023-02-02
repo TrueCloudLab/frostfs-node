@@ -111,6 +111,13 @@ func (s *Shard) Inhume(prm InhumePrm) (InhumeRes, error) {
 
 	s.decObjectCounterBy(logical, res.AvailableInhumed())
 
+	i := 0
+	for i < res.GetDeletionInfoLength() {
+		delInfo := res.GetDeletionInfoByIndex(i)
+		s.addToContainerSize(delInfo.CID.EncodeToString(), -int64(delInfo.Size))
+		i++
+	}
+
 	if deletedLockObjs := res.DeletedLockObjects(); len(deletedLockObjs) != 0 {
 		s.deletedLockCallBack(context.Background(), deletedLockObjs)
 	}

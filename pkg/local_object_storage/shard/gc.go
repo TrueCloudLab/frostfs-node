@@ -268,6 +268,13 @@ func (s *Shard) collectExpiredObjects(ctx context.Context, e Event) {
 	}
 
 	s.decObjectCounterBy(logical, res.AvailableInhumed())
+
+	i := 0
+	for i < res.GetDeletionInfoLength() {
+		delInfo := res.GetDeletionInfoByIndex(i)
+		s.addToContainerSize(delInfo.CID.EncodeToString(), -int64(delInfo.Size))
+		i++
+	}
 }
 
 func (s *Shard) collectExpiredTombstones(ctx context.Context, e Event) {
@@ -408,6 +415,13 @@ func (s *Shard) HandleExpiredTombstones(tss []meta.TombstonedObject) {
 
 	s.decObjectCounterBy(logical, res.AvailableInhumed())
 
+	i := 0
+	for i < res.GetDeletionInfoLength() {
+		delInfo := res.GetDeletionInfoByIndex(i)
+		s.addToContainerSize(delInfo.CID.EncodeToString(), -int64(delInfo.Size))
+		i++
+	}
+
 	// drop just processed expired tombstones
 	// from graveyard
 	err = s.metaBase.DropGraves(tss)
@@ -446,6 +460,13 @@ func (s *Shard) HandleExpiredLocks(lockers []oid.Address) {
 	}
 
 	s.decObjectCounterBy(logical, res.AvailableInhumed())
+
+	i := 0
+	for i < res.GetDeletionInfoLength() {
+		delInfo := res.GetDeletionInfoByIndex(i)
+		s.addToContainerSize(delInfo.CID.EncodeToString(), -int64(delInfo.Size))
+		i++
+	}
 }
 
 // HandleDeletedLocks unlocks all objects which were locked by lockers.
