@@ -16,7 +16,7 @@ type commonPrm struct {
 	cli *client.Client
 }
 
-// SetClient sets the base client for NeoFS API communication.
+// SetClient sets the base client for FrostFS API communication.
 func (x *commonPrm) SetClient(cli *client.Client) {
 	x.cli = cli
 }

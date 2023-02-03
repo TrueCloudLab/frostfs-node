@@ -37,7 +37,7 @@ var netInfoCmd = &cobra.Command{
 
 		const format = "  %s: %v\n"
 
-		cmd.Println("NeoFS network configuration (system)")
+		cmd.Println("FrostFS network configuration (system)")
 		cmd.Printf(format, "Audit fee", netInfo.AuditFee())
 		cmd.Printf(format, "Storage price", netInfo.StoragePrice())
 		cmd.Printf(format, "Container fee", netInfo.ContainerFee())
@@ -50,7 +50,7 @@ var netInfoCmd = &cobra.Command{
 		cmd.Printf(format, "Homomorphic hashing disabled", netInfo.HomomorphicHashingDisabled())
 		cmd.Printf(format, "Maintenance mode allowed", netInfo.MaintenanceModeAllowed())
 
-		cmd.Println("NeoFS network configuration (other)")
+		cmd.Println("FrostFS network configuration (other)")
 		netInfo.IterateRawNetworkParameters(func(name string, value []byte) {
 			cmd.Printf(format, name, hex.EncodeToString(value))
 		})

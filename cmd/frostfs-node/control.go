@@ -59,7 +59,7 @@ func initControlService(c *cfg) {
 	c.cfgControlService.server = grpc.NewServer()
 
 	c.onShutdown(func() {
-		stopGRPC("NeoFS Control API", c.cfgControlService.server, c.log)
+		stopGRPC("FrostFS Control API", c.cfgControlService.server, c.log)
 	})
 
 	control.RegisterControlServiceServer(c.cfgControlService.server, ctlSvc)

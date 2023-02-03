@@ -8,8 +8,8 @@ import (
 
 const SessionToken = "session"
 
-// InitSession registers SessionToken flag representing filepath to the token
-// of the session with the given name. Supports NeoFS-binary and JSON files.
+// InitSession registers SessionToken flag representing file path to the token of
+// the session with the given name. Supports FrostFS-binary and JSON files.
 func InitSession(cmd *cobra.Command, name string) {
 	cmd.Flags().String(
 		SessionToken,

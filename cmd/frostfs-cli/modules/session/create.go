@@ -81,7 +81,7 @@ func createSession(cmd *cobra.Command, _ []string) {
 	commonCmd.ExitOnErr(cmd, "can't write token to file: %w", err)
 }
 
-// CreateSession opens a new communication with NeoFS storage node using client connection.
+// CreateSession opens a new communication with FrostFS storage node using client connection.
 // The session is expected to be maintained by the storage node during the given
 // number of epochs.
 //

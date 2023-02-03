@@ -34,7 +34,7 @@ func (x BalanceOfRes) Balance() accounting.Decimal {
 	return x.cliRes.Amount()
 }
 
-// BalanceOf requests the current balance of a NeoFS user.
+// BalanceOf requests the current balance of a FrostFS user.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func BalanceOf(prm BalanceOfPrm) (res BalanceOfRes, err error) {
@@ -59,7 +59,7 @@ func (x ListContainersRes) IDList() []cid.ID {
 	return x.cliRes.Containers()
 }
 
-// ListContainers requests a list of NeoFS user's containers.
+// ListContainers requests a list of FrostFS user's containers.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func ListContainers(prm ListContainersPrm) (res ListContainersRes, err error) {
@@ -84,7 +84,7 @@ func (x PutContainerRes) ID() cid.ID {
 	return x.cnr
 }
 
-// PutContainer sends a request to save the container in NeoFS.
+// PutContainer sends a request to save the container in FrostFS.
 //
 // Operation is asynchronous and not guaranteed even in the absence of errors.
 // The required time is also not predictable.
@@ -122,7 +122,7 @@ func (x GetContainerRes) Container() containerSDK.Container {
 	return x.cliRes.Container()
 }
 
-// GetContainer reads a container from NeoFS by ID.
+// GetContainer reads a container from FrostFS by ID.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func GetContainer(prm GetContainerPrm) (res GetContainerRes, err error) {
@@ -140,7 +140,7 @@ func IsACLExtendable(c *client.Client, cnr cid.ID) (bool, error) {
 
 	res, err := GetContainer(prm)
 	if err != nil {
-		return false, fmt.Errorf("get container from the NeoFS: %w", err)
+		return false, fmt.Errorf("get container from the FrostFS: %w", err)
 	}
 
 	return res.Container().BasicACL().Extendable(), nil
@@ -155,7 +155,7 @@ type DeleteContainerPrm struct {
 // DeleteContainerRes groups the resulting values of DeleteContainer operation.
 type DeleteContainerRes struct{}
 
-// DeleteContainer sends a request to remove a container from NeoFS by ID.
+// DeleteContainer sends a request to remove a container from FrostFS by ID.
 //
 // Operation is asynchronous and not guaranteed even in the absence of errors.
 // The required time is also not predictable.
@@ -185,7 +185,7 @@ func (x EACLRes) EACL() eacl.Table {
 	return x.cliRes.Table()
 }
 
-// EACL reads eACL table from NeoFS by container ID.
+// EACL reads eACL table from FrostFS by container ID.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func EACL(prm EACLPrm) (res EACLRes, err error) {
@@ -203,7 +203,7 @@ type SetEACLPrm struct {
 // SetEACLRes groups the resulting values of SetEACL operation.
 type SetEACLRes struct{}
 
-// SetEACL requests to save an eACL table in NeoFS.
+// SetEACL requests to save an eACL table in FrostFS.
 //
 // Operation is asynchronous and no guaranteed even in the absence of errors.
 // The required time is also not predictable.
@@ -228,12 +228,12 @@ type NetworkInfoRes struct {
 	cliRes *client.ResNetworkInfo
 }
 
-// NetworkInfo returns structured information about the NeoFS network.
+// NetworkInfo returns structured information about the FrostFS network.
 func (x NetworkInfoRes) NetworkInfo() netmap.NetworkInfo {
 	return x.cliRes.Info()
 }
 
-// NetworkInfo reads information about the NeoFS network.
+// NetworkInfo reads information about the FrostFS network.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func NetworkInfo(prm NetworkInfoPrm) (res NetworkInfoRes, err error) {
@@ -258,12 +258,12 @@ func (x NodeInfoRes) NodeInfo() netmap.NodeInfo {
 	return x.cliRes.NodeInfo()
 }
 
-// LatestVersion returns the latest NeoFS API version in use.
+// LatestVersion returns the latest FrostFS API version in use.
 func (x NodeInfoRes) LatestVersion() version.Version {
 	return x.cliRes.LatestVersion()
 }
 
-// NodeInfo requests information about the remote server from NeoFS netmap.
+// NodeInfo requests information about the remote server from FrostFS netmap.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func NodeInfo(prm NodeInfoPrm) (res NodeInfoRes, err error) {
@@ -282,7 +282,7 @@ type NetMapSnapshotRes struct {
 	cliRes *client.ResNetMapSnapshot
 }
 
-// NetMap returns current local snapshot of the NeoFS network map.
+// NetMap returns current local snapshot of the FrostFS network map.
 func (x NetMapSnapshotRes) NetMap() netmap.NetMap {
 	return x.cliRes.NetMap()
 }
@@ -362,7 +362,7 @@ func (x PutObjectRes) ID() oid.ID {
 	return x.id
 }
 
-// PutObject saves the object in NeoFS network.
+// PutObject saves the object in FrostFS network.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func PutObject(prm PutObjectPrm) (*PutObjectRes, error) {
@@ -460,7 +460,7 @@ func (x DeleteObjectRes) Tombstone() oid.ID {
 	return x.tomb
 }
 
-// DeleteObject marks an object to be removed from NeoFS through tombstone placement.
+// DeleteObject marks an object to be removed from FrostFS through tombstone placement.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func DeleteObject(prm DeleteObjectPrm) (*DeleteObjectRes, error) {
@@ -576,7 +576,7 @@ type HeadObjectPrm struct {
 	mainOnly bool
 }
 
-// SetMainOnlyFlag sets flag to get only main fields of an object header in terms of NeoFS API.
+// SetMainOnlyFlag sets flag to get only main fields of an object header in terms of FrostFS API.
 func (x *HeadObjectPrm) SetMainOnlyFlag(v bool) {
 	x.mainOnly = v
 }
@@ -812,7 +812,7 @@ func (x *PayloadRangePrm) SetRange(rng *object.Range) {
 // PayloadRangeRes groups the resulting values of PayloadRange operation.
 type PayloadRangeRes struct{}
 
-// PayloadRange reads object payload range from NeoFS and writes it to the specified writer.
+// PayloadRange reads object payload range from FrostFS and writes it to the specified writer.
 //
 // Interrupts on any writer error.
 //
@@ -872,7 +872,7 @@ func (s *SyncContainerPrm) SetContainer(c *containerSDK.Container) {
 // operation.
 type SyncContainerRes struct{}
 
-// SyncContainerSettings reads global network config from NeoFS and
+// SyncContainerSettings reads global network config from FrostFS and
 // syncs container settings with it.
 //
 // Interrupts on any writer error.

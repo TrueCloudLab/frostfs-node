@@ -65,7 +65,7 @@ func initGRPC(c *cfg) {
 		srv := grpc.NewServer(serverOpts...)
 
 		c.onShutdown(func() {
-			stopGRPC("NeoFS Public API", srv, c.log)
+			stopGRPC("FrostFS Public API", srv, c.log)
 		})
 
 		c.cfgGRPC.servers = append(c.cfgGRPC.servers, srv)

@@ -849,8 +849,8 @@ func (c *cfg) LocalNodeInfo() (*netmapV2.NodeInfo, error) {
 	return &res, nil
 }
 
-// handleLocalNodeInfo rewrites local node info from the NeoFS network map.
-// Called with nil when storage node is outside the NeoFS network map
+// handleLocalNodeInfo rewrites local node info from the FrostFS network map.
+// Called with nil when storage node is outside the FrostFS network map
 // (before entering the network and after leaving it).
 func (c *cfg) handleLocalNodeInfo(ni *netmap.NodeInfo) {
 	c.cfgNetmap.state.setNodeInfo(ni)

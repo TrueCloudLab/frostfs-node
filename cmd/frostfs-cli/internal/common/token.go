@@ -31,7 +31,7 @@ func ReadBearerToken(cmd *cobra.Command, flagname string) *bearer.Token {
 }
 
 // BinaryOrJSON is an interface of entities which provide json.Unmarshaler
-// and NeoFS binary decoder.
+// and FrostFS binary decoder.
 type BinaryOrJSON interface {
 	Unmarshal([]byte) error
 	json.Unmarshaler

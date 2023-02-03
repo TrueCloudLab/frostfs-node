@@ -274,7 +274,7 @@ func OpenSessionViaClient(cmd *cobra.Command, dst SessionPrm, cli *client.Client
 
 	var tok session.Object
 
-	const sessionLifetime = 10 // in NeoFS epochs
+	const sessionLifetime = 10 // in FrostFS epochs
 
 	common.PrintVerbose(cmd, "Opening remote session with the node...")
 

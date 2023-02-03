@@ -86,7 +86,7 @@ var objectLockCmd = &cobra.Command{
 		prm.SetHeader(obj)
 
 		res, err := internalclient.PutObject(prm)
-		commonCmd.ExitOnErr(cmd, "Store lock object in NeoFS: %w", err)
+		commonCmd.ExitOnErr(cmd, "Store lock object in FrostFS: %w", err)
 
 		cmd.Printf("Lock object ID: %s\n", res.ID())
 		cmd.Println("Objects successfully locked.")

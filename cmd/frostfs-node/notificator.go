@@ -117,7 +117,7 @@ func initNotifications(c *cfg) {
 		}
 
 		natsSvc := nats.New(
-			nats.WithConnectionName("NeoFS Storage Node: "+pubKey), // connection name is used in the server side logs
+			nats.WithConnectionName("FrostFS Storage Node: "+pubKey), // connection name is used in the server side logs
 			nats.WithTimeout(nodeconfig.Notification(c.appCfg).Timeout()),
 			nats.WithClientCert(
 				nodeconfig.Notification(c.appCfg).CertPath(),
