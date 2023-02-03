@@ -1,10 +1,11 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: frostfs-node
-Upstream-Contact: tech@nspcc.ru
+Upstream-Contact: tech@frostfs.info
 Source: https://github.com/TrueCloudLab/frostfs-node
 
 Files: *
-Copyright: 2018-2022 NeoSPCC (@nspcc-dev), contributors of frostfs-node project 
+Copyright: 2022-2023 TrueCloudLab (@TrueCloudLab), contributors of FrostFS project
+           2018-2022 NeoSPCC (@nspcc-dev), contributors of NeoFS project
            (https://github.com/TrueCloudLab/frostfs-node/blob/master/CREDITS.md)
 
 License: GPL-3

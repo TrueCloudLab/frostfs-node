@@ -1,5 +1,5 @@
 [Unit]
-Description=NeoFS InnerRing node
+Description=FrostFS InnerRing node
 Requires=network.target
 
 [Service]

@@ -19,7 +19,7 @@ set -e
 case "$1" in
     configure)
         USERNAME=ir
-        id -u frostfs-ir >/dev/null 2>&1 || useradd -s /usr/sbin/nologin -d /var/lib/frostfs/ir --system -M -U -c "NeoFS InnerRing node" frostfs-ir
+        id -u frostfs-ir >/dev/null 2>&1 || useradd -s /usr/sbin/nologin -d /var/lib/frostfs/ir --system -M -U -c "FrostFS InnerRing node" frostfs-ir
         if ! dpkg-statoverride --list /etc/frostfs/$USERNAME >/dev/null; then
             chown -f root:frostfs-$USERNAME /etc/frostfs/$USERNAME
             chmod -f 0750 /etc/frostfs/$USERNAME

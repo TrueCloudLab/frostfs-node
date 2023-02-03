@@ -11,29 +11,29 @@ Vcs-Browser: https://github.com/TrueCloudLab/frostfs-node
 Package: frostfs-storage
 Architecture: any
 Depends: ${misc:Depends}
-Description: NeoFS Storage node
- NeoFS is a decentralized distributed object storage integrated with the NEO
- Blockchain. NeoFS Nodes are organized in a peer-to-peer network that takes care
+Description: FrostFS Storage node
+ FrostFS is a decentralized distributed object storage integrated with the NEO
+ Blockchain. FrostFS Nodes are organized in a peer-to-peer network that takes care
  of storing and distributing user's data. Any Neo user may participate in the
  network and get paid for providing storage resources to other users or store
- their data in NeoFS and pay a competitive price for it.
+ their data in FrostFS and pay a competitive price for it.
 
 Package: frostfs-ir
 Architecture: any
 Depends: ${misc:Depends}, frostfs-locode-db
-Description: NeoFS InnerRing node
- NeoFS is a decentralized distributed object storage integrated with the NEO
- Blockchain. NeoFS Nodes are organized in a peer-to-peer network that takes care
+Description: FrostFS InnerRing node
+ FrostFS is a decentralized distributed object storage integrated with the NEO
+ Blockchain. FrostFS Nodes are organized in a peer-to-peer network that takes care
  of storing and distributing user's data. Any Neo user may participate in the
  network and get paid for providing storage resources to other users or store
- their data in NeoFS and pay a competitive price for it.
+ their data in FrostFS and pay a competitive price for it.
 
 Package: frostfs-cli
 Architecture: any
 Depends: ${misc:Depends}
-Description: CLI tools for NeoFS
- NeoFS is a decentralized distributed object storage integrated with the NEO
- Blockchain. NeoFS Nodes are organized in a peer-to-peer network that takes care
+Description: CLI tools for FrostFS
+ FrostFS is a decentralized distributed object storage integrated with the NEO
+ Blockchain. FrostFS Nodes are organized in a peer-to-peer network that takes care
  of storing and distributing user's data. Any Neo user may participate in the
  network and get paid for providing storage resources to other users or store
- their data in NeoFS and pay a competitive price for it.
+ their data in FrostFS and pay a competitive price for it.
