@@ -9,10 +9,10 @@ import (
 const (
 	subsection = "apiclient"
 
-	// DialTimeoutDefault is a default dial timeout of NeoFS API client connection.
+	// DialTimeoutDefault is a default dial timeout of FrostFS API client connection.
 	DialTimeoutDefault = 5 * time.Second
 
-	// StreamTimeoutDefault is a default timeout of NeoFS API streaming operation.
+	// StreamTimeoutDefault is a default timeout of FrostFS API streaming operation.
 	StreamTimeoutDefault = 15 * time.Second
 )
 

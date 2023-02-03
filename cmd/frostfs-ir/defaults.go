@@ -8,14 +8,14 @@ import (
 )
 
 func newConfig(path string) (*viper.Viper, error) {
-	const innerRingPrefix = "neofs_ir"
+	const envPrefix = "FROSTFS_IR"
 
 	var (
 		err error
 		v   = viper.New()
 	)
 
-	v.SetEnvPrefix(innerRingPrefix)
+	v.SetEnvPrefix(envPrefix)
 	v.AutomaticEnv()
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 

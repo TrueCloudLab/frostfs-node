@@ -9,7 +9,7 @@ import (
 
 func TestEnv(t *testing.T) {
 	require.Equal(t,
-		"NEOFS_SECTION_PARAMETER",
+		"FROSTFS_SECTION_PARAMETER",
 		internal.Env("section", "parameter"),
 	)
 }

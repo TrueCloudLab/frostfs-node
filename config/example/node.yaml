@@ -31,7 +31,7 @@ node:
     path: /state  # path to persistent state file of Storage node
   subnet:
     exit_zero: true # toggle entrance to zero subnet (overrides corresponding attribute and occurrence in `entries`)
-    entries: # list of IDs of subnets to enter in a text format of NeoFS API protocol (overrides corresponding attributes)
+    entries: # list of IDs of subnets to enter in a text format of FrostFS API protocol (overrides corresponding attributes)
       - 123
       - 456
       - 789
@@ -88,13 +88,13 @@ morph:
                   # Cached entities: containers, container lists, eACL tables.
   switch_interval: 3m # interval b/w RPC switch attempts if the node is connected not to the highest priority node
   rpc_endpoint:  # side chain NEO RPC endpoints; are shuffled and used one by one until the first success
-    - address: wss://rpc1.morph.fs.neo.org:40341/ws
+    - address: wss://rpc1.morph.frostfs.info:40341/ws
       priority: 0
-    - address: wss://rpc2.morph.fs.neo.org:40341/ws
+    - address: wss://rpc2.morph.frostfs.info:40341/ws
       priority: 2
 
 apiclient:
-  dial_timeout: 15s  # timeout for NEOFS API client connection
+  dial_timeout: 15s  # timeout for FrostFS API client connection
   stream_timeout: 20s # timeout for individual operations in a streaming RPC
   allow_external: true # allow to fallback to addresses in `ExternalAddr` attribute
   reconnect_timeout: 30s # time to wait before reconnecting to a failed node

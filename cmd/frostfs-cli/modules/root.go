@@ -26,7 +26,7 @@ import (
 )
 
 const (
-	envPrefix = "NEOFS_CLI"
+	envPrefix = "FROSTFS_CLI"
 )
 
 // Global scope flags.

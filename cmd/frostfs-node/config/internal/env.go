@@ -6,7 +6,7 @@ import (
 
 // EnvPrefix is a prefix of ENV variables related
 // to storage node configuration.
-const EnvPrefix = "neofs"
+const EnvPrefix = "FROSTFS"
 
 // EnvSeparator is a section separator in ENV variables.
 const EnvSeparator = "_"

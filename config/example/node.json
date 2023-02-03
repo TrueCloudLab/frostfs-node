@@ -105,11 +105,11 @@
     "switch_interval": "3m",
     "rpc_endpoint": [
       {
-        "address": "wss://rpc1.morph.fs.neo.org:40341/ws",
+        "address": "wss://rpc1.morph.frostfs.info:40341/ws",
         "priority": 0
       },
       {
-        "address": "wss://rpc2.morph.fs.neo.org:40341/ws",
+        "address": "wss://rpc2.morph.frostfs.info:40341/ws",
         "priority": 2
       }
     ]

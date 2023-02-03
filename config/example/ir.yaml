@@ -69,7 +69,7 @@ emit:
   mint:
     value: 20000000  # Fixed8 value of sidechain GAS transferred to account that received a deposit from mainchain
     cache_size: 1000 # LRU cache size of all deposit receivers to avoid double GAS emission
-    threshold: 1     # Lifetime of records in LRU cache of all deposit receivers in NeoFS epochs
+    threshold: 1     # Lifetime of records in LRU cache of all deposit receivers in FrostFS epochs
   gas:
     balance_threshold: 100000000000 # Fixed8 value of inner ring wallet balance threshold when GAS emission for deposit receivers is disabled; disabled by default
 
@@ -102,7 +102,7 @@ indexer:
 
 netmap_cleaner:
   enabled: true # Enable voting for removing stale storage nodes from network map
-  threshold: 3  # Number of NeoFS epoch without bootstrap request from storage node before it considered stale
+  threshold: 3  # Number of FrostFS epoch without bootstrap request from storage node before it considered stale
 
 contracts:
   frostfs: ee3dee6d05dc79c24a5b8f6985e10d68b7cacc62    # Address of FrostFS contract in mainchain; ignore if mainchain is disabled
