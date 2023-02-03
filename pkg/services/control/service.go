@@ -7,7 +7,7 @@ func (x *HealthCheckRequest) SetBody(v *HealthCheckRequest_Body) {
 	}
 }
 
-// SetNetmapStatus sets status of the storage node in NeoFS network map.
+// SetNetmapStatus sets status of the storage node in FrostFS network map.
 func (x *HealthCheckResponse_Body) SetNetmapStatus(v NetmapStatus) {
 	if x != nil {
 		x.NetmapStatus = v
@@ -28,7 +28,7 @@ func (x *HealthCheckResponse) SetBody(v *HealthCheckResponse_Body) {
 	}
 }
 
-// SetStatus sets new storage node status in NeoFS network map.
+// SetStatus sets new storage node status in FrostFS network map.
 func (x *SetNetmapStatusRequest_Body) SetStatus(v NetmapStatus) {
 	if x != nil {
 		x.Status = v
@@ -54,7 +54,7 @@ func (x *SetNetmapStatusResponse) SetBody(v *SetNetmapStatusResponse_Body) {
 	}
 }
 
-// SetAddressList sets list of objects to be removed in NeoFS API binary format.
+// SetAddressList sets list of objects to be removed in FrostFS API binary format.
 func (x *DropObjectsRequest_Body) SetAddressList(v [][]byte) {
 	if x != nil {
 		x.AddressList = v

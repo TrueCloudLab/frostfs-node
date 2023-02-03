@@ -13,7 +13,7 @@ message Signature {
     bytes sign = 2 [json_name = "signature"];
 }
 
-// Status of the storage node in the NeoFS network map.
+// Status of the storage node in the FrostFS network map.
 enum NetmapStatus {
     // Undefined status, default value.
     STATUS_UNDEFINED = 0;
@@ -28,15 +28,15 @@ enum NetmapStatus {
     MAINTENANCE = 3;
 }
 
-// NeoFS node description.
+// FrostFS node description.
 message NodeInfo {
-    // Public key of the NeoFS node in a binary format.
+    // Public key of the FrostFS node in a binary format.
     bytes public_key = 1 [json_name = "publicKey"];
 
     // Ways to connect to a node.
     repeated string addresses = 2 [json_name = "addresses"];
 
-    // Administrator-defined Attributes of the NeoFS Storage Node.
+    // Administrator-defined Attributes of the FrostFS Storage Node.
     //
     // `Attribute` is a Key-Value metadata pair. Key name must be a valid UTF-8
     // string. Value can't be empty.
@@ -74,7 +74,7 @@ message NodeInfo {
     //   without diacritics . Calculated automatically from `Locode` attribute.
     //
     // For detailed description of each well-known attribute please see the
-    // corresponding section in NeoFS Technical specification.
+    // corresponding section in FrostFS Technical specification.
     message Attribute {
         // Key of the node attribute.
         string key = 1 [json_name = "key"];
@@ -86,13 +86,13 @@ message NodeInfo {
         // `Country`.
         repeated string parents = 3 [json_name = "parents"];
     }
-    // Carries list of the NeoFS node attributes in a key-value form. Key name
+    // Carries list of the FrostFS node attributes in a key-value form. Key name
     // must be a node-unique valid UTF-8 string. Value can't be empty. NodeInfo
     // structures with duplicated attribute names or attributes with empty values
     // will be considered invalid.
     repeated Attribute attributes = 3 [json_name = "attributes"];
 
-    // Carries state of the NeoFS node.
+    // Carries state of the FrostFS node.
     NetmapStatus state = 4 [json_name = "state"];
 }
 

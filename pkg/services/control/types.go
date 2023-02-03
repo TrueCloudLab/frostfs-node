@@ -39,7 +39,7 @@ func (x *NodeInfo_Attribute) SetParents(v []string) {
 	}
 }
 
-// SetPublicKey sets public key of the NeoFS node in a binary format.
+// SetPublicKey sets public key of the FrostFS node in a binary format.
 func (x *NodeInfo) SetPublicKey(v []byte) {
 	if x != nil {
 		x.PublicKey = v
@@ -53,14 +53,14 @@ func (x *NodeInfo) SetAddresses(v []string) {
 	}
 }
 
-// SetAttributes sets attributes of the NeoFS Storage Node.
+// SetAttributes sets attributes of the FrostFS Storage Node.
 func (x *NodeInfo) SetAttributes(v []*NodeInfo_Attribute) {
 	if x != nil {
 		x.Attributes = v
 	}
 }
 
-// SetState sets state of the NeoFS node.
+// SetState sets state of the FrostFS node.
 func (x *NodeInfo) SetState(v NetmapStatus) {
 	if x != nil {
 		x.State = v

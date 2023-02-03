@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// SetNetmapStatus sets node status in NeoFS network.
+// SetNetmapStatus sets node status in FrostFS network.
 //
 // If request is unsigned or signed by disallowed key, permission error returns.
 func (s *Server) SetNetmapStatus(ctx context.Context, req *control.SetNetmapStatusRequest) (*control.SetNetmapStatusResponse, error) {

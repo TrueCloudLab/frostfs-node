@@ -11,7 +11,7 @@ service ControlService {
     // Performs health check of the storage node.
     rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
 
-    // Sets status of the storage node in NeoFS network map.
+    // Sets status of the storage node in FrostFS network map.
     rpc SetNetmapStatus (SetNetmapStatusRequest) returns (SetNetmapStatusResponse);
 
     // Mark objects to be removed from node's local object storage.
@@ -56,7 +56,7 @@ message HealthCheckRequest {
 message HealthCheckResponse {
     // Health check response body
     message Body {
-        // Status of the storage node in NeoFS network map.
+        // Status of the storage node in FrostFS network map.
         NetmapStatus netmap_status = 1;
 
         // Health status of storage node application.
@@ -74,7 +74,7 @@ message HealthCheckResponse {
 message SetNetmapStatusRequest {
     // Set netmap status request body.
     message Body {
-        // New storage node status in NeoFS network map.
+        // New storage node status in FrostFS network map.
         // If status is MAINTENANCE, the node checks whether maintenance is
         // allowed in the network settings. In case of prohibition, the request
         // is denied. Otherwise, node switches to local maintenance state. To
@@ -112,7 +112,7 @@ message DropObjectsRequest {
     // Request body structure.
     message Body {
         // List of object addresses to be removed.
-        // in NeoFS API binary format.
+        // in FrostFS API binary format.
         repeated bytes address_list = 1;
     }
 
