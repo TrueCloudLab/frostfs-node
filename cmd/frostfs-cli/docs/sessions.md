@@ -1,8 +1,8 @@
-# How NeoFS CLI uses session mechanism of the NeoFS
+# How FrostFS CLI uses session mechanism of the FrostFS
 
 ## Overview
 
-NeoFS sessions implement a mechanism for issuing a power of attorney by one
+FrostFS sessions implement a mechanism for issuing a power of attorney by one
 party to another. A trusted party can provide a so-called session token as
 proof of the right to act on behalf of another member of the network. The
 client of operations carried out with such a token will be the user who opened
@@ -15,7 +15,7 @@ attached session token is treated as performed by the original client.
 
 ## Types
 
-NeoFS CLI supports two ways to execute operation within a session depending on
+FrostFS CLI supports two ways to execute operation within a session depending on
 whether the user of the command application is an original user (1) or a trusted
 one (2).
 

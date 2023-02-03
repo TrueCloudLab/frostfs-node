@@ -38,7 +38,7 @@ $ git clone https://github.com/TrueCloudLab/frostfs-node
 
 ### Set up git remote as ``upstream``
 ```sh
-$ cd neofs-node
+$ cd frostfs-node
 $ git remote add upstream https://github.com/TrueCloudLab/frostfs-node
 $ git fetch upstream
 $ git merge upstream/master
