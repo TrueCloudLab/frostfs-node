@@ -7,7 +7,7 @@ node:
     - <announced.address:port>
   attribute_0: UN-LOCODE:<XX YYY>
   attribute_1: Price:100000
-  attribute_2: User-Agent:NeoFS\/0.27
+  attribute_2: User-Agent:FrostFS\/0.9999
 
 grpc:
   num: 1
@@ -55,13 +55,13 @@ object:
 
 morph:
   rpc_endpoint:
-    - wss://rpc1.morph.fs.neo.org:40341/ws
-    - wss://rpc2.morph.fs.neo.org:40341/ws
-    - wss://rpc3.morph.fs.neo.org:40341/ws
-    - wss://rpc4.morph.fs.neo.org:40341/ws
-    - wss://rpc5.morph.fs.neo.org:40341/ws
-    - wss://rpc6.morph.fs.neo.org:40341/ws
-    - wss://rpc7.morph.fs.neo.org:40341/ws
+    - wss://rpc1.morph.frostfs.info:40341/ws
+    - wss://rpc2.morph.frostfs.info:40341/ws
+    - wss://rpc3.morph.frostfs.info:40341/ws
+    - wss://rpc4.morph.frostfs.info:40341/ws
+    - wss://rpc5.morph.frostfs.info:40341/ws
+    - wss://rpc6.morph.frostfs.info:40341/ws
+    - wss://rpc7.morph.frostfs.info:40341/ws
   dial_timeout: 20s
 
 contracts:

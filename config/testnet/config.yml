@@ -3,13 +3,13 @@ logger:
 
 morph:
   rpc_endpoint:
-    - wss://rpc01.morph.testnet.fs.neo.org:51331/ws
-    - wss://rpc02.morph.testnet.fs.neo.org:51331/ws
-    - wss://rpc03.morph.testnet.fs.neo.org:51331/ws
-    - wss://rpc04.morph.testnet.fs.neo.org:51331/ws
-    - wss://rpc05.morph.testnet.fs.neo.org:51331/ws
-    - wss://rpc06.morph.testnet.fs.neo.org:51331/ws
-    - wss://rpc07.morph.testnet.fs.neo.org:51331/ws
+    - wss://rpc01.morph.testnet.frostfs.info:51331/ws
+    - wss://rpc02.morph.testnet.frostfs.info:51331/ws
+    - wss://rpc03.morph.testnet.frostfs.info:51331/ws
+    - wss://rpc04.morph.testnet.frostfs.info:51331/ws
+    - wss://rpc05.morph.testnet.frostfs.info:51331/ws
+    - wss://rpc06.morph.testnet.frostfs.info:51331/ws
+    - wss://rpc07.morph.testnet.frostfs.info:51331/ws
   dial_timeout: 20s
 
 contracts:
@@ -21,7 +21,7 @@ contracts:
 node:
   key: /node.key
   attribute_0: Deployed:SelfHosted
-  attribute_1: User-Agent:NeoFS\/0.27
+  attribute_1: User-Agent:FrostFS\/0.9999
 
 prometheus:
   enabled: true
