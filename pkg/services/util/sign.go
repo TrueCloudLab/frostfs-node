@@ -15,7 +15,7 @@ type RequestMessage interface {
 	GetMetaHeader() *session.RequestMetaHeader
 }
 
-// ResponseMessage is an interface of NeoFS response message.
+// ResponseMessage is an interface of FrostFS response message.
 type ResponseMessage interface {
 	GetMetaHeader() *session.ResponseMetaHeader
 	SetMetaHeader(*session.ResponseMetaHeader)

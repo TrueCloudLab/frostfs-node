@@ -169,7 +169,7 @@ func (v *FormatValidator) checkOwnerKey(id user.ID, key frostfsecdsa.PublicKey) 
 	return nil
 }
 
-// ContentMeta describes NeoFS meta information that brings object's payload if the object
+// ContentMeta describes FrostFS meta information that brings object's payload if the object
 // is one of:
 //   - object.TypeTombstone;
 //   - object.TypeStorageGroup;

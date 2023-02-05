@@ -7,7 +7,7 @@ import (
 )
 
 // LocationCode represents a location code for
-// the storage in the NeoFS location database.
+// the storage in the FrostFS location database.
 type LocationCode locodecolumn.LocationCode
 
 // LocationCodeFromString parses a string UN/LOCODE location code

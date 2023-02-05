@@ -7,7 +7,7 @@ import (
 )
 
 type CommonBindPrm struct {
-	ownerID []byte // NeoFS account identifier
+	ownerID []byte // FrostFS account identifier
 
 	keys [][]byte // list of serialized public keys
 
@@ -18,7 +18,7 @@ func (x *CommonBindPrm) SetOptionalPrm(prm client.InvokePrmOptional) {
 	x.InvokePrmOptional = prm
 }
 
-// SetOwnerID sets NeoFS account identifier.
+// SetOwnerID sets FrostFS account identifier.
 func (x *CommonBindPrm) SetOwnerID(v []byte) {
 	x.ownerID = v
 }
@@ -28,7 +28,7 @@ func (x *CommonBindPrm) SetKeys(v [][]byte) {
 	x.keys = v
 }
 
-// AddKeys adds a list of public keys to/from NeoFS account.
+// AddKeys adds a list of public keys to/from FrostFS account.
 func (x *Client) AddKeys(p CommonBindPrm) error {
 	prm := client.InvokePrm{}
 
@@ -44,7 +44,7 @@ func (x *Client) AddKeys(p CommonBindPrm) error {
 	return nil
 }
 
-// RemoveKeys removes a list of public keys to/from NeoFS account.
+// RemoveKeys removes a list of public keys to/from FrostFS account.
 func (x *Client) RemoveKeys(args CommonBindPrm) error {
 	prm := client.InvokePrm{}
 

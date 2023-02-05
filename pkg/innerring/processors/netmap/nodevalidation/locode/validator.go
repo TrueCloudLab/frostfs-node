@@ -6,7 +6,7 @@ package locode
 // Passing incorrect parameter values will result in constructor
 // failure (error or panic depending on the implementation).
 type Prm struct {
-	// NeoFS LOCODE database interface.
+	// FrostFS LOCODE database interface.
 	//
 	// Must not be nil.
 	DB DB

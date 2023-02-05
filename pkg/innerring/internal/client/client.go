@@ -16,14 +16,14 @@ import (
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
-// Client represents NeoFS API client cut down to the needs of a purely IR application.
+// Client represents FrostFS API client cut down to the needs of a purely IR application.
 type Client struct {
 	key *ecdsa.PrivateKey
 
 	c clientcore.Client
 }
 
-// WrapBasicClient wraps a client.Client instance to use it for NeoFS API RPC.
+// WrapBasicClient wraps a client.Client instance to use it for FrostFS API RPC.
 func (x *Client) WrapBasicClient(c clientcore.Client) {
 	x.c = c
 }
@@ -211,7 +211,7 @@ func (x Client) HeadObject(prm HeadObjectPrm) (*HeadObjectRes, error) {
 	}
 
 	if err != nil {
-		return nil, fmt.Errorf("read object header from NeoFS: %w", err)
+		return nil, fmt.Errorf("read object header from FrostFS: %w", err)
 	}
 
 	var hdr object.Object
@@ -225,7 +225,7 @@ func (x Client) HeadObject(prm HeadObjectPrm) (*HeadObjectRes, error) {
 	}, nil
 }
 
-// GetObjectPayload reads an object by address from NeoFS via Client and returns its payload.
+// GetObjectPayload reads an object by address from FrostFS via Client and returns its payload.
 //
 // Returns any error which prevented the operation from completing correctly in error return.
 func GetObjectPayload(ctx context.Context, c Client, addr oid.Address) ([]byte, error) {

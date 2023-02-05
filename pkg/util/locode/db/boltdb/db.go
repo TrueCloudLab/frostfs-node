@@ -13,13 +13,13 @@ import (
 // Passing incorrect parameter values will result in constructor
 // failure (error or panic depending on the implementation).
 type Prm struct {
-	// Path to BoltDB file with NeoFS location database.
+	// Path to BoltDB file with FrostFS location database.
 	//
 	// Must not be empty.
 	Path string
 }
 
-// DB is a descriptor of the NeoFS BoltDB location database.
+// DB is a descriptor of the FrostFS BoltDB location database.
 //
 // For correct operation, DB must be created
 // using the constructor (New) based on the required parameters

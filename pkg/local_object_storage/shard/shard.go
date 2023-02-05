@@ -16,7 +16,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// Shard represents single shard of NeoFS Local Storage Engine.
+// Shard represents single shard of FrostFS Local Storage Engine.
 type Shard struct {
 	*cfg
 

@@ -48,7 +48,7 @@ func (x *InitPrm) SetBaseClient(base *client.Client) {
 	x.base = base
 }
 
-// SetContractAddress sets address of Subnet contract in NeoFS sidechain.
+// SetContractAddress sets address of Subnet contract in FrostFS sidechain.
 func (x *InitPrm) SetContractAddress(addr util.Uint160) {
 	x.addr = addr
 }

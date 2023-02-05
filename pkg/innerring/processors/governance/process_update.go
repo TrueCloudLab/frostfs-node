@@ -123,7 +123,7 @@ func (gp *Processor) processAlphabetSync(txHash util.Uint256) {
 		}
 	}
 
-	// 4. Update NeoFS contract in the mainnet.
+	// 4. Update FrostFS contract in the mainnet.
 	epoch := gp.epochState.EpochCounter()
 
 	buf := make([]byte, 8)

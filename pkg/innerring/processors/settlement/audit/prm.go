@@ -29,7 +29,7 @@ type ResultStorage interface {
 	AuditResultsForEpoch(epoch uint64) ([]*audit.Result, error)
 }
 
-// SGInfo groups the data about NeoFS storage group
+// SGInfo groups the data about FrostFS storage group
 // necessary for calculating audit fee.
 type SGInfo interface {
 	// Must return sum size of the all group members.

@@ -35,7 +35,7 @@ func Get(c *Client, cnr cid.ID) (*containercore.Container, error) {
 	return c.Get(binCnr)
 }
 
-// Get reads the container from NeoFS system by binary identifier
+// Get reads the container from FrostFS system by binary identifier
 // through Container contract call.
 //
 // If an empty slice is returned for the requested identifier,

@@ -13,7 +13,7 @@ type NodeInfo = netmap.NodeInfo
 
 // Client is a wrapper over StaticClient
 // which makes calls with the names and arguments
-// of the NeoFS Netmap contract.
+// of the FrostFS Netmap contract.
 //
 // Working client must be created via constructor New.
 // Using the Client that has been created with new(Client)

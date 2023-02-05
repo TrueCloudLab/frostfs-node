@@ -16,7 +16,7 @@ type SourceTable interface {
 	IterateAll(func(locode.Record) error) error
 }
 
-// DB is an interface of NeoFS location database.
+// DB is an interface of FrostFS location database.
 type DB interface {
 	// Must save the record by key in the database.
 	Put(Key, Record) error
@@ -25,7 +25,7 @@ type DB interface {
 	Get(Key) (*Record, error)
 }
 
-// AirportRecord represents the entry in NeoFS airport database.
+// AirportRecord represents the entry in FrostFS airport database.
 type AirportRecord struct {
 	// Name of the country where airport is located.
 	CountryName string
@@ -38,7 +38,7 @@ type AirportRecord struct {
 // when the required airport is not found.
 var ErrAirportNotFound = errors.New("airport not found")
 
-// AirportDB is an interface of NeoFS airport database.
+// AirportDB is an interface of FrostFS airport database.
 type AirportDB interface {
 	// Must return the record by UN/LOCODE table record.
 	//
@@ -47,7 +47,7 @@ type AirportDB interface {
 	Get(locode.Record) (*AirportRecord, error)
 }
 
-// ContinentsDB is an interface of NeoFS continent database.
+// ContinentsDB is an interface of FrostFS continent database.
 type ContinentsDB interface {
 	// Must return continent of the geo point.
 	PointContinent(*Point) (*Continent, error)
@@ -57,7 +57,7 @@ var ErrSubDivNotFound = errors.New("subdivision not found")
 
 var ErrCountryNotFound = errors.New("country not found")
 
-// NamesDB is an interface of the NeoFS location namespace.
+// NamesDB is an interface of the FrostFS location namespace.
 type NamesDB interface {
 	// Must resolve a country code to a country name.
 	//
@@ -73,7 +73,7 @@ type NamesDB interface {
 	SubDivName(*CountryCode, string) (string, error)
 }
 
-// FillDatabase generates the NeoFS location database based on the UN/LOCODE table.
+// FillDatabase generates the FrostFS location database based on the UN/LOCODE table.
 func FillDatabase(table SourceTable, airports AirportDB, continents ContinentsDB, names NamesDB, db DB) error {
 	return table.IterateAll(func(tableRecord locode.Record) error {
 		if tableRecord.LOCODE.LocationCode() == "" {
@@ -152,7 +152,7 @@ func FillDatabase(table SourceTable, airports AirportDB, continents ContinentsDB
 	})
 }
 
-// LocodeRecord returns the record from the NeoFS location database
+// LocodeRecord returns the record from the FrostFS location database
 // corresponding to the string representation of UN/LOCODE.
 func LocodeRecord(db DB, sLocode string) (*Record, error) {
 	lc, err := locode.FromString(sLocode)

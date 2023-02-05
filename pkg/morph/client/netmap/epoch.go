@@ -6,7 +6,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
-// Epoch receives number of current NeoFS epoch
+// Epoch receives number of current FrostFS epoch
 // through the Netmap contract call.
 func (c *Client) Epoch() (uint64, error) {
 	prm := client.TestInvokePrm{}
@@ -30,7 +30,7 @@ func (c *Client) Epoch() (uint64, error) {
 	return uint64(num), nil
 }
 
-// LastEpochBlock receives block number of current NeoFS epoch
+// LastEpochBlock receives block number of current FrostFS epoch
 // through the Netmap contract call.
 func (c *Client) LastEpochBlock() (uint32, error) {
 	prm := client.TestInvokePrm{}

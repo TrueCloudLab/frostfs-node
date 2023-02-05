@@ -29,7 +29,7 @@ func (a2 *AnnounceLoadPrm) SetReporter(key []byte) {
 }
 
 // AnnounceLoad saves container size estimation calculated by storage node
-// with key in NeoFS system through Container contract call.
+// with key in FrostFS system through Container contract call.
 //
 // Returns any error encountered that caused the saving to interrupt.
 func (c *Client) AnnounceLoad(p AnnounceLoadPrm) error {

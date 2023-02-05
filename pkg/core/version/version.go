@@ -4,7 +4,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-sdk-go/version"
 )
 
-// IsValid checks if Version is not earlier than the genesis version of the NeoFS.
+// IsValid checks if Version is not earlier than the genesis version of the FrostFS.
 func IsValid(v version.Version) bool {
 	const (
 		startMajor = 2

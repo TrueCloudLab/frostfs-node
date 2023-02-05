@@ -210,7 +210,7 @@ func WithPool(p *ants.Pool) Option {
 	}
 }
 
-// WithNodeLoader returns option to set NeoFS node load source.
+// WithNodeLoader returns option to set FrostFS node load source.
 func WithNodeLoader(l nodeLoader) Option {
 	return func(c *cfg) {
 		c.loader = l

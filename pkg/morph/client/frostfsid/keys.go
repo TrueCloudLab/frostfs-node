@@ -19,7 +19,7 @@ func (a *AccountKeysPrm) SetID(id user.ID) {
 	a.id = id
 }
 
-// AccountKeys requests public keys of NeoFS account from NeoFS ID contract.
+// AccountKeys requests public keys of FrostFS account from FrostFS ID contract.
 func (x *Client) AccountKeys(p AccountKeysPrm) (keys.PublicKeys, error) {
 	prm := client.TestInvokePrm{}
 	prm.SetMethod(keyListingMethod)

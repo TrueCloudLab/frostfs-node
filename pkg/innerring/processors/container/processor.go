@@ -81,7 +81,7 @@ func New(p *Params) (*Processor, error) {
 	case p.ContainerClient == nil:
 		return nil, errors.New("ir/container: Container client is not set")
 	case p.FrostFSIDClient == nil:
-		return nil, errors.New("ir/container: NeoFS ID client is not set")
+		return nil, errors.New("ir/container: FrostFS ID client is not set")
 	case p.NetworkState == nil:
 		return nil, errors.New("ir/container: network state is not set")
 	case p.SubnetClient == nil:

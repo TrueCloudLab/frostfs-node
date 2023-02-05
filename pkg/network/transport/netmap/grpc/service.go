@@ -8,7 +8,7 @@ import (
 	netmapsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/netmap"
 )
 
-// Server wraps NeoFS API Netmap service and
+// Server wraps FrostFS API Netmap service and
 // provides gRPC Netmap service server interface.
 type Server struct {
 	srv netmapsvc.Server

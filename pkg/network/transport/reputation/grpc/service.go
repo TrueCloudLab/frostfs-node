@@ -8,7 +8,7 @@ import (
 	reputationrpc "github.com/TrueCloudLab/frostfs-node/pkg/services/reputation/rpc"
 )
 
-// Server wraps NeoFS API v2 Reputation service server
+// Server wraps FrostFS API v2 Reputation service server
 // and provides gRPC Reputation service server interface.
 type Server struct {
 	srv reputationrpc.Server

@@ -27,7 +27,7 @@ type Put struct {
 // MorphEvent implements Neo:Morph Event interface.
 func (Put) MorphEvent() {}
 
-// ID returns identifier of the creating subnet in a binary format of NeoFS API protocol.
+// ID returns identifier of the creating subnet in a binary format of FrostFS API protocol.
 func (x Put) ID() []byte {
 	return x.id
 }
@@ -37,7 +37,7 @@ func (x Put) Owner() []byte {
 	return x.owner
 }
 
-// Info returns information about the subnet in a binary format of NeoFS API protocol.
+// Info returns information about the subnet in a binary format of FrostFS API protocol.
 func (x Put) Info() []byte {
 	return x.info
 }

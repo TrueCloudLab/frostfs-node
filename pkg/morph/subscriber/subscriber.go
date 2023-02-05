@@ -205,7 +205,7 @@ func New(ctx context.Context, p *Params) (Subscriber, error) {
 // returns error if it is not reached that height after timeout duration.
 // This function is required to avoid connections to unsynced RPC nodes, because
 // they can produce events from the past that should not be processed by
-// NeoFS nodes.
+// FrostFS nodes.
 func awaitHeight(cli *client.Client, startFrom uint32) error {
 	if startFrom == 0 {
 		return nil

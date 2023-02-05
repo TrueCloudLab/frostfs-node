@@ -11,7 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// Blobovnicza represents the implementation of NeoFS Blobovnicza.
+// Blobovnicza represents the implementation of FrostFS Blobovnicza.
 type Blobovnicza struct {
 	cfg
 

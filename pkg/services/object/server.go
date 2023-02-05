@@ -7,25 +7,25 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 )
 
-// GetObjectStream is an interface of NeoFS API v2 compatible object streamer.
+// GetObjectStream is an interface of FrostFS API v2 compatible object streamer.
 type GetObjectStream interface {
 	util.ServerStream
 	Send(*object.GetResponse) error
 }
 
-// GetObjectRangeStream is an interface of NeoFS API v2 compatible payload range streamer.
+// GetObjectRangeStream is an interface of FrostFS API v2 compatible payload range streamer.
 type GetObjectRangeStream interface {
 	util.ServerStream
 	Send(*object.GetRangeResponse) error
 }
 
-// SearchStream is an interface of NeoFS API v2 compatible search streamer.
+// SearchStream is an interface of FrostFS API v2 compatible search streamer.
 type SearchStream interface {
 	util.ServerStream
 	Send(*object.SearchResponse) error
 }
 
-// PutObjectStream is an interface of NeoFS API v2 compatible client's object streamer.
+// PutObjectStream is an interface of FrostFS API v2 compatible client's object streamer.
 type PutObjectStream interface {
 	Send(*object.PutRequest) error
 	CloseAndRecv() (*object.PutResponse, error)

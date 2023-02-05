@@ -91,7 +91,7 @@ func (s *Service) GetRangeHash(ctx context.Context, req *objectV2.GetRangeHashRe
 	return toHashResponse(req.GetBody().GetType(), res), nil
 }
 
-// Head serves NeoFS API v2 compatible HEAD requests.
+// Head serves ForstFS API v2 compatible HEAD requests.
 func (s *Service) Head(ctx context.Context, req *objectV2.HeadRequest) (*objectV2.HeadResponse, error) {
 	resp := new(objectV2.HeadResponse)
 	resp.SetBody(new(objectV2.HeadResponseBody))

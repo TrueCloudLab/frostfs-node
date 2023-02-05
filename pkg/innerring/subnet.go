@@ -184,14 +184,14 @@ type putSubnetEvent struct {
 	ev subnetevents.Put
 }
 
-// ReadID unmarshals the subnet ID from a binary NeoFS API protocol's format.
+// ReadID unmarshals the subnet ID from a binary FrostFS API protocol's format.
 func (x putSubnetEvent) ReadID(id *subnetid.ID) error {
 	return id.Unmarshal(x.ev.ID())
 }
 
 var errMissingSubnetOwner = errors.New("missing subnet owner")
 
-// ReadCreator unmarshals the subnet creator from a binary NeoFS API protocol's format.
+// ReadCreator unmarshals the subnet creator from a binary FrostFS API protocol's format.
 // Returns an error if the byte array is empty.
 func (x putSubnetEvent) ReadCreator(id *user.ID) error {
 	data := x.ev.Owner()
@@ -210,7 +210,7 @@ func (x putSubnetEvent) ReadCreator(id *user.ID) error {
 	return nil
 }
 
-// ReadInfo unmarshal the subnet info from a binary NeoFS API protocol's format.
+// ReadInfo unmarshal the subnet info from a binary FrostFS API protocol's format.
 func (x putSubnetEvent) ReadInfo(info *subnet.Info) error {
 	return info.Unmarshal(x.ev.Info())
 }

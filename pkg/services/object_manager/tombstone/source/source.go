@@ -14,7 +14,7 @@ import (
 )
 
 // Source represents wrapper over the object service that
-// allows checking if a tombstone is available in NeoFS
+// allows checking if a tombstone is available in FrostFS
 // network.
 //
 // Must be created via NewSource function. `var` and `Source{}`

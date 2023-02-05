@@ -32,7 +32,7 @@ func (f FeeConfig) SideChainFee() fixedn.Fixed8 {
 	return f.sidechain
 }
 
-// NamedContainerRegistrationFee returns additional GAS fee for named container registration in NeoFS network.
+// NamedContainerRegistrationFee returns additional GAS fee for named container registration in FrostFS network.
 func (f FeeConfig) NamedContainerRegistrationFee() fixedn.Fixed8 {
 	return f.registerNamedCnr
 }

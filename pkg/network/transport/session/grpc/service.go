@@ -8,7 +8,7 @@ import (
 	sessionsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/session"
 )
 
-// Server wraps NeoFS API Session service and
+// Server wraps FrostFS API Session service and
 // provides gRPC Session service server interface.
 type Server struct {
 	srv sessionsvc.Server

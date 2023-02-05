@@ -34,7 +34,7 @@ type commonPrm struct {
 	xHeaders []string
 }
 
-// SetClient sets base client for NeoFS API communication.
+// SetClient sets base client for ForstFS API communication.
 //
 // Required parameter.
 func (x *commonPrm) SetClient(cli coreclient.Client) {
@@ -260,7 +260,7 @@ func HeadObject(prm HeadObjectPrm) (*HeadObjectRes, error) {
 	}
 
 	if err != nil {
-		return nil, fmt.Errorf("read object header from NeoFS: %w", err)
+		return nil, fmt.Errorf("read object header from FrostFS: %w", err)
 	}
 
 	var hdr object.Object

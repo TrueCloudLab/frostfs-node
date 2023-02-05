@@ -67,7 +67,7 @@ func (g *ExpirationChecker) IsTombstoneAvailable(ctx context.Context, a oid.Addr
 	}
 
 	// requested tombstone not
-	// found in the NeoFS network
+	// found in the FrostFS network
 	return false
 }
 

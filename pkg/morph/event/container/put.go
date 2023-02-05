@@ -48,7 +48,7 @@ func (p Put) NotaryRequest() *payload.P2PNotaryRequest {
 	return p.notaryRequest
 }
 
-// PutNamed represents notification event spawned by PutNamed method from Container contract of NeoFS Morph chain.
+// PutNamed represents notification event spawned by PutNamed method from Container contract of FrostFS Morph chain.
 type PutNamed struct {
 	Put
 

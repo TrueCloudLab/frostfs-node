@@ -13,7 +13,7 @@ type NodeAllowedPrm struct {
 	args [2]interface{}
 }
 
-// SetID sets identifier of the subnet of the node in a binary NeoFS API protocol format.
+// SetID sets identifier of the subnet of the node in a binary FrostFS API protocol format.
 func (x *NodeAllowedPrm) SetID(id []byte) {
 	x.args[0] = id
 }

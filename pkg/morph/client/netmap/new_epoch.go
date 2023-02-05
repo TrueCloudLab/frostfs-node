@@ -6,7 +6,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/morph/client"
 )
 
-// NewEpoch updates NeoFS epoch number through
+// NewEpoch updates FrostFS epoch number through
 // Netmap contract call.
 func (c *Client) NewEpoch(epoch uint64) error {
 	prm := client.InvokePrm{}

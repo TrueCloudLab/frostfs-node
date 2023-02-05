@@ -15,10 +15,10 @@ import (
 )
 
 // TombstoneSource is an interface that checks
-// tombstone status in the NeoFS network.
+// tombstone status in the FrostFS network.
 type TombstoneSource interface {
 	// IsTombstoneAvailable must return boolean value that means
-	// provided tombstone's presence in the NeoFS network at the
+	// provided tombstone's presence in the FrostFS network at the
 	// time of the passed epoch.
 	IsTombstoneAvailable(ctx context.Context, addr oid.Address, epoch uint64) bool
 }

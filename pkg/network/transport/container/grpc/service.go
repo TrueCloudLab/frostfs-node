@@ -8,7 +8,7 @@ import (
 	containersvc "github.com/TrueCloudLab/frostfs-node/pkg/services/container"
 )
 
-// Server wraps NeoFS API Container service and
+// Server wraps FrostFS API Container service and
 // provides gRPC Container service server interface.
 type Server struct {
 	srv containersvc.Server

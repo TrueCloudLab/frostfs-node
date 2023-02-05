@@ -248,11 +248,11 @@ func (p *Policer) processNodes(ctx *processPlacementContext, addrWithType object
 	}
 }
 
-// isClientErrMaintenance checks if err corresponds to NeoFS status return
+// isClientErrMaintenance checks if err corresponds to FrostFS status return
 // which tells that node is currently under maintenance. Supports wrapped
 // errors.
 //
-// Similar to client.IsErr___ errors, consider replacing to NeoFS SDK.
+// Similar to client.IsErr___ errors, consider replacing to FrostFS SDK.
 func isClientErrMaintenance(err error) bool {
 	switch unwrapErr(err).(type) {
 	default:

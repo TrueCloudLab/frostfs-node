@@ -1,5 +1,5 @@
-// Package internal provides functionality for NeoFS Node Object service communication with NeoFS network.
-// The base client for accessing remote nodes via NeoFS API is a NeoFS SDK Go API client.
+// Package internal provides functionality for FrostFS Node Object service communication with FrostFS network.
+// The base client for accessing remote nodes via FrostFS API is a FrostFS SDK Go API client.
 // However, although it encapsulates a useful piece of business logic (e.g. the signature mechanism),
 // the Object service does not fully use the client's flexible interface.
 //
@@ -7,5 +7,5 @@
 // This allows you to concentrate the entire spectrum of the client's use in one place  (this will be convenient
 // both when updating the base client and for evaluating the UX of SDK library). So it is expected that all
 // Object service packages will be limited to this package for the development of  functionality requiring
-// NeoFS API communication.
+// FrostFS API communication.
 package internal

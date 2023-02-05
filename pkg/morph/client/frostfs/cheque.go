@@ -36,7 +36,7 @@ func (c *ChequePrm) SetLock(lock util.Uint160) {
 	c.lock = lock
 }
 
-// Cheque invokes `cheque` method of NeoFS contract.
+// Cheque invokes `cheque` method of FrostFS contract.
 func (x *Client) Cheque(p ChequePrm) error {
 	prm := client.InvokePrm{}
 	prm.SetMethod(chequeMethod)

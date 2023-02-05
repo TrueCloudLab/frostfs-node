@@ -11,12 +11,12 @@ type UserAllowedPrm struct {
 	args [2]interface{}
 }
 
-// SetID sets identifier of the subnet in a binary NeoFS API protocol format.
+// SetID sets identifier of the subnet in a binary FrostFS API protocol format.
 func (x *UserAllowedPrm) SetID(id []byte) {
 	x.args[0] = id
 }
 
-// SetClient sets owner ID of the client that is being checked in a binary NeoFS API protocol format.
+// SetClient sets owner ID of the client that is being checked in a binary FrostFS API protocol format.
 func (x *UserAllowedPrm) SetClient(id []byte) {
 	x.args[1] = id
 }
@@ -72,17 +72,17 @@ func (x *ManageClientsPrm) SetRemove() {
 	x.rm = true
 }
 
-// SetSubnet sets identifier of the subnet in a binary NeoFS API protocol format.
+// SetSubnet sets identifier of the subnet in a binary FrostFS API protocol format.
 func (x *ManageClientsPrm) SetSubnet(id []byte) {
 	x.args[0] = id
 }
 
-// SetGroup sets identifier of the client group in a binary NeoFS API protocol format.
+// SetGroup sets identifier of the client group in a binary FrostFS API protocol format.
 func (x *ManageClientsPrm) SetGroup(id []byte) {
 	x.args[1] = id
 }
 
-// SetClient sets client's user ID in a binary NeoFS API protocol format.
+// SetClient sets client's user ID in a binary FrostFS API protocol format.
 func (x *ManageClientsPrm) SetClient(id []byte) {
 	x.args[2] = id
 }
@@ -90,7 +90,7 @@ func (x *ManageClientsPrm) SetClient(id []byte) {
 // ManageClientsRes groups the resulting values of client management methods of Subnet contract.
 type ManageClientsRes struct{}
 
-// ManageClients manages client list of the NeoFS subnet through Subnet contract calls.
+// ManageClients manages client list of the FrostFS subnet through Subnet contract calls.
 func (x Client) ManageClients(prm ManageClientsPrm) (*ManageClientsRes, error) {
 	var method string
 

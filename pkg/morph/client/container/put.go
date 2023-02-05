@@ -89,7 +89,7 @@ func (p *PutPrm) SetZone(zone string) {
 }
 
 // Put saves binary container with its session token, key and signature
-// in NeoFS system through Container contract call.
+// in FrostFS system through Container contract call.
 //
 // Returns calculated container identifier and any error
 // encountered that caused the saving to interrupt.

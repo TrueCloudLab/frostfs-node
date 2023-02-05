@@ -18,7 +18,7 @@ func (x *DeletePrm) SetTxHash(hash util.Uint256) {
 	x.cliPrm.SetHash(hash)
 }
 
-// SetID sets identifier of the subnet to be removed in a binary NeoFS API protocol format.
+// SetID sets identifier of the subnet to be removed in a binary FrostFS API protocol format.
 func (x *DeletePrm) SetID(id []byte) {
 	x.args[0] = id
 }

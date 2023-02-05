@@ -19,7 +19,7 @@ func (x *commonBindArgs) SetOptionalPrm(op client.InvokePrmOptional) {
 	x.InvokePrmOptional = op
 }
 
-// SetScriptHash sets script hash of the NeoFS account identifier.
+// SetScriptHash sets script hash of the FrostFS account identifier.
 func (x *commonBindArgs) SetScriptHash(v []byte) {
 	x.scriptHash = v
 }
@@ -34,7 +34,7 @@ type BindKeysPrm struct {
 	commonBindArgs
 }
 
-// BindKeys binds list of public keys from NeoFS account by script hash.
+// BindKeys binds list of public keys from FrostFS account by script hash.
 func (x *Client) BindKeys(p BindKeysPrm) error {
 	prm := client.InvokePrm{}
 	prm.SetMethod(bindKeysMethod)
@@ -55,7 +55,7 @@ type UnbindKeysPrm struct {
 }
 
 // UnbindKeys invokes the call of key unbinding method
-// of NeoFS contract.
+// of FrostFS contract.
 func (x *Client) UnbindKeys(args UnbindKeysPrm) error {
 	prm := client.InvokePrm{}
 	prm.SetMethod(unbindKeysMethod)

@@ -5,7 +5,7 @@ import (
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
 
-// AddressWithType groups object address with its NeoFS
+// AddressWithType groups object address with its FrostFS
 // object type.
 type AddressWithType struct {
 	Address oid.Address

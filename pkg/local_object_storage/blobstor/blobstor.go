@@ -17,7 +17,7 @@ type SubStorage struct {
 	Policy  func(*objectSDK.Object, []byte) bool
 }
 
-// BlobStor represents NeoFS local BLOB storage.
+// BlobStor represents FrostFS local BLOB storage.
 type BlobStor struct {
 	cfg
 

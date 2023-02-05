@@ -569,7 +569,7 @@ func (c *Client) notaryCosigners(invokedByAlpha bool, ir []*keys.PublicKey, comm
 
 	multisigScript, err := sc.CreateMultiSigRedeemScript(m, ir)
 	if err != nil {
-		// wrap error as NeoFS-specific since the call is not related to any client
+		// wrap error as FrostFS-specific since the call is not related to any client
 		return nil, wrapFrostFSError(fmt.Errorf("can't create ir multisig redeem script: %w", err))
 	}
 
@@ -703,7 +703,7 @@ func (c *Client) notaryMultisigAccount(ir []*keys.PublicKey, committee, invokedB
 		multisigAccount = wallet.NewAccountFromPrivateKey(c.acc.PrivateKey())
 		err := multisigAccount.ConvertMultisig(m, ir)
 		if err != nil {
-			// wrap error as NeoFS-specific since the call is not related to any client
+			// wrap error as FrostFS-specific since the call is not related to any client
 			return nil, wrapFrostFSError(fmt.Errorf("can't convert account to inner ring multisig wallet: %w", err))
 		}
 	} else {
@@ -712,7 +712,7 @@ func (c *Client) notaryMultisigAccount(ir []*keys.PublicKey, committee, invokedB
 		// inner ring multiaddress witness
 		multisigAccount, err = notary.FakeMultisigAccount(m, ir)
 		if err != nil {
-			// wrap error as NeoFS-specific since the call is not related to any client
+			// wrap error as FrostFS-specific since the call is not related to any client
 			return nil, wrapFrostFSError(fmt.Errorf("can't make inner ring multisig wallet: %w", err))
 		}
 	}
@@ -766,7 +766,7 @@ func invocationParams(args ...interface{}) ([]sc.Parameter, error) {
 }
 
 // sigCount returns the number of required signature.
-// For NeoFS Alphabet M is a 2/3+1 of it (like in dBFT).
+// For FrostFS Alphabet M is a 2/3+1 of it (like in dBFT).
 // If committee is true, returns M as N/2+1.
 func sigCount(ir []*keys.PublicKey, committee bool) int {
 	if committee {

@@ -98,7 +98,7 @@ func (c *Checker) CheckBasicACL(info v2.RequestInfo) bool {
 
 // StickyBitCheck validates owner field in the request if sticky bit is enabled.
 func (c *Checker) StickyBitCheck(info v2.RequestInfo, owner user.ID) bool {
-	// According to NeoFS specification sticky bit has no effect on system nodes
+	// According to FrostFS specification sticky bit has no effect on system nodes
 	// for correct intra-container work with objects (in particular, replication).
 	if info.RequestRole() == acl.RoleContainer {
 		return true

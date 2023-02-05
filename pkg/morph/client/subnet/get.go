@@ -11,7 +11,7 @@ type GetPrm struct {
 	args [1]interface{}
 }
 
-// SetID sets identifier of the subnet to be read in a binary NeoFS API protocol format.
+// SetID sets identifier of the subnet to be read in a binary FrostFS API protocol format.
 func (x *GetPrm) SetID(id []byte) {
 	x.args[0] = id
 }
@@ -21,7 +21,7 @@ type GetRes struct {
 	info []byte
 }
 
-// Info returns information about the subnet in a binary format of NeoFS API protocol.
+// Info returns information about the subnet in a binary format of FrostFS API protocol.
 func (x GetRes) Info() []byte {
 	return x.info
 }

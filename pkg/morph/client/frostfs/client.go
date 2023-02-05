@@ -27,7 +27,7 @@ const (
 	chequeMethod         = "cheque"
 )
 
-// NewFromMorph wraps client to work with NeoFS contract.
+// NewFromMorph wraps client to work with FrostFS contract.
 func NewFromMorph(cli *client.Client, contract util.Uint160, fee fixedn.Fixed8, opts ...Option) (*Client, error) {
 	o := defaultOpts()
 
@@ -37,7 +37,7 @@ func NewFromMorph(cli *client.Client, contract util.Uint160, fee fixedn.Fixed8, 
 
 	sc, err := client.NewStatic(cli, contract, fee, ([]client.StaticClientOption)(*o)...)
 	if err != nil {
-		return nil, fmt.Errorf("could not create client of NeoFS contract: %w", err)
+		return nil, fmt.Errorf("could not create client of FrostFS contract: %w", err)
 	}
 
 	return &Client{client: sc}, nil

@@ -19,7 +19,7 @@ func (a *AddPeerPrm) SetNodeInfo(nodeInfo netmap.NodeInfo) {
 	a.nodeInfo = nodeInfo
 }
 
-// AddPeer registers peer in NeoFS network through
+// AddPeer registers peer in FrostFS network through
 // Netmap contract call.
 func (c *Client) AddPeer(p AddPeerPrm) error {
 	var method = addPeerMethod

@@ -11,7 +11,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/util"
 )
 
-// Server wraps NeoFS API Object service and
+// Server wraps FrostFS API Object service and
 // provides gRPC Object service server interface.
 type Server struct {
 	srv objectSvc.ServiceServer

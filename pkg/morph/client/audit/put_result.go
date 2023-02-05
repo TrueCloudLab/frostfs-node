@@ -22,7 +22,7 @@ func (p *PutPrm) SetResult(result *auditAPI.Result) {
 	p.result = result
 }
 
-// PutAuditResult saves passed audit result structure in NeoFS system
+// PutAuditResult saves passed audit result structure in FrostFS system
 // through Audit contract call.
 //
 // Returns encountered error that caused the saving to interrupt.

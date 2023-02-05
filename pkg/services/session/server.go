@@ -6,7 +6,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
 )
 
-// Server is an interface of the NeoFS API Session service server.
+// Server is an interface of the FrostFS API Session service server.
 type Server interface {
 	Create(context.Context, *session.CreateRequest) (*session.CreateResponse, error)
 }

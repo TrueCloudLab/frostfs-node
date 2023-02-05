@@ -36,7 +36,7 @@ const (
 	NNSReputationContractName = "reputation.frostfs"
 	// NNSSubnetworkContractName is a name of the subnet contract in NNS.
 	NNSSubnetworkContractName = "subnet.frostfs"
-	// NNSGroupKeyName is a name for the NeoFS group key record in NNS.
+	// NNSGroupKeyName is a name for the FrostFS group key record in NNS.
 	NNSGroupKeyName = "group.frostfs"
 )
 
@@ -193,7 +193,7 @@ func exists(c *rpcclient.WSClient, nnsHash util.Uint160, domain string) (bool, e
 	return !available, nil
 }
 
-// SetGroupSignerScope makes the default signer scope include all NeoFS contracts.
+// SetGroupSignerScope makes the default signer scope include all FrostFS contracts.
 // Should be called for side-chain client only.
 func (c *Client) SetGroupSignerScope() error {
 	c.switchLock.RLock()
@@ -213,7 +213,7 @@ func (c *Client) SetGroupSignerScope() error {
 	return nil
 }
 
-// contractGroupKey returns public key designating NeoFS contract group.
+// contractGroupKey returns public key designating FrostFS contract group.
 func (c *Client) contractGroupKey() (*keys.PublicKey, error) {
 	if gKey := c.cache.groupKey(); gKey != nil {
 		return gKey, nil

@@ -27,8 +27,8 @@ type Reader interface {
 	containercore.EACLSource
 
 	// List returns a list of container identifiers belonging
-	// to the specified user of NeoFS system. Returns the identifiers
-	// of all NeoFS containers if pointer to owner identifier is nil.
+	// to the specified user of FrostFS system. Returns the identifiers
+	// of all FrostFS containers if pointer to owner identifier is nil.
 	List(*user.ID) ([]cid.ID, error)
 }
 

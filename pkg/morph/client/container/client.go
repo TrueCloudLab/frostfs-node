@@ -11,7 +11,7 @@ import (
 
 // Client is a wrapper over StaticClient
 // which makes calls with the names and arguments
-// of the NeoFS Container contract.
+// of the FrostFS Container contract.
 //
 // Working client must be created via constructor New.
 // Using the Client that has been created with new(Client)

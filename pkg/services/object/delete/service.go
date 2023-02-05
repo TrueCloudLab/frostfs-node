@@ -26,7 +26,7 @@ type NetworkInfo interface {
 	netmap.State
 
 	// Must return the lifespan of the tombstones
-	// in the NeoFS epochs.
+	// in the FrostFS epochs.
 	TombstoneLifetime() (uint64, error)
 
 	// Returns user ID of the local storage node. Result must not be nil.

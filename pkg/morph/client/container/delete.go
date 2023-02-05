@@ -52,7 +52,7 @@ func (d *DeletePrm) SetToken(token []byte) {
 	d.token = token
 }
 
-// Delete removes the container from NeoFS system
+// Delete removes the container from FrostFS system
 // through Container contract call.
 //
 // Returns any error encountered that caused

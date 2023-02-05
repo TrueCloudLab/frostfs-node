@@ -8,7 +8,7 @@ import (
 	accountingsvc "github.com/TrueCloudLab/frostfs-node/pkg/services/accounting"
 )
 
-// Server wraps NeoFS API Accounting service and
+// Server wraps FrostFS API Accounting service and
 // provides gRPC Accounting service server interface.
 type Server struct {
 	srv accountingsvc.Server

@@ -15,7 +15,7 @@ import (
 // ErrMaintenanceModeDisallowed is returned when maintenance mode is disallowed.
 var ErrMaintenanceModeDisallowed = errors.New("maintenance mode is disallowed")
 
-// NetworkSettings encapsulates current settings of the NeoFS network and
+// NetworkSettings encapsulates current settings of the FrostFS network and
 // provides interface used for processing the network map candidates.
 type NetworkSettings interface {
 	// MaintenanceModeAllowed checks if maintenance state of the storage nodes
@@ -27,7 +27,7 @@ type NetworkSettings interface {
 }
 
 // NetMapCandidateValidator represents tool which checks state of nodes which
-// are going to register in the NeoFS network (enter the network map).
+// are going to register in the FrostFS network (enter the network map).
 //
 // NetMapCandidateValidator can be instantiated using built-in var declaration
 // and currently doesn't require any additional initialization.

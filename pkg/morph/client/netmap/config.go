@@ -58,7 +58,7 @@ func (c *Client) AuditFee() (uint64, error) {
 	return fee, nil
 }
 
-// EpochDuration returns number of sidechain blocks per one NeoFS epoch.
+// EpochDuration returns number of sidechain blocks per one FrostFS epoch.
 func (c *Client) EpochDuration() (uint64, error) {
 	epochDuration, err := c.readUInt64Config(epochDurationConfig)
 	if err != nil {
@@ -132,7 +132,7 @@ func (c *Client) InnerRingCandidateFee() (uint64, error) {
 }
 
 // WithdrawFee returns global configuration value of fee paid by user to
-// withdraw assets from NeoFS contract.
+// withdraw assets from FrostFS contract.
 func (c *Client) WithdrawFee() (uint64, error) {
 	fee, err := c.readUInt64Config(withdrawFeeConfig)
 	if err != nil {
@@ -143,7 +143,7 @@ func (c *Client) WithdrawFee() (uint64, error) {
 }
 
 // MaintenanceModeAllowed reads admission of "maintenance" state from the
-// NeoFS network configuration stored in the Sidechain. The admission means
+// FrostFS network configuration stored in the Sidechain. The admission means
 // that storage nodes are allowed to switch their state to "maintenance".
 //
 // By default, maintenance state is disallowed.
@@ -171,7 +171,7 @@ func (c *Client) readStringConfig(key string) (string, error) {
 	return v.(string), nil
 }
 
-// reads boolean value by the given key from the NeoFS network configuration
+// reads boolean value by the given key from the FrostFS network configuration
 // stored in the Sidechain. Returns false if key is not presented.
 func (c *Client) readBoolConfig(key string) (bool, error) {
 	v, err := c.config([]byte(key), BoolAssert)
@@ -221,8 +221,8 @@ func (c *Client) SetConfig(p SetConfigPrm) error {
 	return c.client.Invoke(prm)
 }
 
-// RawNetworkParameter is a NeoFS network parameter which is transmitted but
-// not interpreted by the NeoFS API protocol.
+// RawNetworkParameter is a FrostFS network parameter which is transmitted but
+// not interpreted by the FrostFS API protocol.
 type RawNetworkParameter struct {
 	// Name of the parameter.
 	Name string
@@ -231,8 +231,8 @@ type RawNetworkParameter struct {
 	Value []byte
 }
 
-// NetworkConfiguration represents NeoFS network configuration stored
-// in the NeoFS Sidechain.
+// NetworkConfiguration represents FrostFS network configuration stored
+// in the FrostFS Sidechain.
 type NetworkConfiguration struct {
 	MaxObjectSize uint64
 
@@ -261,7 +261,7 @@ type NetworkConfiguration struct {
 	Raw []RawNetworkParameter
 }
 
-// ReadNetworkConfiguration reads NetworkConfiguration from the NeoFS Sidechain.
+// ReadNetworkConfiguration reads NetworkConfiguration from the FrostFS Sidechain.
 func (c *Client) ReadNetworkConfiguration() (NetworkConfiguration, error) {
 	var res NetworkConfiguration
 	prm := client.TestInvokePrm{}
@@ -356,7 +356,7 @@ func bytesToBool(val []byte) bool {
 var ErrConfigNotFound = errors.New("config value not found")
 
 // config performs the test invoke of get config value
-// method of NeoFS Netmap contract.
+// method of FrostFS Netmap contract.
 //
 // Returns ErrConfigNotFound if config key is not found in the contract.
 func (c *Client) config(key []byte, assert func(stackitem.Item) (interface{}, error)) (interface{}, error) {

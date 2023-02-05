@@ -8,7 +8,7 @@ import (
 	locodecolumn "github.com/TrueCloudLab/frostfs-node/pkg/util/locode/column"
 )
 
-// Key represents the key in NeoFS location database.
+// Key represents the key in FrostFS location database.
 type Key struct {
 	cc *CountryCode
 
@@ -43,7 +43,7 @@ func (k *Key) LocationCode() *LocationCode {
 	return k.lc
 }
 
-// Record represents the entry in NeoFS location database.
+// Record represents the entry in FrostFS location database.
 type Record struct {
 	countryName string
 

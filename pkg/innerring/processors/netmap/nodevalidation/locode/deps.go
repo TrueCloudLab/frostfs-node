@@ -6,7 +6,7 @@ import (
 )
 
 // Record is an interface of read-only
-// NeoFS LOCODE database single entry.
+// FrostFS LOCODE database single entry.
 type Record interface {
 	// Must return ISO 3166-1 alpha-2
 	// country code.
@@ -47,7 +47,7 @@ type Record interface {
 }
 
 // DB is an interface of read-only
-// NeoFS LOCODE database.
+// FrostFS LOCODE database.
 type DB interface {
 	// Must find the record that corresponds to
 	// LOCODE and provides the Record interface.

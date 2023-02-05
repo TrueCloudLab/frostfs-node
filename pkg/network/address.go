@@ -18,7 +18,7 @@ import (
 	URIAddr strings:	"<scheme://>127.0.0.1:8080"
 */
 
-// Address represents the NeoFS node
+// Address represents the FrostFS node
 // network address.
 type Address struct {
 	ma multiaddr.Multiaddr

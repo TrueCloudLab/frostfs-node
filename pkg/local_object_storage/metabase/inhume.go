@@ -122,7 +122,7 @@ func (db *DB) Inhume(prm InhumePrm) (res InhumeRes, err error) {
 			bkt = graveyardBKT
 			tombKey := addressKey(*prm.tomb, make([]byte, addressKeySize))
 
-			// it is forbidden to have a tomb-on-tomb in NeoFS,
+			// it is forbidden to have a tomb-on-tomb in FrostFS,
 			// so graveyard keys must not be addresses of tombstones
 			data := bkt.Get(tombKey)
 			if data != nil {

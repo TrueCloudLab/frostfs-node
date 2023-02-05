@@ -10,7 +10,7 @@ import (
 )
 
 // SetEACL represents structure of notification about
-// modified eACL table coming from NeoFS Container contract.
+// modified eACL table coming from FrostFS Container contract.
 type SetEACL struct {
 	table     []byte
 	signature []byte
@@ -25,7 +25,7 @@ type SetEACL struct {
 // MorphEvent implements Neo:Morph Event interface.
 func (SetEACL) MorphEvent() {}
 
-// Table returns returns eACL table in a binary NeoFS API format.
+// Table returns returns eACL table in a binary FrostFS API format.
 func (x SetEACL) Table() []byte {
 	return x.table
 }

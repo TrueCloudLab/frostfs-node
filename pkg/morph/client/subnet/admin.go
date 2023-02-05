@@ -29,7 +29,7 @@ func (x *ManageAdminsPrm) SetClient() {
 	x.client = true
 }
 
-// SetSubnet sets identifier of the subnet in a binary NeoFS API protocol format.
+// SetSubnet sets identifier of the subnet in a binary FrostFS API protocol format.
 func (x *ManageAdminsPrm) SetSubnet(id []byte) {
 	x.subnet = id
 }
@@ -39,7 +39,7 @@ func (x *ManageAdminsPrm) SetAdmin(key []byte) {
 	x.admin = key
 }
 
-// SetGroup sets identifier of the client group in a binary NeoFS API protocol format.
+// SetGroup sets identifier of the client group in a binary FrostFS API protocol format.
 // Makes sense only for client admins (see ManageAdminsPrm.SetClient).
 func (x *ManageAdminsPrm) SetGroup(id []byte) {
 	x.group = id
@@ -48,7 +48,7 @@ func (x *ManageAdminsPrm) SetGroup(id []byte) {
 // ManageAdminsRes groups the resulting values of node administer methods of Subnet contract.
 type ManageAdminsRes struct{}
 
-// ManageAdmins manages admin list of the NeoFS subnet through Subnet contract calls.
+// ManageAdmins manages admin list of the FrostFS subnet through Subnet contract calls.
 func (x Client) ManageAdmins(prm ManageAdminsPrm) (*ManageAdminsPrm, error) {
 	var method string
 

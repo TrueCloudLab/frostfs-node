@@ -13,7 +13,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-sdk-go/session"
 )
 
-// GetEACL reads the extended ACL table from NeoFS system
+// GetEACL reads the extended ACL table from FrostFS system
 // through Container contract call.
 //
 // Returns apistatus.EACLNotFound if eACL table is missing in the contract.

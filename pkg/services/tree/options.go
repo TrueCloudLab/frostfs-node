@@ -14,7 +14,7 @@ import (
 
 type ContainerSource interface {
 	container.Source
-	// List must return list of all the containers in the NeoFS network
+	// List must return list of all the containers in the FrostFS network
 	// at the moment of a call and any error that does not allow fetching
 	// container information.
 	List() ([]cid.ID, error)

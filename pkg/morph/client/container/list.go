@@ -9,10 +9,10 @@ import (
 )
 
 // List returns a list of container identifiers belonging
-// to the specified user of NeoFS system. The list is composed
+// to the specified user of FrostFS system. The list is composed
 // through Container contract call.
 //
-// Returns the identifiers of all NeoFS containers if pointer
+// Returns the identifiers of all FrostFS containers if pointer
 // to user identifier is nil.
 func (c *Client) List(idUser *user.ID) ([]cid.ID, error) {
 	var rawID []byte

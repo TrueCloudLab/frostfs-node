@@ -192,9 +192,9 @@ func assertVerb(tok sessionSDK.Object, op acl.Op) bool {
 	return false
 }
 
-// assertSessionRelation checks if given token describing the NeoFS session
+// assertSessionRelation checks if given token describing the FrostFS session
 // relates to the given container and optional object. Missing object
-// means that the context isn't bound to any NeoFS object in the container.
+// means that the context isn't bound to any FrostFS object in the container.
 // Returns no error iff relation is correct. Criteria:
 //
 //	session is bound to the given container

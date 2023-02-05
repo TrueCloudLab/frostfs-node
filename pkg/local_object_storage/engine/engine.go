@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// StorageEngine represents NeoFS local storage engine.
+// StorageEngine represents FrostFS local storage engine.
 type StorageEngine struct {
 	*cfg
 

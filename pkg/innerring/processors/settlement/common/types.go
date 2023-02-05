@@ -17,7 +17,7 @@ type NodeInfo interface {
 	PublicKey() []byte
 }
 
-// ContainerInfo groups the data about NeoFS container
+// ContainerInfo groups the data about FrostFS container
 // necessary for calculating audit fee.
 type ContainerInfo interface {
 	// Must return identifier of the container owner.
@@ -25,7 +25,7 @@ type ContainerInfo interface {
 }
 
 // ContainerStorage is an interface of
-// storage of the NeoFS containers.
+// storage of the FrostFS containers.
 type ContainerStorage interface {
 	// Must return information about the container by ID.
 	ContainerInfo(cid.ID) (ContainerInfo, error)

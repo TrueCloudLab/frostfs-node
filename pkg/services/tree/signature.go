@@ -213,7 +213,7 @@ var errDENY = errors.New("DENY eACL rule")
 var errNoAllowRules = errors.New("not found allowing rules for the request")
 
 // checkEACL searches for the eACL rules that could be applied to the request
-// (a tuple of a signer key, his NeoFS role and a request operation).
+// (a tuple of a signer key, his FrostFS role and a request operation).
 // It does not filter the request by the filters of the eACL table since tree
 // requests do not contain any "object" information that could be filtered and,
 // therefore, filtering leads to unexpected results.

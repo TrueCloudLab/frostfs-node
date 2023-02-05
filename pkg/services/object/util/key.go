@@ -41,7 +41,7 @@ func NewKeyStorage(localKey *ecdsa.PrivateKey, tokenStore SessionSource, net net
 	}
 }
 
-// SessionInfo groups information about NeoFS Object session
+// SessionInfo groups information about FrostFS Object session
 // which is reflected in KeyStorage.
 type SessionInfo struct {
 	// Session unique identifier.

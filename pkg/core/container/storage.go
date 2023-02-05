@@ -11,7 +11,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-sdk-go/session"
 )
 
-// Container groups information about the NeoFS container stored in the NeoFS network.
+// Container groups information about the FrostFS container stored in the FrostFS network.
 type Container struct {
 	// Container structure.
 	Value container.Container
@@ -43,8 +43,8 @@ func IsErrNotFound(err error) bool {
 	return errors.As(err, new(apistatus.ContainerNotFound))
 }
 
-// EACL groups information about the NeoFS container's extended ACL stored in
-// the NeoFS network.
+// EACL groups information about the FrostFS container's extended ACL stored in
+// the FrostFS network.
 type EACL struct {
 	// Extended ACL structure.
 	Value *eacl.Table

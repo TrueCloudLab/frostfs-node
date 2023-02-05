@@ -72,7 +72,7 @@ func (p *PutEACLPrm) SetToken(token []byte) {
 }
 
 // PutEACL saves binary eACL table with its session token, key and signature
-// in NeoFS system through Container contract call.
+// in FrostFS system through Container contract call.
 //
 // Returns any error encountered that caused the saving to interrupt.
 func (c *Client) PutEACL(p PutEACLPrm) error {

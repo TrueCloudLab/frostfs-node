@@ -27,7 +27,7 @@ message LogMove {
 
 // Signature of a message.
 message Signature {
-  // Serialized public key as defined in NeoFS API.
+  // Serialized public key as defined in FrostFS API.
   bytes key = 1 [json_name = "key"];
   // Signature of a message body.
   bytes sign = 2 [json_name = "signature"];

@@ -10,14 +10,14 @@ import (
 
 // Client is a wrapper over StaticClient
 // which makes calls with the names and arguments
-// of the NeoFS ID contract.
+// of the FrostFS ID contract.
 //
 // Working client must be created via constructor New.
 // Using the Client that has been created with new(Client)
 // expression (or just declaring a Client variable) is unsafe
 // and can lead to panic.
 type Client struct {
-	client *client.StaticClient // static NeoFS ID contract client
+	client *client.StaticClient // static FrostFS ID contract client
 }
 
 const (
@@ -26,7 +26,7 @@ const (
 	removeKeysMethod = "removeKey"
 )
 
-// NewFromMorph wraps client to work with NeoFS ID contract.
+// NewFromMorph wraps client to work with FrostFS ID contract.
 func NewFromMorph(cli *client.Client, contract util.Uint160, fee fixedn.Fixed8, opts ...Option) (*Client, error) {
 	o := defaultOpts()
 
@@ -36,7 +36,7 @@ func NewFromMorph(cli *client.Client, contract util.Uint160, fee fixedn.Fixed8, 
 
 	sc, err := client.NewStatic(cli, contract, fee, ([]client.StaticClientOption)(*o)...)
 	if err != nil {
-		return nil, fmt.Errorf("could not create client of NeoFS ID contract: %w", err)
+		return nil, fmt.Errorf("could not create client of FrostFS ID contract: %w", err)
 	}
 
 	return &Client{client: sc}, nil

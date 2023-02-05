@@ -7,7 +7,7 @@ import (
 )
 
 // CountryCode represents a country code for
-// the storage in the NeoFS location database.
+// the storage in the FrostFS location database.
 type CountryCode locodecolumn.CountryCode
 
 // CountryCodeFromString parses a string UN/LOCODE country code

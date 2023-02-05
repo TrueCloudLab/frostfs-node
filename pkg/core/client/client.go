@@ -8,7 +8,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-sdk-go/client"
 )
 
-// Client is an interface of NeoFS storage
+// Client is an interface of FrostFS storage
 // node's client.
 type Client interface {
 	ContainerAnnounceUsedSpace(context.Context, client.PrmAnnounceSpace) (*client.ResAnnounceSpace, error)
@@ -35,7 +35,7 @@ type MultiAddressClient interface {
 	RawForAddress(network.Address, func(cli *rawclient.Client) error) error
 }
 
-// NodeInfo groups information about a NeoFS storage node needed for Client construction.
+// NodeInfo groups information about a FrostFS storage node needed for Client construction.
 type NodeInfo struct {
 	addrGroup network.AddressGroup
 

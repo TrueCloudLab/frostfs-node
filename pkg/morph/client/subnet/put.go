@@ -18,17 +18,17 @@ func (x *PutPrm) SetTxHash(hash util.Uint256) {
 	x.cliPrm.SetHash(hash)
 }
 
-// SetID sets identifier of the created subnet in a binary NeoFS API protocol format.
+// SetID sets identifier of the created subnet in a binary FrostFS API protocol format.
 func (x *PutPrm) SetID(id []byte) {
 	x.args[0] = id
 }
 
-// SetOwner sets identifier of the subnet owner in a binary NeoFS API protocol format.
+// SetOwner sets identifier of the subnet owner in a binary FrostFS API protocol format.
 func (x *PutPrm) SetOwner(id []byte) {
 	x.args[1] = id
 }
 
-// SetInfo sets information about the created subnet in a binary NeoFS API protocol format.
+// SetInfo sets information about the created subnet in a binary FrostFS API protocol format.
 func (x *PutPrm) SetInfo(id []byte) {
 	x.args[2] = id
 }
