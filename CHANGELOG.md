@@ -12,6 +12,7 @@ Changelog for FrostFS Node
 
 ### Changed
 - `common.PrintVerbose` prints via `cobra.Command.Printf` (#1962)
+- Env prefix in configuration changed to `FROSTFS_*` (#43)
 
 ### Fixed
 - Big object removal with non-local parts (#1978)
@@ -32,6 +33,7 @@ Changelog for FrostFS Node
 - Minimum go version to v1.18
 
 ### Updating from v0.35.0
+You need to change configuration environment variables to `FROSTFS_*` if you use any.
 
 ## [0.35.0] - 2022-12-28 - Sindo (신도)
 
