@@ -35,6 +35,7 @@ func exitErr(err error) {
 
 func main() {
 	configFile := flag.String("config", "", "path to config")
+	configDir := flag.String("config-dir", "", "path to config directory")
 	versionFlag := flag.Bool("version", false, "frostfs-ir node version")
 	flag.Parse()
 
@@ -44,7 +45,7 @@ func main() {
 		os.Exit(SuccessReturnCode)
 	}
 
-	cfg, err := newConfig(*configFile)
+	cfg, err := newConfig(*configFile, *configDir)
 	exitErr(err)
 
 	var logPrm logger.Prm

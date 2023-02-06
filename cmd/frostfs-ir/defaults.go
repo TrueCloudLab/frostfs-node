@@ -4,10 +4,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/config"
 	"github.com/spf13/viper"
 )
 
-func newConfig(path string) (*viper.Viper, error) {
+func newConfig(path, directory string) (*viper.Viper, error) {
 	const envPrefix = "FROSTFS_IR"
 
 	var (
@@ -28,7 +29,13 @@ func newConfig(path string) (*viper.Viper, error) {
 		} else {
 			v.SetConfigType("yml")
 		}
-		err = v.ReadInConfig()
+		if err = v.ReadInConfig(); err != nil {
+			return v, err
+		}
+	}
+
+	if directory != "" {
+		err = config.ReadConfigDir(v, directory)
 	}
 
 	return v, err
