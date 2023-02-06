@@ -19,6 +19,7 @@ import (
 	utilCli "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/modules/util"
 	commonCmd "github.com/TrueCloudLab/frostfs-node/cmd/internal/common"
 	"github.com/TrueCloudLab/frostfs-node/misc"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/config"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/gendoc"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
@@ -32,6 +33,7 @@ const (
 // Global scope flags.
 var (
 	cfgFile string
+	cfgDir  string
 )
 
 // rootCmd represents the base command when called without any subcommands.
@@ -64,6 +66,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "Config file (default is $HOME/.config/frostfs-cli/config.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgDir, "config-dir", "", "Config directory")
 	rootCmd.PersistentFlags().BoolP(commonflags.Verbose, commonflags.VerboseShorthand,
 		false, commonflags.VerboseUsage)
 
@@ -120,5 +123,11 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		common.PrintVerbose(rootCmd, "Using config file: %s", viper.ConfigFileUsed())
+	}
+
+	if cfgDir != "" {
+		if err := config.ReadConfigDir(viper.GetViper(), cfgDir); err != nil {
+			commonCmd.ExitOnErr(rootCmd, "failed to read config dir: %w", err)
+		}
 	}
 }
