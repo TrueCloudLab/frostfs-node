@@ -16,6 +16,7 @@ Changelog for FrostFS Node
 - Env prefix in configuration changed to `FROSTFS_*` (#43)
 - Link object is broadcast throughout the whole container now (#57)
 - Pilorama now can merge multiple batches into one (#2231)
+- Storage engine now can start even when some shard components are unavailable (#2238)
 
 ### Fixed
 - Increase payload size metric on shards' `put` operation (#1794)
