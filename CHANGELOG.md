@@ -17,6 +17,7 @@ Changelog for FrostFS Node
 - Link object is broadcast throughout the whole container now (#57)
 - Pilorama now can merge multiple batches into one (#2231)
 - Storage engine now can start even when some shard components are unavailable (#2238)
+- `neofs-cli` buffer for object put increased from 4 KiB to 3 MiB (#2243)
 
 ### Fixed
 - Increase payload size metric on shards' `put` operation (#1794)
