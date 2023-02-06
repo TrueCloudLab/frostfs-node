@@ -9,6 +9,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-adm/internal/modules/storagecfg"
 	"github.com/TrueCloudLab/frostfs-node/misc"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/autocomplete"
+	utilConfig "github.com/TrueCloudLab/frostfs-node/pkg/util/config"
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/gendoc"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -34,6 +35,7 @@ func init() {
 	rootCmd.SetOut(os.Stdout)
 
 	rootCmd.PersistentFlags().StringP(commonflags.ConfigFlag, commonflags.ConfigFlagShorthand, "", commonflags.ConfigFlagUsage)
+	rootCmd.PersistentFlags().String(commonflags.ConfigDirFlag, "", commonflags.ConfigDirFlagUsage)
 	rootCmd.PersistentFlags().BoolP(commonflags.Verbose, commonflags.VerboseShorthand, false, commonflags.VerboseUsage)
 	_ = viper.BindPFlag(commonflags.Verbose, rootCmd.PersistentFlags().Lookup(commonflags.Verbose))
 	rootCmd.Flags().Bool("version", false, "Application version")
@@ -62,11 +64,22 @@ func entryPoint(cmd *cobra.Command, args []string) error {
 
 func initConfig(cmd *cobra.Command) {
 	configFile, err := cmd.Flags().GetString(commonflags.ConfigFlag)
-	if err != nil || configFile == "" {
+	if err != nil {
 		return
 	}
 
-	viper.SetConfigType("yml")
-	viper.SetConfigFile(configFile)
-	_ = viper.ReadInConfig() // if config file is set but unavailable, ignore it
+	if configFile != "" {
+		viper.SetConfigType("yml")
+		viper.SetConfigFile(configFile)
+		_ = viper.ReadInConfig() // if config file is set but unavailable, ignore it
+	}
+
+	configDir, err := cmd.Flags().GetString(commonflags.ConfigDirFlag)
+	if err != nil {
+		return
+	}
+
+	if configDir != "" {
+		_ = utilConfig.ReadConfigDir(viper.GetViper(), configDir) // if config files cannot be read, ignore it
+	}
 }

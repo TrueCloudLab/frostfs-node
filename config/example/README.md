@@ -29,7 +29,8 @@ $ ./bin/frotsfs-node --config ./config/example/node.yaml --config-dir ./dir/with
 When the `--config-dir` flag set, the application:
 * reads all `*.y[a]ml` files from provided directory,
 * use Viper's [MergeConfig](https://pkg.go.dev/github.com/spf13/viper#MergeConfig) functionality to produce the final configuration,
-* files are being processing in alphanumerical order so that `01.yaml` may be extended with contents of `02.yaml`.
+* files are being processing in alphanumerical order so that `01.yaml` may be extended with contents of `02.yaml`, so
+if a field is specified in multiple files, the latest occurrence takes effect.
 
 So if we have the following files:
 ```yaml
