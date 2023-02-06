@@ -34,6 +34,7 @@ func fatalOnErrDetails(details string, err error) {
 
 func main() {
 	configFile := flag.String("config", "", "path to config")
+	configDir := flag.String("config-dir", "", "path to config directory")
 	versionFlag := flag.Bool("version", false, "frostfs node version")
 	dryRunFlag := flag.Bool("check", false, "validate configuration and exit")
 	flag.Parse()
@@ -44,7 +45,7 @@ func main() {
 		os.Exit(SuccessReturnCode)
 	}
 
-	appCfg := config.New(config.Prm{}, config.WithConfigFile(*configFile))
+	appCfg := config.New(config.Prm{}, config.WithConfigFile(*configFile), config.WithConfigDir(*configDir))
 
 	err := validateConfig(appCfg)
 	fatalOnErr(err)

@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-node/config/internal"
+	"github.com/TrueCloudLab/frostfs-node/pkg/util/config"
 	"github.com/spf13/viper"
 )
 
@@ -54,6 +55,12 @@ func New(_ Prm, opts ...Option) *Config {
 		}
 	}
 
+	if o.configDir != "" {
+		if err := config.ReadConfigDir(v, o.configDir); err != nil {
+			panic(fmt.Errorf("failed to read config dir: %w", err))
+		}
+	}
+
 	return &Config{
 		v:    v,
 		opts: *o,
@@ -66,6 +73,12 @@ func (x *Config) Reload() error {
 		err := x.v.ReadInConfig()
 		if err != nil {
 			return fmt.Errorf("rereading configuration file: %w", err)
+		}
+	}
+
+	if x.opts.configDir != "" {
+		if err := config.ReadConfigDir(x.v, x.opts.configDir); err != nil {
+			return fmt.Errorf("rereading configuration dir: %w", err)
 		}
 	}
 

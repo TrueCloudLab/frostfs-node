@@ -1,7 +1,8 @@
 package config
 
 type opts struct {
-	path string
+	path      string
+	configDir string
 }
 
 func defaultOpts() *opts {
@@ -16,5 +17,13 @@ type Option func(*opts)
 func WithConfigFile(path string) Option {
 	return func(o *opts) {
 		o.path = path
+	}
+}
+
+// WithConfigDir returns an option to set the system path
+// to the directory with configuration files.
+func WithConfigDir(path string) Option {
+	return func(o *opts) {
+		o.configDir = path
 	}
 }
