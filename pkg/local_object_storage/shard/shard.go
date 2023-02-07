@@ -388,7 +388,7 @@ func (s *Shard) addToContainerSize(cnr string, size int64) {
 	}
 }
 
-func (s *Shard) addToPayloadCounter(size int64) {
+func (s *Shard) addToPayloadSize(size int64) {
 	if s.cfg.metricsWriter != nil {
 		s.cfg.metricsWriter.AddToPayloadSize(size)
 	}

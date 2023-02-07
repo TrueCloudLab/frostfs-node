@@ -15,6 +15,7 @@ Changelog for FrostFS Node
 - Env prefix in configuration changed to `FROSTFS_*` (#43)
 
 ### Fixed
+- Increase payload size metric on shards' `put` operation (#1794)
 - Big object removal with non-local parts (#1978)
 - Disable pilorama when moving to degraded mode (#2197)
 - Fetching blobovnicza objects that not found in write-cache (#2206)
