@@ -11,6 +11,7 @@ Changelog for FrostFS Node
 - Add command `frostfs-adm morph netmap-candidates` (#1889)
 - `object.delete.tombstone_lifetime` config parameter to set tombstone lifetime in the DELETE service (#2246)
 - Reload config for pprof and metrics on SIGHUP in `neofs-node` (#1868)
+- Multiple configs support (#44)
 
 ### Changed
 - Change `frostfs_node_engine_container_size` to counting sizes of logical objects
