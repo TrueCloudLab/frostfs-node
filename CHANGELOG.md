@@ -9,6 +9,7 @@ Changelog for FrostFS Node
 - New `frostfs_node_object_container_size` metric for tracking size of reqular objects in a container (#2116)
 - New `frostfs_node_object_payload_size` metric for tracking size of reqular objects on a single shard (#1794)
 - Add command `frostfs-adm morph netmap-candidates` (#1889)
+- `object.delete.tombstone_lifetime` config parameter to set tombstone lifetime in the DELETE service (#2246)
 
 ### Changed
 - Change `frostfs_node_engine_container_size` to counting sizes of logical objects
@@ -46,7 +47,13 @@ Changelog for FrostFS Node
 - Minimum go version to v1.18
 
 ### Updating from v0.35.0
+<<<<<<< HEAD
 You need to change configuration environment variables to `FROSTFS_*` if you use any.
+||||||| parent of 00afc576d ([#2246] node: Allow to configure tombsone lifetime)
+=======
+New config field `object.delete.tombstone_lifetime` allows to set tombstone lifetime
+more appropriate for a specific deployment.
+>>>>>>> 00afc576d ([#2246] node: Allow to configure tombsone lifetime)
 
 ## [0.35.0] - 2022-12-28 - Sindo (신도, 信島)
 
