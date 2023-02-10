@@ -71,27 +71,27 @@ func stringifyAddress(addr oid.Address) string {
 	return addr.Object().EncodeToString() + "." + addr.Container().EncodeToString()
 }
 
-func addressFromString(s string) (*oid.Address, error) {
-	ss := strings.SplitN(s, ".", 2)
-	if len(ss) != 2 {
-		return nil, errors.New("invalid address")
+func addressFromString(s string) (oid.Address, error) {
+	i := strings.IndexByte(s, '.')
+	if i == -1 {
+		return oid.Address{}, errors.New("invalid address")
 	}
 
 	var obj oid.ID
-	if err := obj.DecodeString(ss[0]); err != nil {
-		return nil, err
+	if err := obj.DecodeString(s[:i]); err != nil {
+		return oid.Address{}, err
 	}
 
 	var cnr cid.ID
-	if err := cnr.DecodeString(ss[1]); err != nil {
-		return nil, err
+	if err := cnr.DecodeString(s[i+1:]); err != nil {
+		return oid.Address{}, err
 	}
 
 	var addr oid.Address
 	addr.SetObject(obj)
 	addr.SetContainer(cnr)
 
-	return &addr, nil
+	return addr, nil
 }
 
 // Iterate iterates over all stored objects.
@@ -135,7 +135,7 @@ func (t *FSTree) iterate(depth uint64, curPath []string, prm common.IteratePrm) 
 		}
 
 		if prm.LazyHandler != nil {
-			err = prm.LazyHandler(*addr, func() ([]byte, error) {
+			err = prm.LazyHandler(addr, func() ([]byte, error) {
 				return os.ReadFile(filepath.Join(curPath...))
 			})
 		} else {
@@ -147,7 +147,7 @@ func (t *FSTree) iterate(depth uint64, curPath []string, prm common.IteratePrm) 
 			if err != nil {
 				if prm.IgnoreErrors {
 					if prm.ErrorHandler != nil {
-						return prm.ErrorHandler(*addr, err)
+						return prm.ErrorHandler(addr, err)
 					}
 					continue
 				}
@@ -155,7 +155,7 @@ func (t *FSTree) iterate(depth uint64, curPath []string, prm common.IteratePrm) 
 			}
 
 			err = prm.Handler(common.IterationElement{
-				Address:    *addr,
+				Address:    addr,
 				ObjectData: data,
 				StorageID:  []byte{},
 			})
