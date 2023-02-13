@@ -22,6 +22,7 @@ Changelog for FrostFS Node
 - Do not search for the small objects in FSTree (#2206)
 - Correct status error for expired session token (#2207)
 - Set flag `mode` required for `frostfs-cli control shards set-mode` (#8)
+- Fix `dirty` suffix in debian package version (#53)
 
 ### Removed
 ### Updated

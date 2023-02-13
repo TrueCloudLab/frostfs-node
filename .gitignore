@@ -30,5 +30,22 @@ testfile
 .neofs-cli.yml
 
 # debhelpers
-**/.debhelper
+debian/*debhelper*
+
+# logfiles
+debian/*.log
+
+# .substvars
+debian/*.substvars
+
+# .bash-completion
+debian/*.bash-completion
+
+# Install folders and files
+debian/frostfs-cli/
+debian/frostfs-ir/
+debian/files
+debian/frostfs-storage/
 debian/changelog
+man/
+debs/
