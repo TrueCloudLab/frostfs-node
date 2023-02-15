@@ -96,6 +96,7 @@ func generateTestData(t *testing.T, dir string, size int) {
 	}
 
 	cfg := config.Config{}
+	cfg.ProtocolConfiguration.Magic = 12345
 	cfg.ProtocolConfiguration.ValidatorsCount = size
 	cfg.ProtocolConfiguration.SecondsPerBlock = 1
 	cfg.ProtocolConfiguration.StandbyCommittee = pubs // sorted by glagolic letters

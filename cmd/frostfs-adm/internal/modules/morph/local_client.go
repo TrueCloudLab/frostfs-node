@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/nspcc-dev/neo-go/pkg/config"
@@ -20,6 +21,7 @@ import (
 	"github.com/nspcc-dev/neo-go/pkg/core/transaction"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/hash"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
+	"github.com/nspcc-dev/neo-go/pkg/encoding/address"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/fixedn"
 	"github.com/nspcc-dev/neo-go/pkg/io"
 	"github.com/nspcc-dev/neo-go/pkg/neorpc/result"
@@ -226,7 +228,24 @@ func (l *localClient) TraverseIterator(_, _ uuid.UUID, _ int) ([]stackitem.Item,
 
 // GetVersion return default version.
 func (l *localClient) GetVersion() (*result.Version, error) {
-	return &result.Version{}, nil
+	c := l.bc.GetConfig()
+	return &result.Version{
+		Protocol: result.Protocol{
+			AddressVersion:              address.NEO3Prefix,
+			Network:                     c.Magic,
+			MillisecondsPerBlock:        int(c.TimePerBlock / time.Millisecond),
+			MaxTraceableBlocks:          c.MaxTraceableBlocks,
+			MaxValidUntilBlockIncrement: c.MaxValidUntilBlockIncrement,
+			MaxTransactionsPerBlock:     c.MaxTransactionsPerBlock,
+			MemoryPoolMaxTransactions:   c.MemPoolSize,
+			ValidatorsCount:             byte(c.ValidatorsCount),
+			InitialGasDistribution:      c.InitialGASSupply,
+			CommitteeHistory:            c.CommitteeHistory,
+			P2PSigExtensions:            c.P2PSigExtensions,
+			StateRootInHeader:           c.StateRootInHeader,
+			ValidatorsHistory:           c.ValidatorsHistory,
+		},
+	}, nil
 }
 
 func (l *localClient) InvokeContractVerify(contract util.Uint160, params []smartcontract.Parameter, signers []transaction.Signer, witnesses ...transaction.Witness) (*result.Invoke, error) {
