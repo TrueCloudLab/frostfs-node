@@ -27,6 +27,9 @@ func TestInitialize(t *testing.T) {
 	// It is here for performing local testing after the changes.
 	t.Skip()
 
+	t.Run("1 nodes", func(t *testing.T) {
+		testInitialize(t, 1)
+	})
 	t.Run("4 nodes", func(t *testing.T) {
 		testInitialize(t, 4)
 	})
