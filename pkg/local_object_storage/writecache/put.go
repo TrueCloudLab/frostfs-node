@@ -16,11 +16,18 @@ var (
 )
 
 // Put puts object to write-cache.
+//
+// Returns ErrReadOnly if write-cache is in R/O mode.
+// Returns ErrNotInitialized if write-cache has not been initialized yet.
+// Returns ErrOutOfSpace if saving an object leads to WC's size overflow.
+// Returns ErrBigObject if an objects exceeds maximum object size.
 func (c *cache) Put(prm common.PutPrm) (common.PutRes, error) {
 	c.modeMtx.RLock()
 	defer c.modeMtx.RUnlock()
 	if c.readOnly() {
 		return common.PutRes{}, ErrReadOnly
+	} else if !c.initialized.Load() {
+		return common.PutRes{}, ErrNotInitialized
 	}
 
 	sz := uint64(len(prm.RawData))

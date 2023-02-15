@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	objectCore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
 	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor"
@@ -64,7 +65,7 @@ func TestFlush(t *testing.T) {
 				WithBlobstor(bs),
 			}, opts...)...)
 		require.NoError(t, wc.Open(false))
-		require.NoError(t, wc.Init())
+		initWC(t, wc)
 
 		// First set mode for metabase and blobstor to prevent background flushes.
 		require.NoError(t, mb.SetMode(mode.ReadOnly))
@@ -262,7 +263,7 @@ func TestFlush(t *testing.T) {
 
 		// Open in read-only: no error, nothing is removed.
 		require.NoError(t, wc.Open(true))
-		require.NoError(t, wc.Init())
+		initWC(t, wc)
 		for i := range objects {
 			_, err := wc.Get(objects[i].addr)
 			require.NoError(t, err, i)
@@ -271,7 +272,7 @@ func TestFlush(t *testing.T) {
 
 		// Open in read-write: no error, something is removed.
 		require.NoError(t, wc.Open(false))
-		require.NoError(t, wc.Init())
+		initWC(t, wc)
 		for i := range objects {
 			_, err := wc.Get(objects[i].addr)
 			if i < 2 {
@@ -314,6 +315,15 @@ func newObject(t *testing.T, size int) (*object.Object, []byte) {
 	data, err := obj.Marshal()
 	require.NoError(t, err)
 	return obj, data
+}
+
+func initWC(t *testing.T, wc Cache) {
+	require.NoError(t, wc.Init())
+
+	require.Eventually(t, func() bool {
+		rawWc := wc.(*cache)
+		return rawWc.initialized.Load()
+	}, 100*time.Second, 1*time.Millisecond)
 }
 
 type dummyEpoch struct{}
