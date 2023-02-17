@@ -106,6 +106,7 @@ func TestSetMode(t *testing.T, cons Constructor, m mode.Mode) {
 		require.NoError(t, s.Open(false))
 		require.NoError(t, s.Init())
 		require.NoError(t, s.SetMode(m))
+		require.NoError(t, s.Close())
 	})
 }
 
