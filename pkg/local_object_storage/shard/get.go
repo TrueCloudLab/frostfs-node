@@ -102,16 +102,19 @@ func (s *Shard) fetchObjectData(addr oid.Address, skipMeta bool, cb storFetcher,
 		mRes meta.ExistsRes
 	)
 
-	var exists bool
 	if !skipMeta {
 		var mPrm meta.ExistsPrm
 		mPrm.SetAddress(addr)
-
 		mRes, mErr = s.metaBase.Exists(mPrm)
 		if mErr != nil && !s.info.Mode.NoMetabase() {
 			return nil, false, mErr
 		}
-		exists = mRes.Exists()
+
+		if !mRes.Exists() {
+			return nil, false, logicerr.Wrap(apistatus.ObjectNotFound{})
+		}
+	} else {
+		s.log.Warn("fetching object without meta", zap.Stringer("addr", addr))
 	}
 
 	if s.hasWriteCache() {
@@ -119,7 +122,6 @@ func (s *Shard) fetchObjectData(addr oid.Address, skipMeta bool, cb storFetcher,
 		if err == nil || IsErrOutOfRange(err) {
 			return res, false, err
 		}
-
 		if IsErrNotFound(err) {
 			s.log.Debug("object is missing in write-cache",
 				zap.Stringer("addr", addr),
@@ -131,14 +133,9 @@ func (s *Shard) fetchObjectData(addr oid.Address, skipMeta bool, cb storFetcher,
 				zap.Bool("skip_meta", skipMeta))
 		}
 	}
-
 	if skipMeta || mErr != nil {
 		res, err := cb(s.blobStor, nil)
 		return res, false, err
-	}
-
-	if !exists {
-		return nil, false, logicerr.Wrap(apistatus.ObjectNotFound{})
 	}
 
 	var mPrm meta.StorageIDPrm
