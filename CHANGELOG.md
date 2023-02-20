@@ -51,13 +51,11 @@ Changelog for FrostFS Node
 - Minimum go version to v1.18
 
 ### Updating from v0.35.0
-<<<<<<< HEAD
+
 You need to change configuration environment variables to `FROSTFS_*` if you use any.
-||||||| parent of 00afc576d ([#2246] node: Allow to configure tombsone lifetime)
-=======
+
 New config field `object.delete.tombstone_lifetime` allows to set tombstone lifetime
 more appropriate for a specific deployment.
->>>>>>> 00afc576d ([#2246] node: Allow to configure tombsone lifetime)
 
 ## [0.35.0] - 2022-12-28 - Sindo (신도, 信島)
 
