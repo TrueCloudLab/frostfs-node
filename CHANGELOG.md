@@ -42,6 +42,7 @@ Changelog for FrostFS Node
 - `neo-go` client deadlock on subscription restoration (#2244)
 - Possible panic during write-cache initialization (#2234)
 - Do not fetch an object if `meta` is missing it (#61)
+- Create contract wallet only by `init` and `update-config` command (#63)
 
 ### Removed
 ### Updated

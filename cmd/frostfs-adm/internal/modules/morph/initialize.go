@@ -115,8 +115,10 @@ func newInitializeContext(cmd *cobra.Command, v *viper.Viper) (*initializeContex
 		return nil, err
 	}
 
+	needContracts := cmd.Name() == "update-contracts" || cmd.Name() == "init"
+
 	var w *wallet.Wallet
-	if cmd.Name() != "deploy" {
+	if needContracts {
 		w, err = openContractWallet(v, cmd, walletDir)
 		if err != nil {
 			return nil, err
@@ -157,7 +159,6 @@ func newInitializeContext(cmd *cobra.Command, v *viper.Viper) (*initializeContex
 		}
 	}
 
-	needContracts := cmd.Name() == "update-contracts" || cmd.Name() == "init"
 	if needContracts {
 		ctrPath, err = cmd.Flags().GetString(contractsInitFlag)
 		if err != nil {
