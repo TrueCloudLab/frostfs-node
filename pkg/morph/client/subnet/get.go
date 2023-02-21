@@ -8,7 +8,7 @@ import (
 
 // GetPrm groups parameters of Get method of Subnet contract.
 type GetPrm struct {
-	args [1]interface{}
+	args [1]any
 }
 
 // SetID sets identifier of the subnet to be read in a binary FrostFS API protocol format.

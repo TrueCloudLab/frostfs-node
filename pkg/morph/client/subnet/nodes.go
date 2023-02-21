@@ -9,7 +9,7 @@ type ManageNodesPrm struct {
 	// remove or add node
 	rm bool
 
-	args [2]interface{}
+	args [2]any
 }
 
 // SetRemove marks node to be removed. By default, node is added.

@@ -9,7 +9,7 @@ import (
 type PutPrm struct {
 	cliPrm client.InvokePrm
 
-	args [3]interface{}
+	args [3]any
 }
 
 // SetTxHash sets hash of the transaction which spawned the notification.

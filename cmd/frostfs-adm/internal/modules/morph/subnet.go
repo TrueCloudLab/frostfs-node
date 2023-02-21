@@ -340,7 +340,7 @@ func manageSubnetAdmins(cmd *cobra.Command, rm bool) error {
 	}
 
 	// prepare call parameters
-	prm := make([]interface{}, 0, 3)
+	prm := make([]any, 0, 3)
 	prm = append(prm, id.Marshal())
 
 	var method string
@@ -742,7 +742,7 @@ func init() {
 	)
 }
 
-func testInvokeMethod(key keys.PrivateKey, method string, args ...interface{}) ([]stackitem.Item, error) {
+func testInvokeMethod(key keys.PrivateKey, method string, args ...any) ([]stackitem.Item, error) {
 	c, err := getN3Client(viper.GetViper())
 	if err != nil {
 		return nil, fmt.Errorf("morph client creation: %w", err)
@@ -780,7 +780,7 @@ func testInvokeMethod(key keys.PrivateKey, method string, args ...interface{}) (
 	return res.Stack, nil
 }
 
-func invokeMethod(key keys.PrivateKey, tryNotary bool, method string, args ...interface{}) error {
+func invokeMethod(key keys.PrivateKey, tryNotary bool, method string, args ...any) error {
 	c, err := getN3Client(viper.GetViper())
 	if err != nil {
 		return fmt.Errorf("morph client creation: %w", err)
@@ -821,7 +821,7 @@ func invokeMethod(key keys.PrivateKey, tryNotary bool, method string, args ...in
 	return nil
 }
 
-func invokeNonNotary(c Client, key keys.PrivateKey, method string, args ...interface{}) error {
+func invokeNonNotary(c Client, key keys.PrivateKey, method string, args ...any) error {
 	nnsCs, err := c.GetContractStateByID(1)
 	if err != nil {
 		return fmt.Errorf("NNS contract resolving: %w", err)
@@ -868,7 +868,7 @@ func invokeNonNotary(c Client, key keys.PrivateKey, method string, args ...inter
 	return nil
 }
 
-func invokeNotary(c Client, key keys.PrivateKey, method string, notaryHash util.Uint160, args ...interface{}) error {
+func invokeNotary(c Client, key keys.PrivateKey, method string, notaryHash util.Uint160, args ...any) error {
 	nnsCs, err := c.GetContractStateByID(1)
 	if err != nil {
 		return fmt.Errorf("NNS contract resolving: %w", err)

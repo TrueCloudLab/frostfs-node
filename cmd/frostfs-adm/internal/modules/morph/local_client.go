@@ -190,7 +190,7 @@ func (l *localClient) GetCommittee() (keys.PublicKeys, error) {
 func (l *localClient) InvokeFunction(h util.Uint160, method string, sPrm []smartcontract.Parameter, ss []transaction.Signer) (*result.Invoke, error) {
 	var err error
 
-	pp := make([]interface{}, len(sPrm))
+	pp := make([]any, len(sPrm))
 	for i, p := range sPrm {
 		pp[i], err = smartcontract.ExpandParameterToEmitable(p)
 		if err != nil {
@@ -346,7 +346,7 @@ func getSigners(sender *wallet.Account, cosigners []rpcclient.SignerAccount) ([]
 }
 
 func (l *localClient) NEP17BalanceOf(h util.Uint160, acc util.Uint160) (int64, error) {
-	res, err := invokeFunction(l, h, "balanceOf", []interface{}{acc}, nil)
+	res, err := invokeFunction(l, h, "balanceOf", []any{acc}, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -451,7 +451,7 @@ func (l *localClient) putTransactions() error {
 	return l.bc.AddBlock(b)
 }
 
-func invokeFunction(c Client, h util.Uint160, method string, parameters []interface{}, signers []transaction.Signer) (*result.Invoke, error) {
+func invokeFunction(c Client, h util.Uint160, method string, parameters []any, signers []transaction.Signer) (*result.Invoke, error) {
 	w := io.NewBufBinWriter()
 	emit.Array(w.BinWriter, parameters...)
 	emit.AppCallNoArgs(w.BinWriter, h, method, callflag.All)

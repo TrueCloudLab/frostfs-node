@@ -10,9 +10,9 @@ import (
 
 func TestToStackParameter(t *testing.T) {
 	items := []struct {
-		value   interface{}
+		value   any
 		expType sc.ParamType
-		expVal  interface{}
+		expVal  any
 	}{
 		{
 			value:   []byte{1, 2, 3},

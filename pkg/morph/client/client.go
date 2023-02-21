@@ -179,7 +179,7 @@ func wrapFrostFSError(err error) error {
 
 // Invoke invokes contract method by sending transaction into blockchain.
 // Supported args types: int64, string, util.Uint160, []byte and bool.
-func (c *Client) Invoke(contract util.Uint160, fee fixedn.Fixed8, method string, args ...interface{}) error {
+func (c *Client) Invoke(contract util.Uint160, fee fixedn.Fixed8, method string, args ...any) error {
 	c.switchLock.RLock()
 	defer c.switchLock.RUnlock()
 
@@ -202,7 +202,7 @@ func (c *Client) Invoke(contract util.Uint160, fee fixedn.Fixed8, method string,
 
 // TestInvoke invokes contract method locally in neo-go node. This method should
 // be used to read data from smart-contract.
-func (c *Client) TestInvoke(contract util.Uint160, method string, args ...interface{}) (res []stackitem.Item, err error) {
+func (c *Client) TestInvoke(contract util.Uint160, method string, args ...any) (res []stackitem.Item, err error) {
 	c.switchLock.RLock()
 	defer c.switchLock.RUnlock()
 
@@ -384,7 +384,7 @@ func (c *Client) roleList(r noderoles.Role) (keys.PublicKeys, error) {
 // tries to resolve sc.Parameter from the arg.
 //
 // Wraps any error to frostfsError.
-func toStackParameter(value interface{}) (sc.Parameter, error) {
+func toStackParameter(value any) (sc.Parameter, error) {
 	var result = sc.Parameter{
 		Value: value,
 	}

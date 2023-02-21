@@ -9,7 +9,7 @@ import (
 type DeletePrm struct {
 	cliPrm client.InvokePrm
 
-	args [1]interface{}
+	args [1]any
 }
 
 // SetTxHash sets hash of the transaction which spawned the notification.

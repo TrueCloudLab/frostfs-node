@@ -127,7 +127,7 @@ type sgHeadReceiver struct {
 	prm     internalclient.HeadObjectPrm
 }
 
-func (c sgHeadReceiver) Head(addr oid.Address) (interface{}, error) {
+func (c sgHeadReceiver) Head(addr oid.Address) (any, error) {
 	c.prm.SetAddress(addr)
 
 	res, err := internalclient.HeadObject(c.prm)

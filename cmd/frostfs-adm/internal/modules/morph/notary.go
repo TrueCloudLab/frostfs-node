@@ -111,7 +111,7 @@ func depositNotary(cmd *cobra.Command, _ []string) error {
 		accHash,
 		notary.Hash,
 		big.NewInt(int64(gasAmount)),
-		[]interface{}{nil, int64(height) + till},
+		[]any{nil, int64(height) + till},
 	)
 	if err != nil {
 		return fmt.Errorf("could not send tx: %w", err)

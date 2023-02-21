@@ -281,7 +281,7 @@ func nnsIsAvailable(c Client, nnsHash util.Uint160, name string) (bool, error) {
 	case *rpcclient.Client:
 		return ct.NNSIsAvailable(nnsHash, name)
 	default:
-		b, err := unwrap.Bool(invokeFunction(c, nnsHash, "isAvailable", []interface{}{name}, nil))
+		b, err := unwrap.Bool(invokeFunction(c, nnsHash, "isAvailable", []any{name}, nil))
 		if err != nil {
 			return false, fmt.Errorf("`isAvailable`: invalid response: %w", err)
 		}

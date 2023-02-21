@@ -8,7 +8,7 @@ import (
 
 // UserAllowedPrm groups parameters of UserAllowed method of Subnet contract.
 type UserAllowedPrm struct {
-	args [2]interface{}
+	args [2]any
 }
 
 // SetID sets identifier of the subnet in a binary FrostFS API protocol format.
@@ -64,7 +64,7 @@ type ManageClientsPrm struct {
 	// remove or add client
 	rm bool
 
-	args [3]interface{}
+	args [3]any
 }
 
 // SetRemove marks client to be removed. By default, client is added.

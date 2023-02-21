@@ -10,7 +10,7 @@ import (
 type NodeAllowedPrm struct {
 	cliPrm client.TestInvokePrm
 
-	args [2]interface{}
+	args [2]any
 }
 
 // SetID sets identifier of the subnet of the node in a binary FrostFS API protocol format.

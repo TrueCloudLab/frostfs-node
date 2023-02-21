@@ -52,7 +52,7 @@ type ManageAdminsRes struct{}
 func (x Client) ManageAdmins(prm ManageAdminsPrm) (*ManageAdminsPrm, error) {
 	var method string
 
-	args := make([]interface{}, 1, 3)
+	args := make([]any, 1, 3)
 	args[0] = prm.subnet
 
 	if prm.client {

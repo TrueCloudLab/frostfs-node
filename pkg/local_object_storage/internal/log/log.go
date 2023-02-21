@@ -16,7 +16,7 @@ func Write(logger *logger.Logger, fields ...zap.Field) {
 // AddressField returns logger's field for object address.
 //
 // Address should be type of *object.Address or string.
-func AddressField(addr interface{}) zap.Field {
+func AddressField(addr any) zap.Field {
 	return zap.Any("address", addr)
 }
 
