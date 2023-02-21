@@ -44,8 +44,8 @@ github.com/CityOfZion/neo-go v0.70.1-pre.0.20191212173117-32ac01130d4c/go.mod h1
 github.com/CityOfZion/neo-go v0.71.1-pre.0.20200129171427-f773ec69fb84/go.mod h1:FLI526IrRWHmcsO+mHsCbj64pJZhwQFTLJZu+A4PGOA=
 github.com/KirillovDenis/frostfs-api-go/v2 v2.11.2-0.20230221082308-ac00938fa447 h1:8PH1Wdzdk96XwMQheflK9uS9lsSDtLaE9Wfr1sBq+Ng=
 github.com/KirillovDenis/frostfs-api-go/v2 v2.11.2-0.20230221082308-ac00938fa447/go.mod h1:u3P6aL/NpAIY5IFRsJhmV+61Q3pJ3BkLENqySkf5zZQ=
-github.com/KirillovDenis/frostfs-sdk-go v0.0.0-20230221082914-5f20e7c6a460 h1:PAdotKIrdub13K3jvNhcqRKPUcuT0L3+PdV97WImzyQ=
-github.com/KirillovDenis/frostfs-sdk-go v0.0.0-20230221082914-5f20e7c6a460/go.mod h1:kEJuY2GhRZ3MFBwZvTLMlA2D5mrjjoB+g/Q2Lz1dwyQ=
+github.com/KirillovDenis/frostfs-sdk-go v0.0.0-20230221122223-9424a67fb108 h1:EbH3LgjwB+XuaICaWnK/ZnecSzfGSUBlwJ+kT4uOq68=
+github.com/KirillovDenis/frostfs-sdk-go v0.0.0-20230221122223-9424a67fb108/go.mod h1:kEJuY2GhRZ3MFBwZvTLMlA2D5mrjjoB+g/Q2Lz1dwyQ=
 github.com/TrueCloudLab/frostfs-contract v0.0.0-20221213081248-6c805c1b4e42 h1:P/gisZxTzJ9R3tuYDaQWe0tY6m1Zea3gzdPpNYK+NP4=
 github.com/TrueCloudLab/frostfs-contract v0.0.0-20221213081248-6c805c1b4e42/go.mod h1:qmf648elr+FWBZH3hqND8KVrXMnqu/e0z48k+sX8C2s=
 github.com/TrueCloudLab/frostfs-crypto v0.5.0 h1:ZoLjixSkQv3j1EwZ1WJzMEJY2NR+9nO4Pd8WSyM/RRI=

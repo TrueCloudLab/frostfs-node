@@ -41,7 +41,7 @@ require (
 
 replace (
 	github.com/TrueCloudLab/frostfs-api-go/v2 v2.0.0-20221212144048-1351b6656d68 => github.com/KirillovDenis/frostfs-api-go/v2 v2.11.2-0.20230221082308-ac00938fa447
-	github.com/TrueCloudLab/frostfs-sdk-go v0.0.0-20221214065929-4c779423f556 => github.com/KirillovDenis/frostfs-sdk-go v0.0.0-20230221082914-5f20e7c6a460
+	github.com/TrueCloudLab/frostfs-sdk-go v0.0.0-20221214065929-4c779423f556 => github.com/KirillovDenis/frostfs-sdk-go v0.0.0-20230221122223-9424a67fb108
 )
 
 require (
