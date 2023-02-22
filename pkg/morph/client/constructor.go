@@ -9,8 +9,11 @@ import (
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	lru "github.com/hashicorp/golang-lru/v2"
+	"github.com/nspcc-dev/neo-go/pkg/core/block"
+	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/core/transaction"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
+	"github.com/nspcc-dev/neo-go/pkg/neorpc/result"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient/actor"
 	"github.com/nspcc-dev/neo-go/pkg/util"
@@ -109,6 +112,9 @@ func New(key *keys.PrivateKey, opts ...Option) (*Client, error) {
 		cfg:                    *cfg,
 		switchLock:             &sync.RWMutex{},
 		notifications:          make(chan rpcclient.Notification),
+		blockRcv:               make(chan *block.Block),
+		notificationRcv:        make(chan *state.ContainedNotificationEvent),
+		notaryReqRcv:           make(chan *result.NotaryRequestEvent),
 		subscribedEvents:       make(map[util.Uint160]string),
 		subscribedNotaryEvents: make(map[util.Uint160]string),
 		closeChan:              make(chan struct{}),

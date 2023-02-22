@@ -10,10 +10,13 @@ import (
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	lru "github.com/hashicorp/golang-lru/v2"
+	"github.com/nspcc-dev/neo-go/pkg/core/block"
 	"github.com/nspcc-dev/neo-go/pkg/core/native/noderoles"
+	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/core/transaction"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/fixedn"
+	"github.com/nspcc-dev/neo-go/pkg/neorpc/result"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient/actor"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient/gas"
@@ -69,16 +72,19 @@ type Client struct {
 	// on every normal call.
 	switchLock *sync.RWMutex
 
-	// channel for ws notifications
-	notifications chan rpcclient.Notification
-
-	// channel for internal stop
-	closeChan chan struct{}
+	// channels for ws notifications; protected with switchLock
+	notifications   chan rpcclient.Notification
+	blockRcv        chan *block.Block
+	notificationRcv chan *state.ContainedNotificationEvent
+	notaryReqRcv    chan *result.NotaryRequestEvent
 
 	// cached subscription information
 	subscribedEvents       map[util.Uint160]string
 	subscribedNotaryEvents map[util.Uint160]string
 	subscribedToNewBlocks  bool
+
+	// channel for internal stop
+	closeChan chan struct{}
 
 	// indicates that Client is not able to
 	// establish connection to any of the
@@ -524,4 +530,15 @@ func (c *Client) setActor(act *actor.Actor) {
 	c.rpcActor = act
 	c.gasToken = nep17.New(act, gas.Hash)
 	c.rolemgmt = rolemgmt.New(act)
+}
+
+// updateSubs updates subscription information, must be
+// protected with switchLock.
+func (c *Client) updateSubs(si subsInfo) {
+	c.blockRcv = si.blockRcv
+	c.notificationRcv = si.notificationRcv
+	c.notaryReqRcv = si.notaryReqRcv
+
+	c.subscribedEvents = si.subscribedEvents
+	c.subscribedNotaryEvents = si.subscribedNotaryEvents
 }

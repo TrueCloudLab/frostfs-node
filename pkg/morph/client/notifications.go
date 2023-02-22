@@ -1,6 +1,10 @@
 package client
 
 import (
+	"github.com/nspcc-dev/neo-go/pkg/core/block"
+	"github.com/nspcc-dev/neo-go/pkg/core/state"
+	"github.com/nspcc-dev/neo-go/pkg/neorpc"
+	"github.com/nspcc-dev/neo-go/pkg/neorpc/result"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient"
 	"github.com/nspcc-dev/neo-go/pkg/util"
 	"go.uber.org/zap"
@@ -36,7 +40,7 @@ func (c *Client) SubscribeForExecutionNotifications(contract util.Uint160) error
 		return nil
 	}
 
-	id, err := c.client.SubscribeForExecutionNotifications(&contract, nil)
+	id, err := c.client.ReceiveExecutionNotifications(&neorpc.NotificationFilter{Contract: &contract}, c.notificationRcv)
 	if err != nil {
 		return err
 	}
@@ -64,7 +68,7 @@ func (c *Client) SubscribeForNewBlocks() error {
 		return nil
 	}
 
-	_, err := c.client.SubscribeForNewBlocks(nil)
+	_, err := c.client.ReceiveBlocks(nil, c.blockRcv)
 	if err != nil {
 		return err
 	}
@@ -99,7 +103,7 @@ func (c *Client) SubscribeForNotaryRequests(txSigner util.Uint160) error {
 		return nil
 	}
 
-	id, err := c.client.SubscribeForNotaryRequests(nil, &txSigner)
+	id, err := c.client.ReceiveNotaryRequests(&neorpc.TxFilter{Signer: &txSigner}, c.notaryReqRcv)
 	if err != nil {
 		return err
 	}
@@ -203,9 +207,25 @@ func (c *Client) UnsubscribeAll() error {
 	return nil
 }
 
-// restoreSubscriptions restores subscriptions according to
-// cached information about them.
-func (c *Client) restoreSubscriptions(cli *rpcclient.WSClient, endpoint string) bool {
+type subsInfo struct {
+	blockRcv        chan *block.Block
+	notificationRcv chan *state.ContainedNotificationEvent
+	notaryReqRcv    chan *result.NotaryRequestEvent
+
+	subscribedToBlocks     bool
+	subscribedEvents       map[util.Uint160]string
+	subscribedNotaryEvents map[util.Uint160]string
+}
+
+// restoreSubscriptions restores subscriptions according to cached
+// information about them.
+//
+// If it is NOT a background operation switchLock MUST be held.
+// Returns a pair: the second is a restoration status and the first
+// one contains subscription information applied to the passed cli
+// and receivers for the updated subscriptions.
+// Does not change Client instance.
+func (c *Client) restoreSubscriptions(cli *rpcclient.WSClient, endpoint string, background bool) (si subsInfo, ok bool) {
 	var (
 		err error
 		id  string
@@ -214,72 +234,109 @@ func (c *Client) restoreSubscriptions(cli *rpcclient.WSClient, endpoint string) 
 	stopCh := make(chan struct{})
 	defer close(stopCh)
 
+	blockRcv := make(chan *block.Block)
+	notificationRcv := make(chan *state.ContainedNotificationEvent)
+	notaryReqRcv := make(chan *result.NotaryRequestEvent)
+
 	// neo-go WS client says to _always_ read notifications
 	// from its channel. Subscribing to any notification
 	// while not reading them in another goroutine may
 	// lead to a dead-lock, thus that async side notification
 	// listening while restoring subscriptions
 	go func() {
+		var e any
+		var ok bool
+
 		for {
 			select {
 			case <-stopCh:
 				return
-			case n, ok := <-cli.Notifications:
-				if !ok {
-					return
-				}
-
-				c.notifications <- n
+			case e, ok = <-blockRcv:
+			case e, ok = <-notificationRcv:
+			case e, ok = <-notaryReqRcv:
 			}
+
+			if !ok {
+				return
+			}
+
+			if background {
+				// background client (test) switch, no need to send
+				// any notification, just preventing dead-lock
+				continue
+			}
+
+			c.routeEvent(e)
 		}
 	}()
 
+	if background {
+		c.switchLock.RLock()
+		defer c.switchLock.RUnlock()
+	}
+
+	si.subscribedToBlocks = c.subscribedToNewBlocks
+	si.subscribedEvents = copySubsMap(c.subscribedEvents)
+	si.subscribedNotaryEvents = copySubsMap(c.subscribedNotaryEvents)
+	si.blockRcv = blockRcv
+	si.notificationRcv = notificationRcv
+	si.notaryReqRcv = notaryReqRcv
+
 	// new block events restoration
-	if c.subscribedToNewBlocks {
-		_, err = cli.SubscribeForNewBlocks(nil)
+	if si.subscribedToBlocks {
+		_, err = cli.ReceiveBlocks(nil, blockRcv)
 		if err != nil {
 			c.logger.Error("could not restore block subscription after RPC switch",
 				zap.String("endpoint", endpoint),
 				zap.Error(err),
 			)
 
-			return false
+			return
 		}
 	}
 
 	// notification events restoration
-	for contract := range c.subscribedEvents {
+	for contract := range si.subscribedEvents {
 		contract := contract // See https://github.com/nspcc-dev/neo-go/issues/2890
-		id, err = cli.SubscribeForExecutionNotifications(&contract, nil)
+		id, err = cli.ReceiveExecutionNotifications(&neorpc.NotificationFilter{Contract: &contract}, notificationRcv)
 		if err != nil {
 			c.logger.Error("could not restore notification subscription after RPC switch",
 				zap.String("endpoint", endpoint),
 				zap.Error(err),
 			)
 
-			return false
+			return
 		}
 
-		c.subscribedEvents[contract] = id
+		si.subscribedEvents[contract] = id
 	}
 
 	// notary notification events restoration
 	if c.notary != nil {
-		for signer := range c.subscribedNotaryEvents {
+		for signer := range si.subscribedNotaryEvents {
 			signer := signer // See https://github.com/nspcc-dev/neo-go/issues/2890
-			id, err = cli.SubscribeForNotaryRequests(nil, &signer)
+			id, err = cli.ReceiveNotaryRequests(&neorpc.TxFilter{Signer: &signer}, notaryReqRcv)
 			if err != nil {
 				c.logger.Error("could not restore notary notification subscription after RPC switch",
 					zap.String("endpoint", endpoint),
 					zap.Error(err),
 				)
 
-				return false
+				return
 			}
 
-			c.subscribedNotaryEvents[signer] = id
+			si.subscribedNotaryEvents[signer] = id
 		}
 	}
 
-	return true
+	return si, true
+}
+
+func copySubsMap(m map[util.Uint160]string) map[util.Uint160]string {
+	newM := make(map[util.Uint160]string, len(m))
+	for k, v := range m {
+		newM[k] = v
+	}
+
+	return newM
 }
