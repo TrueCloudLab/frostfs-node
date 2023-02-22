@@ -391,43 +391,43 @@ func (c *Client) roleList(r noderoles.Role) (keys.PublicKeys, error) {
 //
 // Wraps any error to frostfsError.
 func toStackParameter(value any) (sc.Parameter, error) {
-	var result = sc.Parameter{
+	var res = sc.Parameter{
 		Value: value,
 	}
 
 	switch v := value.(type) {
 	case []byte:
-		result.Type = sc.ByteArrayType
+		res.Type = sc.ByteArrayType
 	case int:
-		result.Type = sc.IntegerType
-		result.Value = big.NewInt(int64(v))
+		res.Type = sc.IntegerType
+		res.Value = big.NewInt(int64(v))
 	case int64:
-		result.Type = sc.IntegerType
-		result.Value = big.NewInt(v)
+		res.Type = sc.IntegerType
+		res.Value = big.NewInt(v)
 	case uint64:
-		result.Type = sc.IntegerType
-		result.Value = new(big.Int).SetUint64(v)
+		res.Type = sc.IntegerType
+		res.Value = new(big.Int).SetUint64(v)
 	case [][]byte:
 		arr := make([]sc.Parameter, 0, len(v))
 		for i := range v {
 			elem, err := toStackParameter(v[i])
 			if err != nil {
-				return result, err
+				return res, err
 			}
 
 			arr = append(arr, elem)
 		}
 
-		result.Type = sc.ArrayType
-		result.Value = arr
+		res.Type = sc.ArrayType
+		res.Value = arr
 	case string:
-		result.Type = sc.StringType
+		res.Type = sc.StringType
 	case util.Uint160:
-		result.Type = sc.ByteArrayType
-		result.Value = v.BytesBE()
+		res.Type = sc.ByteArrayType
+		res.Value = v.BytesBE()
 	case noderoles.Role:
-		result.Type = sc.IntegerType
-		result.Value = big.NewInt(int64(v))
+		res.Type = sc.IntegerType
+		res.Value = big.NewInt(int64(v))
 	case keys.PublicKeys:
 		arr := make([][]byte, 0, len(v))
 		for i := range v {
@@ -436,13 +436,13 @@ func toStackParameter(value any) (sc.Parameter, error) {
 
 		return toStackParameter(arr)
 	case bool:
-		result.Type = sc.BoolType
-		result.Value = v
+		res.Type = sc.BoolType
+		res.Value = v
 	default:
-		return result, wrapFrostFSError(fmt.Errorf("chain/client: unsupported parameter %v", value))
+		return res, wrapFrostFSError(fmt.Errorf("chain/client: unsupported parameter %v", value))
 	}
 
-	return result, nil
+	return res, nil
 }
 
 // MagicNumber returns the magic number of the network
@@ -486,7 +486,7 @@ func (c *Client) MsPerBlock() (res int64, err error) {
 }
 
 // IsValidScript returns true if invocation script executes with HALT state.
-func (c *Client) IsValidScript(script []byte, signers []transaction.Signer) (res bool, err error) {
+func (c *Client) IsValidScript(script []byte, signers []transaction.Signer) (valid bool, err error) {
 	c.switchLock.RLock()
 	defer c.switchLock.RUnlock()
 
@@ -494,12 +494,12 @@ func (c *Client) IsValidScript(script []byte, signers []transaction.Signer) (res
 		return false, ErrConnectionLost
 	}
 
-	result, err := c.client.InvokeScript(script, signers)
+	res, err := c.client.InvokeScript(script, signers)
 	if err != nil {
 		return false, fmt.Errorf("invokeScript: %w", err)
 	}
 
-	return result.State == vmstate.Halt.String(), nil
+	return res.State == vmstate.Halt.String(), nil
 }
 
 // NotificationChannel returns channel than receives subscribed
