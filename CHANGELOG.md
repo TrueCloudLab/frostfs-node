@@ -43,6 +43,7 @@ Changelog for FrostFS Node
 - Possible panic during write-cache initialization (#2234)
 - Do not fetch an object if `meta` is missing it (#61)
 - Create contract wallet only by `init` and `update-config` command (#63)
+- Actually use `object.put.pool_size_local` and independent pool for local puts (#64).
 
 ### Removed
 ### Updated

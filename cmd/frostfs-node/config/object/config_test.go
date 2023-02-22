@@ -14,6 +14,7 @@ func TestObjectSection(t *testing.T) {
 		empty := configtest.EmptyConfig()
 
 		require.Equal(t, objectconfig.PutPoolSizeDefault, objectconfig.Put(empty).PoolSizeRemote())
+		require.Equal(t, objectconfig.PutPoolSizeDefault, objectconfig.Put(empty).PoolSizeLocal())
 		require.EqualValues(t, objectconfig.DefaultTombstoneLifetime, objectconfig.TombstoneLifetime(empty))
 	})
 
@@ -21,6 +22,7 @@ func TestObjectSection(t *testing.T) {
 
 	var fileConfigTest = func(c *config.Config) {
 		require.Equal(t, 100, objectconfig.Put(c).PoolSizeRemote())
+		require.Equal(t, 200, objectconfig.Put(c).PoolSizeLocal())
 		require.EqualValues(t, 10, objectconfig.TombstoneLifetime(c))
 	}
 

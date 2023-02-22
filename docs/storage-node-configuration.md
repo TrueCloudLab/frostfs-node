@@ -427,3 +427,4 @@ object:
 |-----------------------------|-------|---------------|------------------------------------------------------------------------------------------------|
 | `delete.tombstone_lifetime` | `int` | `5`           | Tombstone lifetime for removed objects in epochs.                                              |
 | `put.pool_size_remote`      | `int` | `10`          | Max pool size for performing remote `PUT` operations. Used by Policer and Replicator services. |
+| `put.pool_size_local`       | `int` | `10`          | Max pool size for performing local `PUT` operations. Used by Policer and Replicator services.  |

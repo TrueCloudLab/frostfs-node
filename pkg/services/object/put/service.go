@@ -116,9 +116,9 @@ func WithNetworkMapSource(v netmap.Source) Option {
 	}
 }
 
-func WithWorkerPools(remote util.WorkerPool) Option {
+func WithWorkerPools(remote, local util.WorkerPool) Option {
 	return func(c *cfg) {
-		c.remotePool = remote
+		c.remotePool, c.localPool = remote, local
 	}
 }
 

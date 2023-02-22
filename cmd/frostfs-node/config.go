@@ -496,6 +496,10 @@ type cfgObjectRoutines struct {
 
 	putRemoteCapacity int
 
+	putLocal *ants.Pool
+
+	putLocalCapacity int
+
 	replicatorPoolSize int
 
 	replication *ants.Pool
@@ -834,8 +838,11 @@ func initObjectPool(cfg *config.Config) (pool cfgObjectRoutines) {
 	optNonBlocking := ants.WithNonblocking(true)
 
 	pool.putRemoteCapacity = objectconfig.Put(cfg).PoolSizeRemote()
-
 	pool.putRemote, err = ants.NewPool(pool.putRemoteCapacity, optNonBlocking)
+	fatalOnErr(err)
+
+	pool.putLocalCapacity = objectconfig.Put(cfg).PoolSizeLocal()
+	pool.putLocal, err = ants.NewPool(pool.putLocalCapacity, optNonBlocking)
 	fatalOnErr(err)
 
 	pool.replicatorPoolSize = replicatorconfig.PoolSize(cfg)

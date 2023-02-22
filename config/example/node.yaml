@@ -111,6 +111,7 @@ object:
     tombstone_lifetime: 10 # tombstone "local" lifetime in epochs
   put:
     pool_size_remote: 100  # number of async workers for remote PUT operations
+    pool_size_local: 200  # number of async workers for local PUT operations
 
 storage:
   # note: shard configuration can be omitted for relay node (see `node.relay`)
