@@ -19,7 +19,7 @@ type StorageEngine struct {
 
 	mtx *sync.RWMutex
 
-	shards map[string]shardWrapper
+	shards map[string]hashedShard
 
 	shardPools map[string]util.WorkerPool
 
@@ -223,7 +223,7 @@ func New(opts ...Option) *StorageEngine {
 	return &StorageEngine{
 		cfg:        c,
 		mtx:        new(sync.RWMutex),
-		shards:     make(map[string]shardWrapper),
+		shards:     make(map[string]hashedShard),
 		shardPools: make(map[string]util.WorkerPool),
 		closeCh:    make(chan struct{}),
 		setModeCh:  make(chan setModeRequest),

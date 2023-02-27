@@ -16,7 +16,10 @@ import (
 
 var errShardNotFound = logicerr.New("shard not found")
 
-type hashedShard shardWrapper
+type hashedShard struct {
+	shardWrapper
+	hash uint64
+}
 
 type metricsWithID struct {
 	id string
@@ -127,9 +130,12 @@ func (e *StorageEngine) addShard(sh *shard.Shard) error {
 		return fmt.Errorf("shard with id %s was already added", strID)
 	}
 
-	e.shards[strID] = shardWrapper{
-		errorCount: atomic.NewUint32(0),
-		Shard:      sh,
+	e.shards[strID] = hashedShard{
+		shardWrapper: shardWrapper{
+			errorCount: atomic.NewUint32(0),
+			Shard:      sh,
+		},
+		hash: hrw.Hash([]byte(strID)),
 	}
 
 	e.shardPools[strID] = pool
@@ -144,7 +150,7 @@ func (e *StorageEngine) removeShards(ids ...string) {
 		return
 	}
 
-	ss := make([]shardWrapper, 0, len(ids))
+	ss := make([]hashedShard, 0, len(ids))
 
 	e.mtx.Lock()
 	for _, id := range ids {
@@ -276,7 +282,5 @@ func (e *StorageEngine) HandleNewEpoch(epoch uint64) {
 }
 
 func (s hashedShard) Hash() uint64 {
-	return hrw.Hash(
-		[]byte(s.Shard.ID().String()),
-	)
+	return s.hash
 }

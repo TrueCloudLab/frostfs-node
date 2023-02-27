@@ -21,6 +21,7 @@ import (
 	oidtest "github.com/TrueCloudLab/frostfs-sdk-go/object/id/test"
 	usertest "github.com/TrueCloudLab/frostfs-sdk-go/user/test"
 	"github.com/TrueCloudLab/frostfs-sdk-go/version"
+	"github.com/TrueCloudLab/hrw"
 	"github.com/TrueCloudLab/tzhash/tz"
 	"github.com/panjf2000/ants/v2"
 	"github.com/stretchr/testify/require"
@@ -86,9 +87,12 @@ func testNewEngineWithShards(shards ...*shard.Shard) *StorageEngine {
 			panic(err)
 		}
 
-		engine.shards[s.ID().String()] = shardWrapper{
-			errorCount: atomic.NewUint32(0),
-			Shard:      s,
+		engine.shards[s.ID().String()] = hashedShard{
+			shardWrapper: shardWrapper{
+				errorCount: atomic.NewUint32(0),
+				Shard:      s,
+			},
+			hash: hrw.Hash([]byte(s.ID().String())),
 		}
 		engine.shardPools[s.ID().String()] = pool
 	}
