@@ -93,7 +93,7 @@ func (mb *managerBuilder) BuildManagers(epoch uint64, p apireputation.PeerID) ([
 
 	copy(nodes, nmNodes)
 
-	hrw.SortSliceByValue(nodes, epoch)
+	hrw.SortHasherSliceByValue(nodes, epoch)
 
 	for i := range nodes {
 		if apireputation.ComparePeerKey(p, nodes[i].PublicKey()) {

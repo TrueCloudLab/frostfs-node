@@ -151,7 +151,7 @@ mainLoop:
 					return res, err
 				}
 
-				hrw.SortSliceByWeightValue(shards, weights, hrw.Hash([]byte(addr.EncodeToString())))
+				hrw.SortHasherSliceByWeightValue(shards, weights, hrw.Hash([]byte(addr.EncodeToString())))
 				for j := range shards {
 					if _, ok := shardMap[shards[j].ID().String()]; ok {
 						continue

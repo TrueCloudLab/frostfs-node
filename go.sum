@@ -52,6 +52,8 @@ github.com/TrueCloudLab/frostfs-sdk-go v0.0.0-20221214065929-4c779423f556 h1:Cc1
 github.com/TrueCloudLab/frostfs-sdk-go v0.0.0-20221214065929-4c779423f556/go.mod h1:4ZiG4jNLzrqeJbmZUrPI7wDZhQVPaf0zEIWa/eBsqBg=
 github.com/TrueCloudLab/hrw v1.1.0 h1:2U69PpUX1UtMWgh/RAg6D8mQW+/WsxbLNE+19EUhLhY=
 github.com/TrueCloudLab/hrw v1.1.0/go.mod h1:Pzi8Hy3qx12cew+ajVxgbtDVM4sRG9/gJnJLcL/yRyY=
+github.com/TrueCloudLab/hrw v1.1.1-0.20230227111858-79b208bebf52 h1:fBeG0EkL7Pa2D0SIiZt3yQYGpP/IvrXg4xEPAZ4Jjys=
+github.com/TrueCloudLab/hrw v1.1.1-0.20230227111858-79b208bebf52/go.mod h1:BG6NztCuNc0UFr6MWJ4MM1sUl9lxx6PBRwLmTxdre20=
 github.com/TrueCloudLab/rfc6979 v0.3.0 h1:0SYMAfQWh/TjnofqYQHy+s3rmQ5gi0fvOaDbqd60/Ic=
 github.com/TrueCloudLab/rfc6979 v0.3.0/go.mod h1:qylxFXFQ/sMvpZC/8JyWp+mfzk5Zj/KDT5FAbekhobc=
 github.com/TrueCloudLab/tzhash v1.7.0 h1:btGORepc7Dg+n4MxgJxv73c9eYhwSBI5HqsqUBRmJiw=

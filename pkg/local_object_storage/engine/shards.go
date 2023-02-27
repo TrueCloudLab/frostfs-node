@@ -216,7 +216,7 @@ func (e *StorageEngine) sortShardsByWeight(objAddr interface{ EncodeToString() s
 		weights = append(weights, e.shardWeight(sh.Shard))
 	}
 
-	hrw.SortSliceByWeightValue(shards, weights, hrw.Hash([]byte(objAddr.EncodeToString())))
+	hrw.SortHasherSliceByWeightValue(shards, weights, hrw.Hash([]byte(objAddr.EncodeToString())))
 
 	return shards
 }
