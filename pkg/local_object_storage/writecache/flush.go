@@ -70,7 +70,7 @@ func (c *cache) flushDB() {
 		m = m[:0]
 
 		c.modeMtx.RLock()
-		if c.readOnly() {
+		if c.readOnly() || !c.initialized.Load() {
 			c.modeMtx.RUnlock()
 			time.Sleep(time.Second)
 			continue
@@ -151,6 +151,9 @@ func (c *cache) flushBigObjects() {
 			if c.readOnly() {
 				c.modeMtx.RUnlock()
 				break
+			} else if !c.initialized.Load() {
+				c.modeMtx.RUnlock()
+				continue
 			}
 
 			_ = c.flushFSTree(true)

@@ -2,6 +2,7 @@ package writecache
 
 import (
 	"errors"
+	"sync"
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/blobstor/common"
 	storagelog "github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/internal/log"
@@ -13,10 +14,57 @@ import (
 )
 
 func (c *cache) initFlushMarks() {
+	var localWG sync.WaitGroup
+
+	localWG.Add(1)
+	go func() {
+		defer localWG.Done()
+
+		c.fsTreeFlushMarkUpdate()
+	}()
+
+	localWG.Add(1)
+	go func() {
+		defer localWG.Done()
+
+		c.dbFlushMarkUpdate()
+	}()
+
+	c.initWG.Add(1)
+	c.wg.Add(1)
+	go func() {
+		defer c.wg.Done()
+		defer c.initWG.Done()
+
+		localWG.Wait()
+
+		select {
+		case <-c.stopInitCh:
+			return
+		case <-c.closeCh:
+			return
+		default:
+		}
+
+		c.initialized.Store(true)
+	}()
+}
+
+var errStopIter = errors.New("stop iteration")
+
+func (c *cache) fsTreeFlushMarkUpdate() {
 	c.log.Info("filling flush marks for objects in FSTree")
 
 	var prm common.IteratePrm
 	prm.LazyHandler = func(addr oid.Address, _ func() ([]byte, error)) error {
+		select {
+		case <-c.closeCh:
+			return errStopIter
+		case <-c.stopInitCh:
+			return errStopIter
+		default:
+		}
+
 		flushed, needRemove := c.flushStatus(addr)
 		if flushed {
 			c.store.flushed.Add(addr.EncodeToString(), true)
@@ -37,7 +85,10 @@ func (c *cache) initFlushMarks() {
 		return nil
 	}
 	_, _ = c.fsTree.Iterate(prm)
+	c.log.Info("finished updating FSTree flush marks")
+}
 
+func (c *cache) dbFlushMarkUpdate() {
 	c.log.Info("filling flush marks for objects in database")
 
 	var m []string
@@ -45,6 +96,14 @@ func (c *cache) initFlushMarks() {
 	var lastKey []byte
 	var batchSize = flushBatchSize
 	for {
+		select {
+		case <-c.closeCh:
+			return
+		case <-c.stopInitCh:
+			return
+		default:
+		}
+
 		m = m[:0]
 		indices = indices[:0]
 

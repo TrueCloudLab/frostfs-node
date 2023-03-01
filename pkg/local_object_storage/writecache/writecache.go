@@ -10,6 +10,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 	"go.etcd.io/bbolt"
+	"go.uber.org/atomic"
 	"go.uber.org/zap"
 )
 
@@ -48,8 +49,11 @@ type cache struct {
 	// mtx protects statistics, counters and compressFlags.
 	mtx sync.RWMutex
 
-	mode    mode.Mode
-	modeMtx sync.RWMutex
+	mode        mode.Mode
+	initialized atomic.Bool
+	stopInitCh  chan struct{}  // used to sync initWG initialisation routines and _only_ them
+	initWG      sync.WaitGroup // for initialisation routines only
+	modeMtx     sync.RWMutex
 
 	// compressFlags maps address of a big object to boolean value indicating
 	// whether object should be compressed.
@@ -57,7 +61,7 @@ type cache struct {
 
 	// flushCh is a channel with objects to flush.
 	flushCh chan *object.Object
-	// closeCh is close channel.
+	// closeCh is close channel, protected by modeMtx.
 	closeCh chan struct{}
 	// wg is a wait group for flush workers.
 	wg sync.WaitGroup
@@ -89,8 +93,9 @@ var (
 // New creates new writecache instance.
 func New(opts ...Option) Cache {
 	c := &cache{
-		flushCh: make(chan *object.Object),
-		mode:    mode.ReadWrite,
+		flushCh:    make(chan *object.Object),
+		mode:       mode.ReadWrite,
+		stopInitCh: make(chan struct{}),
 
 		compressFlags: make(map[string]struct{}),
 		options: options{
@@ -151,8 +156,11 @@ func (c *cache) Init() error {
 
 // Close closes db connection and stops services. Executes ObjectCounters.FlushAndClose op.
 func (c *cache) Close() error {
+	c.modeMtx.Lock()
+	defer c.modeMtx.Unlock()
+
 	// Finish all in-progress operations.
-	if err := c.SetMode(mode.ReadOnly); err != nil {
+	if err := c.setMode(mode.ReadOnly); err != nil {
 		return err
 	}
 
@@ -163,6 +171,8 @@ func (c *cache) Close() error {
 	if c.closeCh != nil {
 		c.closeCh = nil
 	}
+
+	c.initialized.Store(false)
 
 	var err error
 	if c.db != nil {

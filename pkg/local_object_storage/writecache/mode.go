@@ -11,6 +11,9 @@ import (
 // ErrReadOnly is returned when Put/Write is performed in a read-only mode.
 var ErrReadOnly = logicerr.New("write-cache is in read-only mode")
 
+// ErrNotInitialized is returned when write-cache is initializing.
+var ErrNotInitialized = logicerr.New("write-cache is not initialized yet")
+
 // SetMode sets write-cache mode of operation.
 // When shard is put in read-only mode all objects in memory are flushed to disk
 // and all background jobs are suspended.
@@ -18,15 +21,36 @@ func (c *cache) SetMode(m mode.Mode) error {
 	c.modeMtx.Lock()
 	defer c.modeMtx.Unlock()
 
-	if m.NoMetabase() && !c.mode.NoMetabase() {
-		err := c.flush(true)
+	return c.setMode(m)
+}
+
+// setMode applies new mode. Must be called with cache.modeMtx lock taken.
+func (c *cache) setMode(m mode.Mode) error {
+	var err error
+	turnOffMeta := m.NoMetabase()
+
+	if turnOffMeta && !c.mode.NoMetabase() {
+		err = c.flush(true)
 		if err != nil {
 			return err
 		}
 	}
 
+	if !c.initialized.Load() {
+		close(c.stopInitCh)
+
+		c.initWG.Wait()
+		c.stopInitCh = make(chan struct{})
+
+		defer func() {
+			if err == nil && !turnOffMeta {
+				c.initFlushMarks()
+			}
+		}()
+	}
+
 	if c.db != nil {
-		if err := c.db.Close(); err != nil {
+		if err = c.db.Close(); err != nil {
 			return fmt.Errorf("can't close write-cache database: %w", err)
 		}
 	}
@@ -39,12 +63,12 @@ func (c *cache) SetMode(m mode.Mode) error {
 		time.Sleep(time.Second)
 	}
 
-	if m.NoMetabase() {
+	if turnOffMeta {
 		c.mode = m
 		return nil
 	}
 
-	if err := c.openStore(m.ReadOnly()); err != nil {
+	if err = c.openStore(m.ReadOnly()); err != nil {
 		return err
 	}
 

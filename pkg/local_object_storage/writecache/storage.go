@@ -76,6 +76,9 @@ func (c *cache) openStore(readOnly bool) error {
 	if c.flushed == nil {
 		c.flushed, _ = lru.NewWithEvict[string, bool](c.maxFlushedMarksCount, c.removeFlushed)
 	}
+
+	c.initialized.Store(false)
+
 	return nil
 }
 

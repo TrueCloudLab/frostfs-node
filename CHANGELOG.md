@@ -23,6 +23,7 @@ Changelog for FrostFS Node
 - Storage engine now can start even when some shard components are unavailable (#2238)
 - `neofs-cli` buffer for object put increased from 4 KiB to 3 MiB (#2243)
 - Expired locked object is available for reading (#56)
+- Initialize write-cache asynchronously (#32)
 
 ### Fixed
 - Increase payload size metric on shards' `put` operation (#1794)
