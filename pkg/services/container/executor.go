@@ -6,6 +6,7 @@ import (
 
 	"github.com/TrueCloudLab/frostfs-api-go/v2/container"
 	"github.com/TrueCloudLab/frostfs-api-go/v2/session"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util/response"
 )
 
 type ServiceExecutor interface {
@@ -21,12 +22,15 @@ type executorSvc struct {
 	Server
 
 	exec ServiceExecutor
+
+	respSvc *response.Service
 }
 
 // NewExecutionService wraps ServiceExecutor and returns Container Service interface.
-func NewExecutionService(exec ServiceExecutor) Server {
+func NewExecutionService(exec ServiceExecutor, respSvc *response.Service) Server {
 	return &executorSvc{
-		exec: exec,
+		exec:    exec,
+		respSvc: respSvc,
 	}
 }
 
@@ -44,6 +48,7 @@ func (s *executorSvc) Put(ctx context.Context, req *container.PutRequest) (*cont
 	resp := new(container.PutResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
@@ -61,6 +66,7 @@ func (s *executorSvc) Delete(ctx context.Context, req *container.DeleteRequest) 
 	resp := new(container.DeleteResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
@@ -73,6 +79,7 @@ func (s *executorSvc) Get(ctx context.Context, req *container.GetRequest) (*cont
 	resp := new(container.GetResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
@@ -85,6 +92,7 @@ func (s *executorSvc) List(ctx context.Context, req *container.ListRequest) (*co
 	resp := new(container.ListResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
@@ -102,6 +110,7 @@ func (s *executorSvc) SetExtendedACL(ctx context.Context, req *container.SetExte
 	resp := new(container.SetExtendedACLResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
@@ -114,5 +123,6 @@ func (s *executorSvc) GetExtendedACL(ctx context.Context, req *container.GetExte
 	resp := new(container.GetExtendedACLResponse)
 	resp.SetBody(respBody)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }

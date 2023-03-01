@@ -6,7 +6,6 @@ import (
 	"io"
 
 	coreclient "github.com/TrueCloudLab/frostfs-node/pkg/core/client"
-	"github.com/TrueCloudLab/frostfs-node/pkg/core/netmap"
 	"github.com/TrueCloudLab/frostfs-node/pkg/local_object_storage/engine"
 	internal "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
 	internalclient "github.com/TrueCloudLab/frostfs-node/pkg/services/object/internal/client"
@@ -28,9 +27,7 @@ type clientWrapper struct {
 	client coreclient.MultiAddressClient
 }
 
-type storageEngineWrapper struct {
-	engine *engine.StorageEngine
-}
+type storageEngineWrapper engine.StorageEngine
 
 type partWriter struct {
 	ObjectWriter
@@ -42,10 +39,6 @@ type partWriter struct {
 
 type hasherWrapper struct {
 	hash io.Writer
-}
-
-type nmSrcWrapper struct {
-	nmSrc netmap.Source
 }
 
 func NewSimpleObjectWriter() *SimpleObjectWriter {
@@ -87,7 +80,7 @@ func (c *clientCacheWrapper) get(info coreclient.NodeInfo) (getClient, error) {
 }
 
 func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*object.Object, error) {
-	if exec.isForwardingEnabled() {
+	if exec.prm.forwarder != nil {
 		return exec.prm.forwarder(info, c.client)
 	}
 
@@ -96,20 +89,20 @@ func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*obj
 		return nil, err
 	}
 
-	if exec.headOnly() {
+	if exec.headOnly {
 		var prm internalclient.HeadObjectPrm
 
-		prm.SetContext(exec.context())
+		prm.SetContext(exec.ctx)
 		prm.SetClient(c.client)
 		prm.SetTTL(exec.prm.common.TTL())
 		prm.SetNetmapEpoch(exec.curProcEpoch)
-		prm.SetAddress(exec.address())
+		prm.SetAddress(exec.prm.addr)
 		prm.SetPrivateKey(key)
 		prm.SetSessionToken(exec.prm.common.SessionToken())
 		prm.SetBearerToken(exec.prm.common.BearerToken())
 		prm.SetXHeaders(exec.prm.common.XHeaders())
 
-		if exec.isRaw() {
+		if exec.prm.raw {
 			prm.SetRawFlag()
 		}
 
@@ -122,21 +115,21 @@ func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*obj
 	}
 	// we don't specify payload writer because we accumulate
 	// the object locally (even huge).
-	if rng := exec.ctxRange(); rng != nil {
+	if rng := exec.prm.rng; rng != nil {
 		var prm internalclient.PayloadRangePrm
 
-		prm.SetContext(exec.context())
+		prm.SetContext(exec.ctx)
 		prm.SetClient(c.client)
 		prm.SetTTL(exec.prm.common.TTL())
 		prm.SetNetmapEpoch(exec.curProcEpoch)
-		prm.SetAddress(exec.address())
+		prm.SetAddress(exec.prm.addr)
 		prm.SetPrivateKey(key)
 		prm.SetSessionToken(exec.prm.common.SessionToken())
 		prm.SetBearerToken(exec.prm.common.BearerToken())
 		prm.SetXHeaders(exec.prm.common.XHeaders())
 		prm.SetRange(rng)
 
-		if exec.isRaw() {
+		if exec.prm.raw {
 			prm.SetRawFlag()
 		}
 
@@ -173,17 +166,17 @@ func (c *clientWrapper) getObject(exec *execCtx, info coreclient.NodeInfo) (*obj
 func (c *clientWrapper) get(exec *execCtx, key *ecdsa.PrivateKey) (*object.Object, error) {
 	var prm internalclient.GetObjectPrm
 
-	prm.SetContext(exec.context())
+	prm.SetContext(exec.ctx)
 	prm.SetClient(c.client)
 	prm.SetTTL(exec.prm.common.TTL())
 	prm.SetNetmapEpoch(exec.curProcEpoch)
-	prm.SetAddress(exec.address())
+	prm.SetAddress(exec.prm.addr)
 	prm.SetPrivateKey(key)
 	prm.SetSessionToken(exec.prm.common.SessionToken())
 	prm.SetBearerToken(exec.prm.common.BearerToken())
 	prm.SetXHeaders(exec.prm.common.XHeaders())
 
-	if exec.isRaw() {
+	if exec.prm.raw {
 		prm.SetRawFlag()
 	}
 
@@ -195,24 +188,25 @@ func (c *clientWrapper) get(exec *execCtx, key *ecdsa.PrivateKey) (*object.Objec
 	return res.Object(), nil
 }
 
-func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
-	if exec.headOnly() {
+func (w *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
+	e := (*engine.StorageEngine)(w)
+	if exec.headOnly {
 		var headPrm engine.HeadPrm
-		headPrm.WithAddress(exec.address())
-		headPrm.WithRaw(exec.isRaw())
+		headPrm.WithAddress(exec.prm.addr)
+		headPrm.WithRaw(exec.prm.raw)
 
-		r, err := e.engine.Head(headPrm)
+		r, err := e.Head(headPrm)
 		if err != nil {
 			return nil, err
 		}
 
 		return r.Header(), nil
-	} else if rng := exec.ctxRange(); rng != nil {
+	} else if rng := exec.prm.rng; rng != nil {
 		var getRange engine.RngPrm
-		getRange.WithAddress(exec.address())
+		getRange.WithAddress(exec.prm.addr)
 		getRange.WithPayloadRange(rng)
 
-		r, err := e.engine.GetRange(getRange)
+		r, err := e.GetRange(getRange)
 		if err != nil {
 			return nil, err
 		}
@@ -220,9 +214,9 @@ func (e *storageEngineWrapper) get(exec *execCtx) (*object.Object, error) {
 		return r.Object(), nil
 	} else {
 		var getPrm engine.GetPrm
-		getPrm.WithAddress(exec.address())
+		getPrm.WithAddress(exec.prm.addr)
 
-		r, err := e.engine.Get(getPrm)
+		r, err := e.Get(getPrm)
 		if err != nil {
 			return nil, err
 		}
@@ -249,8 +243,4 @@ func payloadOnlyObject(payload []byte) *object.Object {
 func (h *hasherWrapper) WriteChunk(p []byte) error {
 	_, err := h.hash.Write(p)
 	return err
-}
-
-func (n *nmSrcWrapper) currentEpoch() (uint64, error) {
-	return n.nmSrc.Epoch()
 }

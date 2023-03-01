@@ -33,7 +33,7 @@ func (exec *execCtx) assemble() {
 
 	exec.log.Debug("trying to assemble the object...")
 
-	splitInfo := exec.splitInfo()
+	splitInfo := exec.splitInfo
 
 	childID, ok := splitInfo.Link()
 	if !ok {
@@ -47,7 +47,7 @@ func (exec *execCtx) assemble() {
 	prev, children := exec.initFromChild(childID)
 
 	if len(children) > 0 {
-		if exec.ctxRange() == nil {
+		if exec.prm.rng == nil {
 			if ok := exec.writeCollectedHeader(); ok {
 				exec.overtakePayloadDirectly(children, nil, true)
 			}
@@ -100,7 +100,7 @@ func (exec *execCtx) initFromChild(obj oid.ID) (prev *oid.ID, children []oid.ID)
 
 	var payload []byte
 
-	if rng := exec.ctxRange(); rng != nil {
+	if rng := exec.prm.rng; rng != nil {
 		seekOff := rng.GetOffset()
 		seekLen := rng.GetLength()
 		seekTo := seekOff + seekLen
@@ -146,7 +146,7 @@ func (exec *execCtx) initFromChild(obj oid.ID) (prev *oid.ID, children []oid.ID)
 }
 
 func (exec *execCtx) overtakePayloadDirectly(children []oid.ID, rngs []objectSDK.Range, checkRight bool) {
-	withRng := len(rngs) > 0 && exec.ctxRange() != nil
+	withRng := len(rngs) > 0 && exec.prm.rng != nil
 
 	for i := range children {
 		var r *objectSDK.Range
@@ -194,7 +194,7 @@ func (exec *execCtx) buildChainInReverse(prev oid.ID) ([]oid.ID, []objectSDK.Ran
 	var (
 		chain   = make([]oid.ID, 0)
 		rngs    = make([]objectSDK.Range, 0)
-		seekRng = exec.ctxRange()
+		seekRng = exec.prm.rng
 		from    = seekRng.GetOffset()
 		to      = from + seekRng.GetLength()
 

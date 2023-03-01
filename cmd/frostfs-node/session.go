@@ -53,10 +53,7 @@ func initSessionService(c *cfg) {
 	server := sessionTransportGRPC.New(
 		sessionSvc.NewSignService(
 			&c.key.PrivateKey,
-			sessionSvc.NewResponseService(
-				sessionSvc.NewExecutionService(c.privateTokenStore, c.log),
-				c.respSvc,
-			),
+			sessionSvc.NewExecutionService(c.privateTokenStore, c.respSvc, c.log),
 		),
 	)
 

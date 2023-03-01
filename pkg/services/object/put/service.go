@@ -22,7 +22,7 @@ type MaxSizeSource interface {
 }
 
 type Service struct {
-	*cfg
+	cfg
 }
 
 type Option func(*cfg)
@@ -57,31 +57,28 @@ type cfg struct {
 	log *logger.Logger
 }
 
-func defaultCfg() *cfg {
-	return &cfg{
-		remotePool: util.NewPseudoWorkerPool(),
-		localPool:  util.NewPseudoWorkerPool(),
-		log:        &logger.Logger{Logger: zap.L()},
-	}
+func (c *cfg) initDefault() {
+	c.remotePool = util.NewPseudoWorkerPool()
+	c.localPool = util.NewPseudoWorkerPool()
+	c.log = &logger.Logger{Logger: zap.L()}
 }
 
 func NewService(opts ...Option) *Service {
-	c := defaultCfg()
+	var s Service
+	s.cfg.initDefault()
 
 	for i := range opts {
-		opts[i](c)
+		opts[i](&s.cfg)
 	}
 
-	c.fmtValidator = object.NewFormatValidator(c.fmtValidatorOpts...)
+	s.cfg.fmtValidator = object.NewFormatValidator(s.cfg.fmtValidatorOpts...)
 
-	return &Service{
-		cfg: c,
-	}
+	return &s
 }
 
 func (p *Service) Put(ctx context.Context) (*Streamer, error) {
 	return &Streamer{
-		cfg: p.cfg,
+		cfg: &p.cfg,
 		ctx: ctx,
 	}, nil
 }

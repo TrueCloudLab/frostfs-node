@@ -15,7 +15,7 @@ import (
 
 // Service utility serving requests of Object.Get service.
 type Service struct {
-	*cfg
+	cfg
 }
 
 // Option is a Service's constructor option.
@@ -60,24 +60,21 @@ type cfg struct {
 	keyStorage *util.KeyStorage
 }
 
-func defaultCfg() *cfg {
-	return &cfg{
-		log: &logger.Logger{Logger: zap.L()},
-	}
+func (c *cfg) initDefault() {
+	c.log = &logger.Logger{Logger: zap.L()}
 }
 
 // New creates, initializes and returns utility serving
 // Object.Get service requests.
 func New(opts ...Option) *Service {
-	c := defaultCfg()
+	var s Service
+	s.cfg.initDefault()
 
 	for i := range opts {
-		opts[i](c)
+		opts[i](&s.cfg)
 	}
 
-	return &Service{
-		cfg: c,
-	}
+	return &s
 }
 
 // WithLogger returns option to specify Delete service's logger.

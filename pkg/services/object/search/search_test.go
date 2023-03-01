@@ -51,7 +51,7 @@ type simpleIDWriter struct {
 
 type testEpochReceiver uint64
 
-func (e testEpochReceiver) currentEpoch() (uint64, error) {
+func (e testEpochReceiver) Epoch() (uint64, error) {
 	return uint64(e), nil
 }
 
@@ -103,7 +103,7 @@ func (c *testClientCache) get(info clientcore.NodeInfo) (searchClient, error) {
 }
 
 func (s *testStorage) search(exec *execCtx) ([]oid.ID, error) {
-	v, ok := s.items[exec.containerID().EncodeToString()]
+	v, ok := s.items[exec.prm.cnr.EncodeToString()]
 	if !ok {
 		return nil, nil
 	}
@@ -112,7 +112,7 @@ func (s *testStorage) search(exec *execCtx) ([]oid.ID, error) {
 }
 
 func (c *testStorage) searchObjects(exec *execCtx, _ clientcore.NodeInfo) ([]oid.ID, error) {
-	v, ok := c.items[exec.containerID().EncodeToString()]
+	v, ok := c.items[exec.prm.cnr.EncodeToString()]
 	if !ok {
 		return nil, nil
 	}
@@ -146,7 +146,7 @@ func TestGetLocalOnly(t *testing.T) {
 	ctx := context.Background()
 
 	newSvc := func(storage *testStorage) *Service {
-		svc := &Service{cfg: new(cfg)}
+		svc := &Service{}
 		svc.log = test.NewLogger(false)
 		svc.localStorage = storage
 
@@ -248,7 +248,7 @@ func TestGetRemoteSmall(t *testing.T) {
 	container.CalculateID(&id, cnr)
 
 	newSvc := func(b *testPlacementBuilder, c *testClientCache) *Service {
-		svc := &Service{cfg: new(cfg)}
+		svc := &Service{}
 		svc.log = test.NewLogger(false)
 		svc.localStorage = newTestStorage()
 
@@ -261,7 +261,7 @@ func TestGetRemoteSmall(t *testing.T) {
 			},
 		}
 		svc.clientConstructor = c
-		svc.currentEpochReceiver = testEpochReceiver(curEpoch)
+		svc.epochSource = testEpochReceiver(curEpoch)
 
 		return svc
 	}
@@ -357,7 +357,7 @@ func TestGetFromPastEpoch(t *testing.T) {
 	ids22 := generateIDs(10)
 	c22.addResult(idCnr, ids22, nil)
 
-	svc := &Service{cfg: new(cfg)}
+	svc := &Service{}
 	svc.log = test.NewLogger(false)
 	svc.localStorage = newTestStorage()
 
@@ -388,7 +388,7 @@ func TestGetFromPastEpoch(t *testing.T) {
 		},
 	}
 
-	svc.currentEpochReceiver = testEpochReceiver(curEpoch)
+	svc.epochSource = testEpochReceiver(curEpoch)
 
 	w := new(simpleIDWriter)
 

@@ -24,12 +24,12 @@ func (w *headSvcWrapper) headAddress(exec *execCtx, addr oid.Address) (*object.O
 	wr := getsvc.NewSimpleObjectWriter()
 
 	p := getsvc.HeadPrm{}
-	p.SetCommonParameters(exec.commonParameters())
+	p.SetCommonParameters(exec.prm.common)
 	p.SetHeaderWriter(wr)
 	p.WithRawFlag(true)
 	p.WithAddress(addr)
 
-	err := (*getsvc.Service)(w).Head(exec.context(), p)
+	err := (*getsvc.Service)(w).Head(exec.ctx, p)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func (w *headSvcWrapper) headAddress(exec *execCtx, addr oid.Address) (*object.O
 }
 
 func (w *headSvcWrapper) splitInfo(exec *execCtx) (*object.SplitInfo, error) {
-	_, err := w.headAddress(exec, exec.address())
+	_, err := w.headAddress(exec, exec.prm.addr)
 
 	var errSplitInfo *object.SplitInfoError
 
@@ -89,11 +89,11 @@ func (w *searchSvcWrapper) splitMembers(exec *execCtx) ([]oid.ID, error) {
 
 	p := searchsvc.Prm{}
 	p.SetWriter(wr)
-	p.SetCommonParameters(exec.commonParameters())
-	p.WithContainerID(exec.containerID())
+	p.SetCommonParameters(exec.prm.common)
+	p.WithContainerID(exec.prm.addr.Container())
 	p.WithSearchFilters(fs)
 
-	err := (*searchsvc.Service)(w).Search(exec.context(), p)
+	err := (*searchsvc.Service)(w).Search(exec.ctx, p)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (s *simpleIDWriter) WriteIDs(ids []oid.ID) error {
 }
 
 func (w *putSvcWrapper) put(exec *execCtx) (*oid.ID, error) {
-	streamer, err := (*putsvc.Service)(w).Put(exec.context())
+	streamer, err := (*putsvc.Service)(w).Put(exec.ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ func (w *putSvcWrapper) put(exec *execCtx) (*oid.ID, error) {
 	payload := exec.tombstoneObj.Payload()
 
 	initPrm := new(putsvc.PutInitPrm).
-		WithCommonPrm(exec.commonParameters()).
+		WithCommonPrm(exec.prm.common).
 		WithObject(exec.tombstoneObj.CutPayload())
 
 	err = streamer.Init(initPrm)

@@ -19,10 +19,8 @@ func initAccountingService(c *cfg) {
 	server := accountingTransportGRPC.New(
 		accountingService.NewSignService(
 			&c.key.PrivateKey,
-			accountingService.NewResponseService(
-				accountingService.NewExecutionService(
-					accounting.NewExecutor(balanceMorphWrapper),
-				),
+			accountingService.NewExecutionService(
+				accounting.NewExecutor(balanceMorphWrapper),
 				c.respSvc,
 			),
 		),

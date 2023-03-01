@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	objectCore "github.com/TrueCloudLab/frostfs-node/pkg/core/object"
-	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/transformer"
 	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	oid "github.com/TrueCloudLab/frostfs-sdk-go/object/id"
 )
@@ -24,40 +23,26 @@ type ObjectStorage interface {
 
 type localTarget struct {
 	storage ObjectStorage
-
-	obj  *object.Object
-	meta objectCore.ContentMeta
 }
 
-func (t *localTarget) WriteObject(obj *object.Object, meta objectCore.ContentMeta) error {
-	t.obj = obj
-	t.meta = meta
-
-	return nil
-}
-
-func (t *localTarget) Close() (*transformer.AccessIdentifiers, error) {
-	switch t.meta.Type() {
+func (t localTarget) WriteObject(obj *object.Object, meta objectCore.ContentMeta) error {
+	switch meta.Type() {
 	case object.TypeTombstone:
-		err := t.storage.Delete(objectCore.AddressOf(t.obj), t.meta.Objects())
+		err := t.storage.Delete(objectCore.AddressOf(obj), meta.Objects())
 		if err != nil {
-			return nil, fmt.Errorf("could not delete objects from tombstone locally: %w", err)
+			return fmt.Errorf("could not delete objects from tombstone locally: %w", err)
 		}
 	case object.TypeLock:
-		err := t.storage.Lock(objectCore.AddressOf(t.obj), t.meta.Objects())
+		err := t.storage.Lock(objectCore.AddressOf(obj), meta.Objects())
 		if err != nil {
-			return nil, fmt.Errorf("could not lock object from lock objects locally: %w", err)
+			return fmt.Errorf("could not lock object from lock objects locally: %w", err)
 		}
 	default:
 		// objects that do not change meta storage
 	}
 
-	if err := t.storage.Put(t.obj); err != nil {
-		return nil, fmt.Errorf("(%T) could not put object to local storage: %w", t, err)
+	if err := t.storage.Put(obj); err != nil {
+		return fmt.Errorf("(%T) could not put object to local storage: %w", t, err)
 	}
-
-	id, _ := t.obj.ID()
-
-	return new(transformer.AccessIdentifiers).
-		WithSelfID(id), nil
+	return nil
 }

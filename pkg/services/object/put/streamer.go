@@ -10,6 +10,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object/util"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/placement"
 	"github.com/TrueCloudLab/frostfs-node/pkg/services/object_manager/transformer"
+	pkgutil "github.com/TrueCloudLab/frostfs-node/pkg/util"
 	containerSDK "github.com/TrueCloudLab/frostfs-sdk-go/container"
 	"github.com/TrueCloudLab/frostfs-sdk-go/object"
 	"github.com/TrueCloudLab/frostfs-sdk-go/user"
@@ -215,12 +216,11 @@ func (p *Streamer) newCommonTarget(prm *PutInitPrm) transformer.ObjectTarget {
 
 			extraBroadcastEnabled: withBroadcast,
 		},
-		payload:    getPayload(),
-		remotePool: p.remotePool,
-		localPool:  p.localPool,
+		payload:       getPayload(),
+		getWorkerPool: p.getWorkerPool,
 		nodeTargetInitializer: func(node nodeDesc) preparedObjectTarget {
 			if node.local {
-				return &localTarget{
+				return localTarget{
 					storage: p.localStore,
 				}
 			}
@@ -239,8 +239,6 @@ func (p *Streamer) newCommonTarget(prm *PutInitPrm) transformer.ObjectTarget {
 		relay: relay,
 		fmt:   p.fmtValidator,
 		log:   p.log,
-
-		isLocalKey: p.netmapKeys.IsLocalKey,
 	}
 }
 
@@ -276,4 +274,11 @@ func (p *Streamer) Close() (*PutResponse, error) {
 	return &PutResponse{
 		id: ids.SelfID(),
 	}, nil
+}
+
+func (p *Streamer) getWorkerPool(pub []byte) (pkgutil.WorkerPool, bool) {
+	if p.netmapKeys.IsLocalKey(pub) {
+		return p.localPool, true
+	}
+	return p.remotePool, false
 }

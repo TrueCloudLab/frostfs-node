@@ -56,7 +56,7 @@ type testClient struct {
 
 type testEpochReceiver uint64
 
-func (e testEpochReceiver) currentEpoch() (uint64, error) {
+func (e testEpochReceiver) Epoch() (uint64, error) {
 	return uint64(e), nil
 }
 
@@ -118,7 +118,7 @@ func newTestClient() *testClient {
 }
 
 func (c *testClient) getObject(exec *execCtx, _ client.NodeInfo) (*objectSDK.Object, error) {
-	v, ok := c.results[exec.address().EncodeToString()]
+	v, ok := c.results[exec.prm.addr.EncodeToString()]
 	if !ok {
 		var errNotFound apistatus.ObjectNotFound
 
@@ -129,7 +129,7 @@ func (c *testClient) getObject(exec *execCtx, _ client.NodeInfo) (*objectSDK.Obj
 		return nil, v.err
 	}
 
-	return cutToRange(v.obj, exec.ctxRange()), nil
+	return cutToRange(v.obj, exec.prm.rng), nil
 }
 
 func (c *testClient) addResult(addr oid.Address, obj *objectSDK.Object, err error) {
@@ -143,7 +143,7 @@ func (s *testStorage) get(exec *execCtx) (*objectSDK.Object, error) {
 	var (
 		ok    bool
 		obj   *objectSDK.Object
-		sAddr = exec.address().EncodeToString()
+		sAddr = exec.prm.addr.EncodeToString()
 	)
 
 	if _, ok = s.inhumed[sAddr]; ok {
@@ -157,7 +157,7 @@ func (s *testStorage) get(exec *execCtx) (*objectSDK.Object, error) {
 	}
 
 	if obj, ok = s.phy[sAddr]; ok {
-		return cutToRange(obj, exec.ctxRange()), nil
+		return cutToRange(obj, exec.prm.rng), nil
 	}
 
 	var errNotFound apistatus.ObjectNotFound
@@ -211,7 +211,7 @@ func TestGetLocalOnly(t *testing.T) {
 	ctx := context.Background()
 
 	newSvc := func(storage *testStorage) *Service {
-		svc := &Service{cfg: new(cfg)}
+		svc := &Service{}
 		svc.log = test.NewLogger(false)
 		svc.localStorage = storage
 		svc.assembly = true
@@ -473,7 +473,7 @@ func TestGetRemoteSmall(t *testing.T) {
 	container.CalculateID(&idCnr, cnr)
 
 	newSvc := func(b *testPlacementBuilder, c *testClientCache) *Service {
-		svc := &Service{cfg: new(cfg)}
+		svc := &Service{}
 		svc.log = test.NewLogger(false)
 		svc.localStorage = newTestStorage()
 		svc.assembly = true
@@ -487,7 +487,7 @@ func TestGetRemoteSmall(t *testing.T) {
 			},
 		}
 		svc.clientCache = c
-		svc.currentEpochReceiver = testEpochReceiver(curEpoch)
+		svc.epochSource = testEpochReceiver(curEpoch)
 
 		return svc
 	}
@@ -1150,7 +1150,7 @@ func TestGetFromPastEpoch(t *testing.T) {
 	c22 := newTestClient()
 	c22.addResult(addr, obj, nil)
 
-	svc := &Service{cfg: new(cfg)}
+	svc := &Service{}
 	svc.log = test.NewLogger(false)
 	svc.localStorage = newTestStorage()
 	svc.assembly = true
@@ -1182,7 +1182,7 @@ func TestGetFromPastEpoch(t *testing.T) {
 		},
 	}
 
-	svc.currentEpochReceiver = testEpochReceiver(curEpoch)
+	svc.epochSource = testEpochReceiver(curEpoch)
 
 	w := NewSimpleObjectWriter()
 

@@ -9,7 +9,7 @@ import (
 
 // Service implements Search operation of Object service v2.
 type Service struct {
-	*cfg
+	cfg
 }
 
 // Option represents Service constructor option.
@@ -23,15 +23,13 @@ type cfg struct {
 
 // NewService constructs Service instance from provided options.
 func NewService(opts ...Option) *Service {
-	c := new(cfg)
+	var s Service
 
 	for i := range opts {
-		opts[i](c)
+		opts[i](&s.cfg)
 	}
 
-	return &Service{
-		cfg: c,
-	}
+	return &s
 }
 
 // Search calls internal service and returns v2 object stream.

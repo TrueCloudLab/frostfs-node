@@ -152,17 +152,15 @@ func initNetmapService(c *cfg) {
 	server := netmapTransportGRPC.New(
 		netmapService.NewSignService(
 			&c.key.PrivateKey,
-			netmapService.NewResponseService(
-				netmapService.NewExecutionService(
-					c,
-					c.apiVersion,
-					&netInfo{
-						netState:          c.cfgNetmap.state,
-						magic:             c.cfgMorph.client,
-						morphClientNetMap: c.cfgNetmap.wrapper,
-						msPerBlockRdr:     c.cfgMorph.client.MsPerBlock,
-					},
-				),
+			netmapService.NewExecutionService(
+				c,
+				c.apiVersion,
+				&netInfo{
+					netState:          c.cfgNetmap.state,
+					magic:             c.cfgMorph.client,
+					morphClientNetMap: c.cfgNetmap.wrapper,
+					msPerBlockRdr:     c.cfgMorph.client.MsPerBlock,
+				},
 				c.respSvc,
 			),
 		),

@@ -8,6 +8,7 @@ import (
 	"github.com/TrueCloudLab/frostfs-api-go/v2/netmap"
 	"github.com/TrueCloudLab/frostfs-api-go/v2/refs"
 	"github.com/TrueCloudLab/frostfs-node/pkg/core/version"
+	"github.com/TrueCloudLab/frostfs-node/pkg/services/util/response"
 	netmapSDK "github.com/TrueCloudLab/frostfs-sdk-go/netmap"
 	versionsdk "github.com/TrueCloudLab/frostfs-sdk-go/version"
 )
@@ -18,6 +19,8 @@ type executorSvc struct {
 	state NodeState
 
 	netInfo NetworkInfo
+
+	respSvc *response.Service
 }
 
 // NodeState encapsulates information
@@ -42,8 +45,8 @@ type NetworkInfo interface {
 	Dump(versionsdk.Version) (*netmapSDK.NetworkInfo, error)
 }
 
-func NewExecutionService(s NodeState, v versionsdk.Version, netInfo NetworkInfo) Server {
-	if s == nil || netInfo == nil || !version.IsValid(v) {
+func NewExecutionService(s NodeState, v versionsdk.Version, netInfo NetworkInfo, respSvc *response.Service) Server {
+	if s == nil || netInfo == nil || !version.IsValid(v) || respSvc == nil {
 		// this should never happen, otherwise it programmers bug
 		panic("can't create netmap execution service")
 	}
@@ -51,6 +54,7 @@ func NewExecutionService(s NodeState, v versionsdk.Version, netInfo NetworkInfo)
 	res := &executorSvc{
 		state:   s,
 		netInfo: netInfo,
+		respSvc: respSvc,
 	}
 
 	v.WriteToV2(&res.version)
@@ -96,6 +100,7 @@ func (s *executorSvc) LocalNodeInfo(
 	resp := new(netmap.LocalNodeInfoResponse)
 	resp.SetBody(body)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
@@ -126,10 +131,11 @@ func (s *executorSvc) NetworkInfo(
 	resp := new(netmap.NetworkInfoResponse)
 	resp.SetBody(body)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }
 
-func (s *executorSvc) Snapshot(_ context.Context, req *netmap.SnapshotRequest) (*netmap.SnapshotResponse, error) {
+func (s *executorSvc) Snapshot(_ context.Context, _ *netmap.SnapshotRequest) (*netmap.SnapshotResponse, error) {
 	var nm netmap.NetMap
 
 	err := s.state.ReadCurrentNetMap(&nm)
@@ -143,5 +149,6 @@ func (s *executorSvc) Snapshot(_ context.Context, req *netmap.SnapshotRequest) (
 	resp := new(netmap.SnapshotResponse)
 	resp.SetBody(body)
 
+	s.respSvc.SetMeta(resp)
 	return resp, nil
 }

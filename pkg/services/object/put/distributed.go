@@ -17,13 +17,10 @@ import (
 
 type preparedObjectTarget interface {
 	WriteObject(*objectSDK.Object, object.ContentMeta) error
-	Close() (*transformer.AccessIdentifiers, error)
 }
 
 type distributedTarget struct {
 	traversal traversal
-
-	remotePool, localPool util.WorkerPool
 
 	obj     *objectSDK.Object
 	objMeta object.ContentMeta
@@ -32,7 +29,7 @@ type distributedTarget struct {
 
 	nodeTargetInitializer func(nodeDesc) preparedObjectTarget
 
-	isLocalKey func([]byte) bool
+	getWorkerPool func([]byte) (util.WorkerPool, bool)
 
 	relay func(nodeDesc) error
 
@@ -47,9 +44,6 @@ type traversal struct {
 
 	// need of additional broadcast after the object is saved
 	extraBroadcastEnabled bool
-
-	// mtx protects mExclude map.
-	mtx sync.RWMutex
 
 	// container nodes which was processed during the primary object placement
 	mExclude map[string]struct{}
@@ -76,21 +70,17 @@ func (x *traversal) submitProcessed(n placement.Node) {
 	if x.extraBroadcastEnabled {
 		key := string(n.PublicKey())
 
-		x.mtx.Lock()
 		if x.mExclude == nil {
 			x.mExclude = make(map[string]struct{}, 1)
 		}
 
 		x.mExclude[key] = struct{}{}
-		x.mtx.Unlock()
 	}
 }
 
 // checks if specified node was processed during the primary object placement.
 func (x *traversal) processed(n placement.Node) bool {
-	x.mtx.RLock()
 	_, ok := x.mExclude[string(n.PublicKey())]
-	x.mtx.RUnlock()
 	return ok
 }
 
@@ -156,10 +146,9 @@ func (t *distributedTarget) sendObject(node nodeDesc) error {
 
 	target := t.nodeTargetInitializer(node)
 
-	if err := target.WriteObject(t.obj, t.objMeta); err != nil {
+	err := target.WriteObject(t.obj, t.objMeta)
+	if err != nil {
 		return fmt.Errorf("could not write header: %w", err)
-	} else if _, err := target.Close(); err != nil {
-		return fmt.Errorf("could not close object stream: %w", err)
 	}
 	return nil
 }
@@ -195,26 +184,11 @@ loop:
 
 			addr := addrs[i]
 
-			isLocal := t.isLocalKey(addr.PublicKey())
-
-			var workerPool util.WorkerPool
-
-			if isLocal {
-				workerPool = t.localPool
-			} else {
-				workerPool = t.remotePool
-			}
-
+			workerPool, isLocal := t.getWorkerPool(addr.PublicKey())
 			if err := workerPool.Submit(func() {
 				defer wg.Done()
 
 				err := f(nodeDesc{local: isLocal, info: addr})
-
-				// mark the container node as processed in order to exclude it
-				// in subsequent container broadcast. Note that we don't
-				// process this node during broadcast if primary placement
-				// on it failed.
-				t.traversal.submitProcessed(addr)
 
 				if err != nil {
 					resErr.Store(err)
@@ -230,6 +204,12 @@ loop:
 
 				break loop
 			}
+
+			// mark the container node as processed in order to exclude it
+			// in subsequent container broadcast. Note that we don't
+			// process this node during broadcast if primary placement
+			// on it failed.
+			t.traversal.submitProcessed(addrs[i])
 		}
 
 		wg.Wait()

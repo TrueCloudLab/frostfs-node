@@ -196,16 +196,13 @@ func initContainerService(c *cfg) {
 	server := containerTransportGRPC.New(
 		containerService.NewSignService(
 			&c.key.PrivateKey,
-			containerService.NewResponseService(
-				&usedSpaceService{
-					Server:               containerService.NewExecutionService(containerMorph.NewExecutor(cnrRdr, cnrWrt)),
-					loadWriterProvider:   loadRouter,
-					loadPlacementBuilder: loadPlacementBuilder,
-					routeBuilder:         routeBuilder,
-					cfg:                  c,
-				},
-				c.respSvc,
-			),
+			&usedSpaceService{
+				Server:               containerService.NewExecutionService(containerMorph.NewExecutor(cnrRdr, cnrWrt), c.respSvc),
+				loadWriterProvider:   loadRouter,
+				loadPlacementBuilder: loadPlacementBuilder,
+				routeBuilder:         routeBuilder,
+				cfg:                  c,
+			},
 		),
 	)
 
@@ -565,6 +562,8 @@ func (c *usedSpaceService) AnnounceUsedSpace(ctx context.Context, req *container
 
 	resp := new(containerV2.AnnounceUsedSpaceResponse)
 	resp.SetBody(respBody)
+
+	c.cfg.respSvc.SetMeta(resp)
 
 	return resp, nil
 }

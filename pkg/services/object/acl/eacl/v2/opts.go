@@ -14,9 +14,7 @@ func WithObjectStorage(v ObjectStorage) Option {
 
 func WithLocalObjectStorage(v *engine.StorageEngine) Option {
 	return func(c *cfg) {
-		c.storage = &localStorage{
-			ls: v,
-		}
+		c.storage = (*localStorage)(v)
 	}
 }
 

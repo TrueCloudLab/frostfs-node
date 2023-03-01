@@ -36,7 +36,7 @@ func (exec *execCtx) formTombstone() (ok bool) {
 	exec.tombstone.SetExpirationEpoch(
 		exec.svc.netInfo.CurrentEpoch() + tsLifetime,
 	)
-	exec.addMembers([]oid.ID{exec.address().Object()})
+	exec.addMembers([]oid.ID{exec.prm.addr.Object()})
 
 	exec.log.Debug("forming split info...")
 

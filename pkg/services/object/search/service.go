@@ -15,7 +15,7 @@ import (
 // Service is an utility serving requests
 // of Object.Search service.
 type Service struct {
-	*cfg
+	cfg
 }
 
 // Option is a Service's constructor option.
@@ -46,32 +46,31 @@ type cfg struct {
 		generateTraverser(cid.ID, uint64) (*placement.Traverser, error)
 	}
 
-	currentEpochReceiver interface {
-		currentEpoch() (uint64, error)
-	}
+	epochSource epochSource
 
 	keyStore *util.KeyStorage
 }
 
-func defaultCfg() *cfg {
-	return &cfg{
-		log:               &logger.Logger{Logger: zap.L()},
-		clientConstructor: new(clientConstructorWrapper),
-	}
+type epochSource interface {
+	Epoch() (uint64, error)
+}
+
+func (c *cfg) initDefault() {
+	c.log = &logger.Logger{Logger: zap.L()}
+	c.clientConstructor = new(clientConstructorWrapper)
 }
 
 // New creates, initializes and returns utility serving
 // Object.Get service requests.
 func New(opts ...Option) *Service {
-	c := defaultCfg()
+	var s Service
+	s.cfg.initDefault()
 
 	for i := range opts {
-		opts[i](c)
+		opts[i](&s.cfg)
 	}
 
-	return &Service{
-		cfg: c,
-	}
+	return &s
 }
 
 // WithLogger returns option to specify Get service's logger.
@@ -110,9 +109,7 @@ func WithTraverserGenerator(t *util.TraverserGenerator) Option {
 // map storage to receive current network state.
 func WithNetMapSource(nmSrc netmap.Source) Option {
 	return func(c *cfg) {
-		c.currentEpochReceiver = &nmSrcWrapper{
-			nmSrc: nmSrc,
-		}
+		c.epochSource = nmSrc
 	}
 }
 

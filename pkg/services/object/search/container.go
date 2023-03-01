@@ -10,12 +10,12 @@ import (
 )
 
 func (exec *execCtx) executeOnContainer() {
-	if exec.isLocal() {
+	if exec.prm.common.LocalOnly() {
 		exec.log.Debug("return result directly")
 		return
 	}
 
-	lookupDepth := exec.netmapLookupDepth()
+	lookupDepth := exec.prm.common.NetmapLookupDepth()
 
 	exec.log.Debug("trying to execute in container...",
 		zap.Uint64("netmap lookup depth", lookupDepth),
@@ -52,12 +52,12 @@ func (exec *execCtx) processCurrentEpoch() bool {
 		zap.Uint64("number", exec.curProcEpoch),
 	)
 
-	traverser, ok := exec.generateTraverser(exec.containerID())
+	traverser, ok := exec.generateTraverser(exec.prm.cnr)
 	if !ok {
 		return true
 	}
 
-	ctx, cancel := context.WithCancel(exec.context())
+	ctx, cancel := context.WithCancel(exec.ctx)
 	defer cancel()
 
 	for {

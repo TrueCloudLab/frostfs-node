@@ -69,7 +69,7 @@ func (s *Service) get(ctx context.Context, prm commonPrm, opts ...execOption) st
 		prm: RangePrm{
 			commonPrm: prm,
 		},
-		infoSplit: object.NewSplitInfo(),
+		splitInfo: object.NewSplitInfo(),
 	}
 
 	for i := range opts {
