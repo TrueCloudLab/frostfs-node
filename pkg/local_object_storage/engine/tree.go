@@ -213,6 +213,44 @@ func (e *StorageEngine) TreeExists(cid cidSDK.ID, treeID string) (bool, error) {
 	return err == nil, err
 }
 
+// TreeUpdateLastSyncHeight implements the pilorama.Forest interface.
+func (e *StorageEngine) TreeUpdateLastSyncHeight(cid cidSDK.ID, treeID string, height uint64) error {
+	index, lst, err := e.getTreeShard(cid, treeID)
+	if err != nil && !errors.Is(err, pilorama.ErrTreeNotFound) {
+		return err
+	}
+
+	err = lst[index].TreeUpdateLastSyncHeight(cid, treeID, height)
+	if err != nil && !errors.Is(err, shard.ErrReadOnlyMode) && err != shard.ErrPiloramaDisabled {
+		e.reportShardError(lst[index], "can't update tree synchronization height", err,
+			zap.Stringer("cid", cid),
+			zap.String("tree", treeID))
+	}
+	return err
+}
+
+// TreeLastSyncHeight implements the pilorama.Forest interface.
+func (e *StorageEngine) TreeLastSyncHeight(cid cidSDK.ID, treeID string) (uint64, error) {
+	var err error
+	var height uint64
+	for _, sh := range e.sortShardsByWeight(cid) {
+		height, err = sh.TreeLastSyncHeight(cid, treeID)
+		if err != nil {
+			if err == shard.ErrPiloramaDisabled {
+				break
+			}
+			if !errors.Is(err, pilorama.ErrTreeNotFound) {
+				e.reportShardError(sh, "can't read tree synchronization height", err,
+					zap.Stringer("cid", cid),
+					zap.String("tree", treeID))
+			}
+			continue
+		}
+		return height, err
+	}
+	return height, err
+}
+
 func (e *StorageEngine) getTreeShard(cid cidSDK.ID, treeID string) (int, []hashedShard, error) {
 	lst := e.sortShardsByWeight(cid)
 	for i, sh := range lst {

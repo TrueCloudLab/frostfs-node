@@ -13,6 +13,7 @@ Changelog for FrostFS Node
 - Reload config for pprof and metrics on SIGHUP in `neofs-node` (#1868)
 - Multiple configs support (#44)
 - Parameters `nns-name` and `nns-zone` for command `frostfs-cli container create` (#37)
+- Tree service now saves the last synchronization height which persists across restarts (#82)
 
 ### Changed
 - Change `frostfs_node_engine_container_size` to counting sizes of logical objects
