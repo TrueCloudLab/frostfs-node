@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	containerApi "github.com/TrueCloudLab/frostfs-api-go/v2/container"
 	internalclient "github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/internal/client"
 	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/internal/common"
 	"github.com/TrueCloudLab/frostfs-node/cmd/frostfs-cli/internal/commonflags"
@@ -217,10 +218,12 @@ func parseAttributes(dst *container.Container, attributes []string) error {
 		container.SetName(dst, containerName)
 	}
 
-	var domain container.Domain
-	domain.SetName(containerNnsName)
-	domain.SetZone(containerNnsZone)
-	container.WriteDomain(dst, domain)
+	if containerNnsName != "" {
+		dst.SetAttribute(containerApi.SysAttributeName, containerNnsName)
+	}
+	if containerNnsZone != "" {
+		dst.SetAttribute(containerApi.SysAttributeZone, containerNnsZone)
+	}
 
 	return nil
 }
