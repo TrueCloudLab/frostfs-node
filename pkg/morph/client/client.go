@@ -10,10 +10,13 @@ import (
 
 	"github.com/TrueCloudLab/frostfs-node/pkg/util/logger"
 	lru "github.com/hashicorp/golang-lru/v2"
+	"github.com/nspcc-dev/neo-go/pkg/core/block"
 	"github.com/nspcc-dev/neo-go/pkg/core/native/noderoles"
+	"github.com/nspcc-dev/neo-go/pkg/core/state"
 	"github.com/nspcc-dev/neo-go/pkg/core/transaction"
 	"github.com/nspcc-dev/neo-go/pkg/crypto/keys"
 	"github.com/nspcc-dev/neo-go/pkg/encoding/fixedn"
+	"github.com/nspcc-dev/neo-go/pkg/neorpc/result"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient/actor"
 	"github.com/nspcc-dev/neo-go/pkg/rpcclient/gas"
@@ -69,16 +72,19 @@ type Client struct {
 	// on every normal call.
 	switchLock *sync.RWMutex
 
-	// channel for ws notifications
-	notifications chan rpcclient.Notification
-
-	// channel for internal stop
-	closeChan chan struct{}
+	// channels for ws notifications; protected with switchLock
+	notifications   chan rpcclient.Notification
+	blockRcv        chan *block.Block
+	notificationRcv chan *state.ContainedNotificationEvent
+	notaryReqRcv    chan *result.NotaryRequestEvent
 
 	// cached subscription information
 	subscribedEvents       map[util.Uint160]string
 	subscribedNotaryEvents map[util.Uint160]string
 	subscribedToNewBlocks  bool
+
+	// channel for internal stop
+	closeChan chan struct{}
 
 	// indicates that Client is not able to
 	// establish connection to any of the
@@ -385,43 +391,43 @@ func (c *Client) roleList(r noderoles.Role) (keys.PublicKeys, error) {
 //
 // Wraps any error to frostfsError.
 func toStackParameter(value any) (sc.Parameter, error) {
-	var result = sc.Parameter{
+	var res = sc.Parameter{
 		Value: value,
 	}
 
 	switch v := value.(type) {
 	case []byte:
-		result.Type = sc.ByteArrayType
+		res.Type = sc.ByteArrayType
 	case int:
-		result.Type = sc.IntegerType
-		result.Value = big.NewInt(int64(v))
+		res.Type = sc.IntegerType
+		res.Value = big.NewInt(int64(v))
 	case int64:
-		result.Type = sc.IntegerType
-		result.Value = big.NewInt(v)
+		res.Type = sc.IntegerType
+		res.Value = big.NewInt(v)
 	case uint64:
-		result.Type = sc.IntegerType
-		result.Value = new(big.Int).SetUint64(v)
+		res.Type = sc.IntegerType
+		res.Value = new(big.Int).SetUint64(v)
 	case [][]byte:
 		arr := make([]sc.Parameter, 0, len(v))
 		for i := range v {
 			elem, err := toStackParameter(v[i])
 			if err != nil {
-				return result, err
+				return res, err
 			}
 
 			arr = append(arr, elem)
 		}
 
-		result.Type = sc.ArrayType
-		result.Value = arr
+		res.Type = sc.ArrayType
+		res.Value = arr
 	case string:
-		result.Type = sc.StringType
+		res.Type = sc.StringType
 	case util.Uint160:
-		result.Type = sc.ByteArrayType
-		result.Value = v.BytesBE()
+		res.Type = sc.ByteArrayType
+		res.Value = v.BytesBE()
 	case noderoles.Role:
-		result.Type = sc.IntegerType
-		result.Value = big.NewInt(int64(v))
+		res.Type = sc.IntegerType
+		res.Value = big.NewInt(int64(v))
 	case keys.PublicKeys:
 		arr := make([][]byte, 0, len(v))
 		for i := range v {
@@ -430,13 +436,13 @@ func toStackParameter(value any) (sc.Parameter, error) {
 
 		return toStackParameter(arr)
 	case bool:
-		result.Type = sc.BoolType
-		result.Value = v
+		res.Type = sc.BoolType
+		res.Value = v
 	default:
-		return result, wrapFrostFSError(fmt.Errorf("chain/client: unsupported parameter %v", value))
+		return res, wrapFrostFSError(fmt.Errorf("chain/client: unsupported parameter %v", value))
 	}
 
-	return result, nil
+	return res, nil
 }
 
 // MagicNumber returns the magic number of the network
@@ -480,7 +486,7 @@ func (c *Client) MsPerBlock() (res int64, err error) {
 }
 
 // IsValidScript returns true if invocation script executes with HALT state.
-func (c *Client) IsValidScript(script []byte, signers []transaction.Signer) (res bool, err error) {
+func (c *Client) IsValidScript(script []byte, signers []transaction.Signer) (valid bool, err error) {
 	c.switchLock.RLock()
 	defer c.switchLock.RUnlock()
 
@@ -488,12 +494,12 @@ func (c *Client) IsValidScript(script []byte, signers []transaction.Signer) (res
 		return false, ErrConnectionLost
 	}
 
-	result, err := c.client.InvokeScript(script, signers)
+	res, err := c.client.InvokeScript(script, signers)
 	if err != nil {
 		return false, fmt.Errorf("invokeScript: %w", err)
 	}
 
-	return result.State == vmstate.Halt.String(), nil
+	return res.State == vmstate.Halt.String(), nil
 }
 
 // NotificationChannel returns channel than receives subscribed
@@ -524,4 +530,15 @@ func (c *Client) setActor(act *actor.Actor) {
 	c.rpcActor = act
 	c.gasToken = nep17.New(act, gas.Hash)
 	c.rolemgmt = rolemgmt.New(act)
+}
+
+// updateSubs updates subscription information, must be
+// protected with switchLock.
+func (c *Client) updateSubs(si subsInfo) {
+	c.blockRcv = si.blockRcv
+	c.notificationRcv = si.notificationRcv
+	c.notaryReqRcv = si.notaryReqRcv
+
+	c.subscribedEvents = si.subscribedEvents
+	c.subscribedNotaryEvents = si.subscribedNotaryEvents
 }
