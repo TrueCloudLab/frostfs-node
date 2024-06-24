@@ -48,7 +48,7 @@ func GetSDKClient(cmd *cobra.Command, key *ecdsa.PrivateKey, addr network.Addres
 	)
 
 	prmInit.SetDefaultPrivateKey(*key)
-	prmInit.ResolveNeoFSFailures()
+	prmInit.ResolveFrostFSFailures()
 	prmDial.SetServerURI(addr.URIAddr())
 	if timeout := viper.GetDuration(commonflags.Timeout); timeout > 0 {
 		// In CLI we can only set a timeout for the whole operation.

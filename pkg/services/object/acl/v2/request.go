@@ -2,6 +2,7 @@ package v2
 
 import (
 	"crypto/ecdsa"
+	"crypto/elliptic"
 	"fmt"
 
 	sessionV2 "github.com/TrueCloudLab/frostfs-api-go/v2/session"
@@ -111,6 +112,12 @@ type MetaWithToken struct {
 func (r MetaWithToken) RequestOwner() (*user.ID, *keys.PublicKey, error) {
 	if r.vheader == nil {
 		return nil, nil, errEmptyVerificationHeader
+	}
+
+	if r.bearer != nil && r.bearer.Impersonate() {
+		issuer := bearer.ResolveIssuer(*r.bearer)
+		pubKey, err := keys.NewPublicKeyFromBytes(r.bearer.SigningKeyBytes(), elliptic.P256())
+		return &issuer, pubKey, err
 	}
 
 	// if session token is presented, use it as truth source

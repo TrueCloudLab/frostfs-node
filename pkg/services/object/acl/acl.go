@@ -124,15 +124,17 @@ func (c *Checker) CheckEACL(msg any, reqInfo v2.RequestInfo) error {
 		return nil
 	}
 
+	bearerTok := reqInfo.Bearer()
+	impersonate := bearerTok != nil && bearerTok.Impersonate()
+
 	// if bearer token is not allowed, then ignore it
-	if !basicACL.AllowedBearerRules(reqInfo.Operation()) {
+	if impersonate || !basicACL.AllowedBearerRules(reqInfo.Operation()) {
 		reqInfo.CleanBearer()
 	}
 
 	var table eaclSDK.Table
 	cnr := reqInfo.ContainerID()
 
-	bearerTok := reqInfo.Bearer()
 	if bearerTok == nil {
 		eaclInfo, err := c.eaclSrc.GetEACL(cnr)
 		if err != nil {

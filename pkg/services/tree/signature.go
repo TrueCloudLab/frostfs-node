@@ -56,7 +56,23 @@ func (s *Service) verifyClient(req message, cid cidSDK.ID, rawBearer []byte, op 
 		return fmt.Errorf("can't get container %s: %w", cid, err)
 	}
 
-	role, err := roleFromReq(cnr, req)
+	eaclOp := eACLOp(op)
+
+	var bt *bearer.Token
+	if len(rawBearer) > 0 {
+		bt = new(bearer.Token)
+		if err = bt.Unmarshal(rawBearer); err != nil {
+			return eACLErr(eaclOp, fmt.Errorf("invalid bearer token: %w", err))
+		}
+		if !bt.VerifySignature() {
+			return eACLErr(eaclOp, errBearerSignature)
+		}
+		if !bt.AssertContainer(cid) {
+			return eACLErr(eaclOp, errBearerWrongContainer)
+		}
+	}
+
+	role, err := roleFromReq(cnr, req, bt)
 	if err != nil {
 		return fmt.Errorf("can't get request role: %w", err)
 	}
@@ -71,8 +87,6 @@ func (s *Service) verifyClient(req message, cid cidSDK.ID, rawBearer []byte, op 
 		return nil
 	}
 
-	eaclOp := eACLOp(op)
-
 	var tableFromBearer bool
 	if len(rawBearer) != 0 {
 		if !basicACL.AllowedBearerRules(op) {
@@ -86,22 +100,25 @@ func (s *Service) verifyClient(req message, cid cidSDK.ID, rawBearer []byte, op 
 	}
 
 	var tb eacl.Table
+	signer := req.GetSignature().GetKey()
 	if tableFromBearer {
-		var bt bearer.Token
-		if err = bt.Unmarshal(rawBearer); err != nil {
-			return eACLErr(eaclOp, fmt.Errorf("invalid bearer token: %w", err))
-		}
-		if !bearer.ResolveIssuer(bt).Equals(cnr.Value.Owner()) {
-			return eACLErr(eaclOp, errBearerWrongOwner)
-		}
-		if !bt.AssertContainer(cid) {
-			return eACLErr(eaclOp, errBearerWrongContainer)
-		}
-		if !bt.VerifySignature() {
-			return eACLErr(eaclOp, errBearerSignature)
-		}
+		if bt.Impersonate() {
+			tbCore, err := s.eaclSource.GetEACL(cid)
+			if err != nil {
+				if client.IsErrEACLNotFound(err) {
+					return nil
+				}
 
-		tb = bt.EACLTable()
+				return fmt.Errorf("get eACL table: %w", err)
+			}
+			tb = *tbCore.Value
+			signer = bt.SigningKeyBytes()
+		} else {
+			if !bearer.ResolveIssuer(*bt).Equals(cnr.Value.Owner()) {
+				return eACLErr(eaclOp, errBearerWrongOwner)
+			}
+			tb = bt.EACLTable()
+		}
 	} else {
 		tbCore, err := s.eaclSource.GetEACL(cid)
 		if err != nil {
@@ -115,7 +132,7 @@ func (s *Service) verifyClient(req message, cid cidSDK.ID, rawBearer []byte, op 
 		tb = *tbCore.Value
 	}
 
-	return checkEACL(tb, req.GetSignature().GetKey(), eACLRole(role), eaclOp)
+	return checkEACL(tb, signer, eACLRole(role), eaclOp)
 }
 
 func verifyMessage(m message) error {
@@ -168,13 +185,20 @@ func SignMessage(m message, key *ecdsa.PrivateKey) error {
 	return nil
 }
 
-func roleFromReq(cnr *core.Container, req message) (acl.Role, error) {
+func roleFromReq(cnr *core.Container, req message, bt *bearer.Token) (acl.Role, error) {
 	role := acl.RoleOthers
 	owner := cnr.Value.Owner()
 
 	pub, err := keys.NewPublicKeyFromBytes(req.GetSignature().GetKey(), elliptic.P256())
 	if err != nil {
 		return role, fmt.Errorf("invalid public key: %w", err)
+	}
+
+	if bt != nil && bt.Impersonate() {
+		pub, err = keys.NewPublicKeyFromBytes(bt.SigningKeyBytes(), elliptic.P256())
+		if err != nil {
+			return role, fmt.Errorf("invalid public key: %w", err)
+		}
 	}
 
 	var reqSigner user.ID
